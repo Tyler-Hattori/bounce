@@ -25,12 +25,8 @@ import './App.css';
 function App() {
   return(
     <div classname= "App">
-      Interesting
       <header classname= "App-header">
         Very Interesting
-        <p classname= "App-link">
-          oh i see
-        </p>
       </header>
     </div>
   )
