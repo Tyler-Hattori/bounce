@@ -1,6 +1,6 @@
 import './LineRiderGame.css'
 import React from 'react'
-import Congrats from './GameOver.jsx'
+import GameOver from './GameOver.js'
 
 class LineRiderGame extends React.Component {
     constructor(props) {

@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import Ball from './Ball';
+import LineRiderGame from './LineRiderGame.js'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <LineRiderGame />
   </React.StrictMode>,
   document.getElementById('root')
 );
