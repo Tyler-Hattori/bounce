@@ -1,11 +1,11 @@
-import logo from './logo.svg';
 import './App.css';
+import Ball from './Ball.js';
 
-/*function App() {
+function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <Ball></Ball>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -20,16 +20,5 @@ import './App.css';
       </header>
     </div>
   );
-}*/
-
-function App() {
-  return(
-    <div classname= "App">
-      <header classname= "App-header">
-        Very Interesting
-      </header>
-    </div>
-  )
 }
-
 export default App;
