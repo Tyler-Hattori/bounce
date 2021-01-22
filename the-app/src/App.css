@@ -17,3 +17,24 @@
   color: #61dafb;
 }
 
+.website-text {
+  color: #1a0f81;
+  font-family: sans-serif;
+  font-size: xx-large;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .website-text { 
+    animation: freak infinite 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+}
+
+@keyframes freak {
+  from {
+    background-color: rgb(41, 201, 26);
+  }
+  to {
+    background-color: coral;
+  }
+}
+
