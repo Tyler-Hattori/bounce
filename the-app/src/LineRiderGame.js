@@ -13,8 +13,9 @@ class LineRiderGame extends React.Component {
             timeoutId: 0,
             gameLoopTimeout: 50,
             ballSpeed: 0,
-            gravity: 0.4,
+            gravity: 2,
             ballSize: 40,
+            bounced: false,
             isGameover: false,
         }
     }
@@ -54,6 +55,14 @@ class LineRiderGame extends React.Component {
         let grav = this.state.gravity
         let ball_speed = this.state.ballSpeed
         let y = this.state.yPos + ball_speed
+        let game_height = document.getElementById("fill_screen").clientHeight - this.state.ballSize - 10
+        if (this.state.yPos >= game_height && !this.state.bounced) {
+            ball_speed *= -1
+            this.setState({bounced: true})
+        }
+        if (this.state.yPos < game_height && this.state.bounced) {
+            this.setState({bounced: false})
+        }
         this.setState({
             ballSpeed: ball_speed + grav,
             yPos: y})
@@ -89,7 +98,7 @@ class LineRiderGame extends React.Component {
         }
 
         return(
-            <div>
+            <div id = "fill_screen">
                 <img src= "https://clipart.info/images/ccovers/1495749720Bowling-Ball-PNG-Clip-Art.png"
                     style= {{height: this.state.ballSize, top: this.state.yPos}} 
                     id= "ball-image"
