@@ -2,9 +2,13 @@
   height: 5vmin;
 }
 
+#ball-image {
+  position: absolute;
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .Ball { 
-      animation: Ball-spin infinite 1s cubic-bezier(0.47, 0.7, 0.5, 0.815);
+      animation: Ball-spin infinite 1s linear
     }
   }
 

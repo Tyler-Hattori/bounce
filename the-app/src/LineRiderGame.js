@@ -4,11 +4,17 @@ import GameOver from './GameOver.js'
 
 class LineRiderGame extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        
+    this.handleKeyDown = this.handleKeyDown.bind(this)
 
         this.state = {
+            yPos: 150,
+            timeoutId: 0,
+            gameLoopTimeout: 50,
             ballSpeed: 0,
-            gravity: 1,
+            gravity: 0.4,
+            ballSize: 40,
             isGameover: false,
         }
     }
@@ -16,23 +22,41 @@ class LineRiderGame extends React.Component {
     //runs immediately after LineRiderGame is created
     componentDidMount() {
         this.startGame()
+        window.addEventListener('keydown', this.handleKeyDown)
         this.gameLoop()
     }
 
     startGame() {
         //Game
         //Ball 
-        let ballSpeed = this.props.ballSpeed
         this.setState ({
-            ballSpeed,
         })
     }
 
     gameLoop() {
-        //Loop the Game
-        this.setState({
+        let timeoutId = setTimeout(() => {
+            if (!this.state.isGameOver) {
+              this.fall()
+            }
+      
+            this.gameLoop()
+          }, this.state.gameLoopTimeout)
+      
+        this.setState({ timeoutId })
+    }
 
-        })
+    componentWillUnmount() {
+        clearTimeout(this.state.timeoutId)
+        window.removeEventListener('keydown', this.handleKeyDown)
+    }
+
+    fall() {
+        let grav = this.state.gravity
+        let ball_speed = this.state.ballSpeed
+        let y = this.state.yPos + ball_speed
+        this.setState({
+            ballSpeed: ball_speed + grav,
+            yPos: y})
     }
 
     resetGame() {
@@ -40,9 +64,18 @@ class LineRiderGame extends React.Component {
         //reset the Ball position
 
         this.setState({
-
+            
         })
     }
+
+    handleKeyDown(event) {
+        // if mouse is pressed
+
+
+        this.setState({
+
+        })
+      }
 
     //runs when we update props or components
     render() {
@@ -56,8 +89,11 @@ class LineRiderGame extends React.Component {
         }
 
         return(
-            <div className = 'Ball'>
-                <img src= "https://clipart.info/images/ccovers/1495749720Bowling-Ball-PNG-Clip-Art.png" height= "20px"/>            
+            <div>
+                <img src= "https://clipart.info/images/ccovers/1495749720Bowling-Ball-PNG-Clip-Art.png"
+                    style= {{height: this.state.ballSize, top: this.state.yPos}} 
+                    id= "ball-image"
+                    className = 'Ball'/>            
             </div>
         )
     }
