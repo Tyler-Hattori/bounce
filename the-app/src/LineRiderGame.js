@@ -7,7 +7,9 @@ class LineRiderGame extends React.Component {
         super(props)
 
         this.state = {
-
+            ballSpeed: 0,
+            gravity: 1,
+            isGameover: false,
         }
     }
 
@@ -19,10 +21,10 @@ class LineRiderGame extends React.Component {
 
     startGame() {
         //Game
-        //Ball position
-
+        //Ball 
+        let ballSpeed = this.props.ballSpeed
         this.setState ({
-
+            ballSpeed,
         })
     }
 
@@ -54,8 +56,8 @@ class LineRiderGame extends React.Component {
         }
 
         return(
-            <div>
-
+            <div className = 'Ball'>
+                <img src= "https://clipart.info/images/ccovers/1495749720Bowling-Ball-PNG-Clip-Art.png" height= "20px"/>            
             </div>
         )
     }

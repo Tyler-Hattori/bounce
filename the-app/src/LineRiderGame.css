@@ -1,15 +1,10 @@
 .Ball {
-    height: 5vmin;
-    pointer-events: none;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
+  height: 5vmin;
 }
 
 @media (prefers-reduced-motion: no-preference) {
     .Ball { 
-      animation: Ball-spin infinite 1s linear;
+      animation: Ball-spin infinite 1s cubic-bezier(0.47, 0.7, 0.5, 0.815);
     }
   }
 
