@@ -10,11 +10,16 @@ class LineRiderGame extends React.Component {
 
         this.state = {
             yPos: 150,
+            xPos: 350,
+            ballDirection: '',
             timeoutId: 0,
             gameLoopTimeout: 50,
-            ballSpeed: 0,
-            gravity: 2,
+            ballSpeedY: 0,
+            ballSpeedX: 0,
+            gravity: 1.7,
+            xAcceleration: 0.6,
             ballSize: 40,
+            keyPressed: false,
             bounced: false,
             isGameover: false,
         }
@@ -38,6 +43,8 @@ class LineRiderGame extends React.Component {
         let timeoutId = setTimeout(() => {
             if (!this.state.isGameOver) {
               this.fall()
+              this.changeDirection()
+              this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
             }
       
             this.gameLoop()
@@ -53,7 +60,7 @@ class LineRiderGame extends React.Component {
 
     fall() {
         let grav = this.state.gravity
-        let ball_speed = this.state.ballSpeed
+        let ball_speed = this.state.ballSpeedY
         let y = this.state.yPos + ball_speed
         let game_height = document.getElementById("fill_screen").clientHeight - this.state.ballSize - 10
         if (this.state.yPos >= game_height && !this.state.bounced) {
@@ -64,8 +71,37 @@ class LineRiderGame extends React.Component {
             this.setState({bounced: false})
         }
         this.setState({
-            ballSpeed: ball_speed + grav,
+            ballSpeedY: ball_speed + grav,
             yPos: y})
+    }
+
+    changeDirection() {
+        switch (this.state.ballDirection) {
+          case 'left':
+              this.moveSideways('left')
+            break
+          case 'right':
+              this.moveSideways('right')
+              break
+          case 'zero acceleration':
+              this.moveSideways('zero acceleration')
+            break
+          default:
+        }
+    }
+
+    moveSideways(dir) {
+        let acceleration = this.state.xAcceleration
+        let ball_speed = this.state.ballSpeedX
+        if (dir === 'left')
+            acceleration = acceleration * -1
+        if (dir === 'zero acceleration')
+            acceleration = 0;
+        let x = this.state.xPos + ball_speed
+        this.setState({
+            ballSpeedX: ball_speed + acceleration,
+            xPos: x
+        })
     }
 
     resetGame() {
@@ -78,11 +114,17 @@ class LineRiderGame extends React.Component {
     }
 
     handleKeyDown(event) {
-        // if mouse is pressed
-
-
+        switch (event.keyCode) {
+            case 37:
+                this.setState({ ballDirection: 'left' })
+                break
+            case 39:
+                this.setState({ ballDirection: 'right' })
+                break
+            default:
+        }
         this.setState({
-
+            keyPressed: true
         })
       }
 
@@ -100,9 +142,12 @@ class LineRiderGame extends React.Component {
         return(
             <div id = "fill_screen">
                 <img src= "https://clipart.info/images/ccovers/1495749720Bowling-Ball-PNG-Clip-Art.png"
-                    style= {{height: this.state.ballSize, top: this.state.yPos}} 
+                    style= {{height: this.state.ballSize, 
+                        top: this.state.yPos,
+                        left: this.state.xPos}} 
                     id= "ball-image"
-                    className = 'Ball'/>            
+                    className = 'Ball'
+                    alt = "ball"/>            
             </div>
         )
     }
