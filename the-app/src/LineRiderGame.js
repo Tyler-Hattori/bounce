@@ -16,7 +16,7 @@ class LineRiderGame extends React.Component {
             gameLoopTimeout: 50,
             ballSpeedY: 0,
             ballSpeedX: 0,
-            gravity: 1.7,
+            gravity: 2,
             xAcceleration: 0.6,
             ballSize: 40,
             keyPressed: false,
