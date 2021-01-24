@@ -10,7 +10,7 @@ class LineRiderGame extends React.Component {
 
         this.state = {
             yPos: 150,
-            xPos: 350,
+            xPos: 50,
             ballDirection: '',
             timeoutId: 0,
             gameLoopTimeout: 50,
