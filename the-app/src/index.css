@@ -12,12 +12,26 @@ h1 {
   text-align: center;
   font-family: cursive;
   font-size: 20px;
-  font-size: max(20px, 3vw);
+  font-size: max(20px, 4vw);
   margin-top: 0px;
   margin-bottom: 0px;
   transition: cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 
+.fade_in {
+  animation-name: fade-in;
+  animation-duration: 2s;
+}
+@keyframes fade-in {
+  0% {
+    transform: translate3d(80%);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0%);
+  }
+}
 .text {
   text-align: center;
 }

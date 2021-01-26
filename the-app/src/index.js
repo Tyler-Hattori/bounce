@@ -6,8 +6,8 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <h1>Line Roller</h1>
-    <div className = "text">
+    <h1 className= "fade_in">Line Roller</h1>
+    <div className = "text fade_in">
       <p className = "subtitle"> (not to be confused with Line Rider) </p>
       <p className = "instructions"> Draw a line for the ball to roll into the goal </p>
     </div>
