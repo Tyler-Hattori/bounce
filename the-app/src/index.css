@@ -20,20 +20,50 @@ h1 {
 
 .fade_in {
   animation-name: fade-in;
-  animation-duration: 2s;
+  animation-duration: 3s;
+}
+.left {
+  animation-name: left;
+  animation-duration: 1.5s;
+}
+.right {
+  animation-name: right;
+  animation-duration: 1.5s;
 }
 @keyframes fade-in {
   0% {
-    transform: translate3d(80%);
     opacity: 0;
   }
   100% {
     opacity: 1;
-    transform: translate3d(0%);
+  }
+}
+@keyframes left {
+  0% {
+    transform: translateX(-200%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+@keyframes right {
+  0% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
   }
 }
 .text {
+  position: relative;
+  left: 300px;
   text-align: center;
+  background-color: blanchedalmond;
+  width: 500px;
 }
 
 .subtitle {
