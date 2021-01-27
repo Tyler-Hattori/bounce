@@ -22,6 +22,12 @@ h1 {
   animation-name: fade-in;
   animation-duration: 3s;
 }
+.fade_out {
+  animation-name: fade-out;
+  animation-duration: 3s;
+}
+
+
 .left {
   animation-name: left;
   animation-duration: 1.5s;
@@ -36,6 +42,14 @@ h1 {
   }
   100% {
     opacity: 1;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 @keyframes left {
@@ -63,7 +77,15 @@ h1 {
   left: 300px;
   text-align: center;
   background-color: blanchedalmond;
-  width: 500px;
+  width: 700px;
+}
+.text_difficulty {
+  position: relative;
+  text-align: center;
+  background-color: blanchedalmond;
+  width: 300px;
+  left: 495px;
+  margin-top: 150px;
 }
 
 .subtitle {
@@ -74,4 +96,5 @@ h1 {
 .instructions {
   color: black;
   font-family: 'Courier New', Courier, monospace;
+  margin-bottom: 150px;
 }

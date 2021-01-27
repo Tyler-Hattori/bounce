@@ -28,5 +28,27 @@
     to {
       transform: rotate(360deg);
     }
-  }
+}
+
+.in_line {
+  text-align: center !important;
+  position: absolute;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  max-width: 100% !important;
+  margin-top: 0px;
+  margin-bottom: 150px;
+  left: 495px;
+}
+
+.ok_button {
+  position: absolute;
+  left: 565px;
+  margin-top: 150px;
+  width: 150px;
+  height: 100px;
+  font-size: 30px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
 

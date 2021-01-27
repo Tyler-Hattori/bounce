@@ -28,7 +28,7 @@ class LineRiderGame extends React.Component {
 
         this.state = {
             yPos: 150,
-            xPos: 300,
+            xPos: 220,
             ballDirection: '',
             timeoutId: 0,
             gameLoopTimeout: 50,
@@ -40,7 +40,13 @@ class LineRiderGame extends React.Component {
             keyPressed: false,
             bounced: false,
             isGameover: false,
-            selectionsSet: true, //Eventually this will start as false but we haven't coded makeSelections() yet
+            selectionsSet: false,
+            selectionEasyColor: 'gray',
+            selectionMediumColor: 'gray',
+            selectionPlebianColor: 'gray',
+            selectionHardColor: 'gray',
+            selectionExpertColor: 'gray',
+            selectedColor: false,
         }
     }
 
@@ -88,8 +94,11 @@ class LineRiderGame extends React.Component {
         window.removeEventListener('keydown', this.handleKeyDown)
     }
 
-    makeSeletions() {
-
+    makeSelections() {
+        let difficultyStatus = this.state.selectionsSet
+        if (difficultyStatus) {
+            this.setState({ selectionsSet: true })
+        }
     }
 
     //gravity. document.getElementByID() is an extremely useful tool to access the properties of an HTML element.
@@ -170,6 +179,62 @@ class LineRiderGame extends React.Component {
         })
     }
 
+    select(difficulty) {
+        switch(difficulty) {
+            case "plebian":
+                this.setState({
+                    selectionPlebianColor: "yellow",
+                    selectionEasyColor: "gray",
+                    selectionMediumColor: "gray",
+                    selectionHardColor: "gray",
+                    selectionExpertColor: "gray",
+                    selectedColor: true})
+                break
+            case "easy":
+                this.setState({
+                    selectionPlebianColor: "gray",
+                    selectionEasyColor: "green",
+                    selectionMediumColor: "gray",
+                    selectionHardColor: "gray",
+                    selectionExpertColor: "gray",
+                    selectedColor: true})
+                break
+            case "medium":
+                this.setState({
+                    selectionPlebianColor: "gray",
+                    selectionEasyColor: "gray",
+                    selectionMediumColor: "blue",
+                    selectionHardColor: "gray",
+                    selectionExpertColor: "gray",
+                    selectedColor: true})
+                break
+            case "hard":
+                this.setState({
+                    selectionPlebianColor: "gray",
+                    selectionEasyColor: "gray",
+                    selectionMediumColor: "gray",
+                    selectionHardColor: "red",
+                    selectionExpertColor: "gray",
+                    selectedColor: true})
+                break
+            case "expert":
+                this.setState({
+                    selectionPlebianColor: "gray",
+                    selectionEasyColor: "gray",
+                    selectionMediumColor: "gray",
+                    selectionHardColor: "gray",
+                    selectionExpertColor: "purple",
+                    selectedColor: true})
+                break
+            case "Ok":
+                if (this.state.selectedColor)
+                    this.setState({ selectionsSet: true })
+                break
+            default:
+            
+        }
+    }
+
     //specially-named method that runs whenever we update props or components
     //This is HTML. It is how we get the JAVA code we write to actually show up on screen.
     //REACT is cool because it combines JAVA and HTML in this way. Normally, you write a website code in HTML...
@@ -184,12 +249,12 @@ class LineRiderGame extends React.Component {
             )
         }
 
-        if (this.state.selectionsSet) {
+        if (this.state.selectionsSet) { 
             return(
             <div>
                 <div id = "fill_screen"
                     style= {{left: this.state.xPos*-1}}>
-                        <h1 className= "text fade_in">Line Roller</h1>
+                        <h1 className= "text fade_in" style={{color:this.state.selectionColor}}>Line Roller</h1>
                         <p className = "subtitle left text fade_in"> (not to be confused with Line Rider) </p>
                         <p className = "instructions right text fade_in"> Game instructions </p>
                 </div>
@@ -208,10 +273,19 @@ class LineRiderGame extends React.Component {
         else {
             return (
                 <div>
-                    <div style= {{left: this.state.xPos*-1}}>
+                    <div id= "fill_screen" style= {{left: this.state.xPos*-1}}>
                         <h1 className= "text fade_in">Line Roller</h1>
-                        <p className = "subtitle left text fade_in"> (not to be confused with Line Rider) </p>
-                        <p className = "instructions right text fade_in"> Game instructions </p>
+                        <p className = "subtitle left text fade_in">(not to be confused with Line Rider)</p>
+                        <p className = "instructions right text fade_in">Choose difficulty and bounce to the right with the arrow keys!</p>
+                        <p className = "fade_in text_difficulty" style={{marginBottom: 0}}>Difficulty</p>
+                        <div className= "fade_in in_line">
+                            <button onClick= {() => this.select("plebian")} style= {{backgroundColor: this.state.selectionPlebianColor}}>Plebian</button>
+                            <button onClick= {() => this.select("easy")} style= {{backgroundColor: this.state.selectionEasyColor}}>Easy</button>
+                            <button onClick= {() => this.select("medium")} style= {{backgroundColor: this.state.selectionMediumColor}}>Medium</button>
+                            <button onClick= {() => this.select("hard")} style= {{backgroundColor: this.state.selectionHardColor}}>Hard</button>
+                            <button onClick= {() => this.select("expert")} style= {{backgroundColor: this.state.selectionExpertColor}}>Expert</button>
+                        </div>
+                        <button className = "fade_in ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
                     </div>
                 </div>
             )
