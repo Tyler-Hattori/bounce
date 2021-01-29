@@ -98,3 +98,9 @@ h1 {
   font-family: 'Courier New', Courier, monospace;
   margin-bottom: 150px;
 }
+
+.login_logout {
+  position: absolute;
+  left: 30px;
+  bottom: 50px;
+}

@@ -2,6 +2,7 @@ import './LineRiderGame.css'
 import './index.css' //I moved the intro page messages to this one so that they will move away with the background
 import React from 'react'
 import GameOver from './GameOver.js'
+import LoginLogout from './LoginLogout.js'
 
 class LineRiderGame extends React.Component {
     constructor(props) {
@@ -47,6 +48,8 @@ class LineRiderGame extends React.Component {
             selectionHardColor: 'gray',
             selectionExpertColor: 'gray',
             selectedColor: false,
+            loggedIn: false,
+            setName: '',
         }
     }
 
@@ -272,22 +275,25 @@ class LineRiderGame extends React.Component {
         }
         else {
             return (
-                <div>
-                    <div id= "fill_screen" style= {{left: this.state.xPos*-1}}>
-                        <h1 className= "text fade_in">Line Roller</h1>
-                        <p className = "subtitle left text fade_in">(not to be confused with Line Rider)</p>
-                        <p className = "instructions right text fade_in">Choose difficulty and bounce to the right with the arrow keys!</p>
-                        <p className = "fade_in text_difficulty" style={{marginBottom: 0}}>Difficulty</p>
-                        <div className= "fade_in in_line">
-                            <button onClick= {() => this.select("plebian")} style= {{backgroundColor: this.state.selectionPlebianColor}}>Plebian</button>
-                            <button onClick= {() => this.select("easy")} style= {{backgroundColor: this.state.selectionEasyColor}}>Easy</button>
-                            <button onClick= {() => this.select("medium")} style= {{backgroundColor: this.state.selectionMediumColor}}>Medium</button>
-                            <button onClick= {() => this.select("hard")} style= {{backgroundColor: this.state.selectionHardColor}}>Hard</button>
-                            <button onClick= {() => this.select("expert")} style= {{backgroundColor: this.state.selectionExpertColor}}>Expert</button>
-                        </div>
-                        <button className = "fade_in ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
+            <div>
+                <div id= "fill_screen" style= {{left: this.state.xPos*-1}}>
+                    <h1 className= "text fade_in">Line Roller</h1>
+                    <p className = "subtitle left text fade_in">(not to be confused with Line Rider)</p>
+                    <p className = "instructions right text fade_in">Choose difficulty and bounce to the right with the arrow keys!</p>
+                    <p className = "fade_in text_difficulty" style={{marginBottom: 0}}>Difficulty</p>
+                    <div className= "fade_in in_line">
+                        <button onClick= {() => this.select("plebian")} style= {{backgroundColor: this.state.selectionPlebianColor}}>Plebian</button>
+                        <button onClick= {() => this.select("easy")} style= {{backgroundColor: this.state.selectionEasyColor}}>Easy</button>
+                        <button onClick= {() => this.select("medium")} style= {{backgroundColor: this.state.selectionMediumColor}}>Medium</button>
+                        <button onClick= {() => this.select("hard")} style= {{backgroundColor: this.state.selectionHardColor}}>Hard</button>
+                        <button onClick= {() => this.select("expert")} style= {{backgroundColor: this.state.selectionExpertColor}}>Expert</button>
                     </div>
+                    <button className = "fade_in ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
                 </div>
+                <div className= "login_logout">
+                    <LoginLogout/>
+                </div>
+            </div>
             )
         }
     }
