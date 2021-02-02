@@ -171,16 +171,17 @@ class LineRiderGame extends React.Component {
         }
         else { //Play the game
             return(
-            <div id= "fill_screen"> 
                 <div>
+                    <div id= "fill_screen" style= {{left: -1*this.state.xPos}}> 
+                        
+                    </div>
                     <img src= "https://clipart.info/images/ccovers/1495749720Bowling-Ball-PNG-Clip-Art.png"
-                        style= {{height: this.state.ballSize, 
-                            top: this.state.yPos}} 
-                        id= "ball-image"
-                        className = 'Ball'
-                        alt = "ball"/>
+                            style= {{height: this.state.ballSize, 
+                                top: this.state.yPos}} 
+                            id= "ball-image"
+                            className = 'Ball'
+                            alt = "ball"/>
                 </div>
-            </div>
             )
         }
     }
