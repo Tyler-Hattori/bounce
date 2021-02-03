@@ -1,22 +1,49 @@
+
+.text {
+    position: relative;
+    text-align: center;
+    background-color: blanchedalmond;
+}
+.text_difficulty {
+    position: relative;
+    text-align: center;
+    background-color: blanchedalmond;
+    margin-top: 150px;
+}
+
+.subtitle {
+    color: rgb(112, 112, 112);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.instructions {
+    color: black;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 150px;
+}
+
 .in_line {
     text-align: center !important;
-    position: absolute;
+    position: relative;
     min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
     max-width: 100% !important;
     margin-top: 0px;
-    margin-bottom: 150px;
-    left: 495px;
-  }
+}
   
-  .ok_button {
-    position: absolute;
-    left: 565px;
+.ok_button {
+    position: relative;
     margin-top: 150px;
     width: 150px;
     height: 100px;
     font-size: 30px;
     font-family: Georgia, 'Times New Roman', Times, serif;
-  }
-  
+}
+
+#fill {
+    position: absolute;
+    top: 0; right: 0; left: 0; bottom: 0;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    background-image: url('../Backgrounds/gray_gackground.jpg');
+    z-index: -1;
+}

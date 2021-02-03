@@ -112,7 +112,7 @@ class IntroPage extends React.Component {
         else {
             return (
             <div>
-                <div id= "fill_screen" style= {{left: this.state.xPos*-1}}>
+                <div id= "fill" style= {{left: this.state.xPos*-1}}>
                     <h1 className= "text fade_in">Line Roller</h1>
                     <p className = "subtitle left text fade_in">(not to be confused with Line Rider)</p>
                     <p className = "instructions right text fade_in">Choose difficulty and bounce to the right with the arrow keys!</p>

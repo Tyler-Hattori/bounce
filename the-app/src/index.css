@@ -72,32 +72,6 @@ h1 {
     opacity: 1;
   }
 }
-.text {
-  position: relative;
-  left: 300px;
-  text-align: center;
-  background-color: blanchedalmond;
-  width: 700px;
-}
-.text_difficulty {
-  position: relative;
-  text-align: center;
-  background-color: blanchedalmond;
-  width: 300px;
-  left: 495px;
-  margin-top: 150px;
-}
-
-.subtitle {
-  color: rgb(112, 112, 112);
-  font-family: 'Courier New', Courier, monospace;
-}
-
-.instructions {
-  color: black;
-  font-family: 'Courier New', Courier, monospace;
-  margin-bottom: 150px;
-}
 
 .login_logout {
   position: absolute;
