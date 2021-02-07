@@ -1,5 +1,6 @@
-.Ball {
-  height: 5vmin;
+.white_text {
+  font-size: xx-large;
+  color: white;
 }
 
 #fill_screen {
@@ -11,21 +12,3 @@
   z-index: -1;
 }
 
-#ball-image {
-  position: absolute;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .Ball { 
-      animation: Ball-spin infinite 1s linear
-    }
-  }
-
-@keyframes Ball-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-}

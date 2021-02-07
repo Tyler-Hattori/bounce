@@ -14,6 +14,7 @@ class IntroPage extends React.Component {
             selectionHardColor: 'gray',
             selectionExpertColor: 'gray',
             selectedColor: false,
+            difficulty: 0,
             gameLoopTimeout: 50,
             timeoutId: 0,
         }
@@ -54,7 +55,8 @@ class IntroPage extends React.Component {
                     selectionMediumColor: "gray",
                     selectionHardColor: "gray",
                     selectionExpertColor: "gray",
-                    selectedColor: true})
+                    selectedColor: true,
+                    difficulty: 1})
                 break
             case "easy":
                 this.setState({
@@ -63,7 +65,8 @@ class IntroPage extends React.Component {
                     selectionMediumColor: "gray",
                     selectionHardColor: "gray",
                     selectionExpertColor: "gray",
-                    selectedColor: true})
+                    selectedColor: true,
+                    difficulty: 2})
                 break
             case "medium":
                 this.setState({
@@ -72,7 +75,8 @@ class IntroPage extends React.Component {
                     selectionMediumColor: "blue",
                     selectionHardColor: "gray",
                     selectionExpertColor: "gray",
-                    selectedColor: true})
+                    selectedColor: true,
+                    difficulty: 3})
                 break
             case "hard":
                 this.setState({
@@ -81,7 +85,8 @@ class IntroPage extends React.Component {
                     selectionMediumColor: "gray",
                     selectionHardColor: "red",
                     selectionExpertColor: "gray",
-                    selectedColor: true})
+                    selectedColor: true,
+                    difficulty: 4})
                 break
             case "expert":
                 this.setState({
@@ -90,7 +95,8 @@ class IntroPage extends React.Component {
                     selectionMediumColor: "gray",
                     selectionHardColor: "gray",
                     selectionExpertColor: "purple",
-                    selectedColor: true})
+                    selectedColor: true,
+                    difficulty: 5})
                 break
             case "Ok":
                 if (this.state.selectedColor)
@@ -104,9 +110,7 @@ class IntroPage extends React.Component {
     render() {
         if (this.state.selectionsSet) {
             return (
-                <LineRiderGame
-                    //define components
-                />
+                <LineRiderGame difficulty={this.state.difficulty}/>
             )
         }
         else {
