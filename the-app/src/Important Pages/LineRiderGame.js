@@ -43,7 +43,7 @@ class LineRiderGame extends React.Component {
 
     initiateTiles() {
         this.tiles.push(<Tile image={tileImage} height= {100} xPos={800} yPos={document.getElementById("fill_screen").clientHeight - 50}/>);
-        for (let j = 0; j < 2; j++) {
+        for (let j = 0; j < 4; j++) {
             let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty));
             for (let i = 0; i < tileCount; i++) {
                 let x = (j*800) + Math.floor(Math.random() * 8) * 100
@@ -72,16 +72,13 @@ class LineRiderGame extends React.Component {
     }
 
     createGround() {
-        let tiles = [];
         let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty));
         for (let i = 0; i < tileCount; i++) {
-            let x = this.state.xPos + 800 + Math.floor(Math.random() * 8) * 100
+            let x = this.state.xPos + 2400 + Math.floor(Math.random() * 8) * 100
             let y = document.getElementById("fill_screen").clientHeight - 50            
 
-            tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>);
+            this.tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>);
         }
-
-        return tiles;
     }
 
     gameLoop() { 
@@ -89,11 +86,11 @@ class LineRiderGame extends React.Component {
         let timeoutId = setTimeout(() => {
             if (!this.state.isGameOver) {
               if (this.state.xPos % 800 <= this.state.ballSpeedX/2 && this.state.xPos > 0)
-                this.tiles = (this.createGround());
+                this.createGround()
               this.fall()
               this.changeDirection()
               this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
-              if (this.state.yPos > document.getElementById("fill_screen").clientHeight + 400)
+              if (this.state.yPos > document.getElementById("fill_screen").clientHeight + 50)
                 this.resetGame()
             }
       
@@ -125,13 +122,14 @@ class LineRiderGame extends React.Component {
     }
 
     isThereCollision() {
-        let ball = {x: this.state.xPos + this.state.ballSize/2, y: this.state.yPos + this.state.ballSize + this.ballSpeedY, 
+        let ball = {x: this.state.xPos + this.state.ballSize/2, y: this.state.yPos + this.state.ballSize + this.state.ballSpeedY*7/4, 
                     width: this.state.ballSize, height: this.state.ballSize}
         let collided = this.tiles.find(a => {
-            let tile = {x: a.props.xPos - 800, y: a.props.yPos,
-                        width: a.props.height, height: a.props.height}
+            if (a.props === undefined)
+                return false
+            let tile = {x: a.props.xPos - 800, width: a.props.height, height: a.props.height}
             if (ball.x < tile.x + tile.width && ball.x > tile.x &&
-                ball.y >= tile.y)
+                ball.y >= document.getElementById("fill_screen").clientHeight - 50  )
                 return true
             return false
         })
@@ -198,12 +196,12 @@ class LineRiderGame extends React.Component {
                 <div>
                     <div id = "background" style= {{left: -1*this.state.xPos/2}}/>
                     <div id= "fill_screen" style= {{left: -1*this.state.xPos}}>
+                        {this.tiles}
                         <Ball xPos= {800 + this.state.xPos}
                         yPos={this.state.yPos}
                         height={this.state.ballSize}/>
-                        {this.tiles}
+                        <p className= "colored_text" style= {{left: -1*this.state.xPos}}>Attempt: {this.state.attempts}</p>
                     </div>
-                    <p className= "colored_text" style= {{left: -1*this.state.xPos}}>Attempt: {this.state.attempts}        xPos: {this.state.xPos}</p>
                     
                 </div>
             )
