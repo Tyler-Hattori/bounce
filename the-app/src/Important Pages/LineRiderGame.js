@@ -14,15 +14,15 @@ class LineRiderGame extends React.Component {
 
         this.state = {
             yPos: 150,
-            xPos: 220,
+            xPos: 0,
             ballDirection: '',
             timeoutId: 0,
             gameLoopTimeout: 50,
             ballSpeedY: 0,
             ballSpeedX: 0,
-            maxSpeed: 35,
-            gravity: props.difficulty,
-            xAcceleration: 2,
+            maxSpeed: 30,
+            gravity: props.difficulty/2,
+            xAcceleration: 4,
             ballSize: 40,
             keyPressed: false,
             bounced: false,
@@ -35,19 +35,50 @@ class LineRiderGame extends React.Component {
     }
 
     componentDidMount() {
-        this.tiles = this.createGround()
+        this.tiles = []
+        this.initiateTiles();
         window.addEventListener('keydown', this.handleKeyDown)
         this.gameLoop()
     }
 
+    initiateTiles() {
+        this.tiles.push(<Tile image={tileImage} height= {100} xPos={800} yPos={document.getElementById("fill_screen").clientHeight - 50}/>);
+        for (let j = 0; j < 2; j++) {
+            let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty));
+            for (let i = 0; i < tileCount; i++) {
+                let x = (j*800) + Math.floor(Math.random() * 8) * 100
+                let y = document.getElementById("fill_screen").clientHeight - 50            
+
+                this.tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>);
+            }
+        }
+    }
+
+    resetGame() {
+        let attempts = this.state.attempts
+        this.tiles.length = 0
+        this.setState({
+            xPos: 0,
+            yPos: 150,
+            ballDirection: '',
+            timeoutId: 0,
+            ballSpeedY: 0,
+            ballSpeedX: 0,
+            keyPressed: false,
+            bounced: false,
+            attempts: attempts + 1,
+        })
+        this.initiateTiles()
+    }
+
     createGround() {
         let tiles = [];
-        const tileCount = 30 - Math.floor(Math.random() * (5*this.state.difficulty));
+        let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty));
         for (let i = 0; i < tileCount; i++) {
-            const x = Math.floor(Math.random() * document.getElementById("fill_screen").clientWidth) + this.state.xPos
-            const y = document.getElementById("fill_screen").clientHeight - 50            
+            let x = this.state.xPos + 800 + Math.floor(Math.random() * 8) * 100
+            let y = document.getElementById("fill_screen").clientHeight - 50            
 
-            tiles.push(<Tile image={tileImage} height= {50} xPos={x} yPos={y}/>);
+            tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>);
         }
 
         return tiles;
@@ -57,11 +88,13 @@ class LineRiderGame extends React.Component {
 
         let timeoutId = setTimeout(() => {
             if (!this.state.isGameOver) {
+              if (this.state.xPos % 800 <= this.state.ballSpeedX/2 && this.state.xPos > 0)
+                this.tiles = (this.createGround());
               this.fall()
               this.changeDirection()
               this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
-              if (this.state.xPos % 1000 <= this.state.ballSpeedX/2)
-                this.tiles.push(this.createGround());
+              if (this.state.yPos > document.getElementById("fill_screen").clientHeight + 400)
+                this.resetGame()
             }
       
             this.gameLoop()
@@ -79,17 +112,32 @@ class LineRiderGame extends React.Component {
         let grav = this.state.gravity
         let ball_speed = this.state.ballSpeedY
         let y = this.state.yPos + ball_speed
-        let game_height = document.getElementById("fill_screen").clientHeight - this.state.ballSize - 10
-        if (this.state.yPos >= game_height && !this.state.bounced) {
+        if (this.isThereCollision() && !this.state.bounced) {
             ball_speed *= -1
             this.setState({bounced: true})
         }
-        if (this.state.yPos < game_height && this.state.bounced) {
+        if (!this.isThereCollision() && this.state.bounced) {
             this.setState({bounced: false})
         }
         this.setState({
             ballSpeedY: ball_speed + grav,
             yPos: y})
+    }
+
+    isThereCollision() {
+        let ball = {x: this.state.xPos + this.state.ballSize/2, y: this.state.yPos + this.state.ballSize + this.ballSpeedY, 
+                    width: this.state.ballSize, height: this.state.ballSize}
+        let collided = this.tiles.find(a => {
+            let tile = {x: a.props.xPos - 800, y: a.props.yPos,
+                        width: a.props.height, height: a.props.height}
+            if (ball.x < tile.x + tile.width && ball.x > tile.x &&
+                ball.y >= tile.y)
+                return true
+            return false
+        })
+        
+
+        return collided
     }
 
     changeDirection() {
@@ -148,12 +196,15 @@ class LineRiderGame extends React.Component {
         else {
             return(
                 <div>
+                    <div id = "background" style= {{left: -1*this.state.xPos/2}}/>
                     <div id= "fill_screen" style= {{left: -1*this.state.xPos}}>
+                        <Ball xPos= {800 + this.state.xPos}
+                        yPos={this.state.yPos}
+                        height={this.state.ballSize}/>
                         {this.tiles}
                     </div>
-                    <p className= "white_text" style= {{left: -1*this.state.xPos}}>Attempt: {this.state.attempts}        xPos: {this.state.xPos}         ballSpeedX: {this.state.ballSpeedX}</p>
-                    <Ball yPos={this.state.yPos}
-                        height={this.state.ballSize}/>
+                    <p className= "colored_text" style= {{left: -1*this.state.xPos}}>Attempt: {this.state.attempts}        xPos: {this.state.xPos}</p>
+                    
                 </div>
             )
         }

@@ -1,14 +1,20 @@
-.white_text {
+.colored_text {
   font-size: xx-large;
-  color: white;
+  color: black;
 }
 
 #fill_screen {
   position: absolute;
   top: 0; right: 0; left: 0; bottom: 0;
   overflow-y: hidden;
-  overflow-x: scroll;
+  overflow-x: hidden;
+}
+
+#background {
+  position: absolute;
+  top: 0; right: 0; left: 0; bottom: 0;
+  opacity: 75%;
   background-image: url('../Backgrounds/Rock_background.jpg');
-  z-index: -1;
+  z-index: -5;
 }
 
