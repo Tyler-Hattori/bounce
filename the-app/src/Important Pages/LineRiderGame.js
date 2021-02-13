@@ -1,5 +1,4 @@
 import './LineRiderGame.css'
-import '../index.css' //I moved the intro page messages to this one so that they will move away with the background
 import React from 'react'
 import GameOver from './GameOver.js'
 import Ball from '../Components/Ball'
@@ -8,7 +7,7 @@ import tileImage from '../Backgrounds/tile.jpg'
 
 class LineRiderGame extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         
         this.handleKeyDown = this.handleKeyDown.bind(this)
 
@@ -36,27 +35,28 @@ class LineRiderGame extends React.Component {
 
     componentDidMount() {
         this.tiles = []
-        this.initiateTiles();
+        this.initiateTiles()
         window.addEventListener('keydown', this.handleKeyDown)
         this.gameLoop()
     }
 
     initiateTiles() {
-        this.tiles.push(<Tile image={tileImage} height= {100} xPos={800} yPos={document.getElementById("fill_screen").clientHeight - 50}/>);
+        this.tiles.push(<Tile image={tileImage} height= {100} xPos={800} yPos={document.getElementById("fill_screen").clientHeight - 50}/>)
         for (let j = 0; j < 4; j++) {
-            let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty));
+            let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty))
             for (let i = 0; i < tileCount; i++) {
                 let x = (j*800) + Math.floor(Math.random() * 8) * 100
                 let y = document.getElementById("fill_screen").clientHeight - 50            
 
-                this.tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>);
+                this.tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>)
             }
         }
     }
 
     resetGame() {
         let attempts = this.state.attempts
-        this.tiles.length = 0
+        this.tiles= []
+        this.initiateTiles()
         this.setState({
             xPos: 0,
             yPos: 150,
@@ -68,16 +68,15 @@ class LineRiderGame extends React.Component {
             bounced: false,
             attempts: attempts + 1,
         })
-        this.initiateTiles()
     }
 
     createGround() {
-        let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty));
+        let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty))
         for (let i = 0; i < tileCount; i++) {
             let x = this.state.xPos + 2400 + Math.floor(Math.random() * 8) * 100
             let y = document.getElementById("fill_screen").clientHeight - 50            
 
-            this.tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>);
+            this.tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>)
         }
     }
 
@@ -90,7 +89,7 @@ class LineRiderGame extends React.Component {
               this.fall()
               this.changeDirection()
               this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
-              if (this.state.yPos > document.getElementById("fill_screen").clientHeight + 50)
+              if (this.state.yPos > document.getElementById("fill_screen").clientHeight)
                 this.resetGame()
             }
       
@@ -159,7 +158,7 @@ class LineRiderGame extends React.Component {
         if (dir === 'left')
             acceleration = acceleration * -1
         if (dir === 'zero acceleration')
-            acceleration = 0;
+            acceleration = 0
         if ((ball_speed < this.state.maxSpeed && ball_speed > this.state.maxSpeed*-1)
             || (ball_speed >= this.state.maxSpeed && acceleration < 0) || (ball_speed <= this.state.maxSpeed*-1 && acceleration > 0))
             ball_speed += acceleration
@@ -208,4 +207,4 @@ class LineRiderGame extends React.Component {
         }
     }
 }
-export default LineRiderGame;
+export default LineRiderGame
