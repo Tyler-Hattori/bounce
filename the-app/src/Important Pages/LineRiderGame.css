@@ -13,7 +13,7 @@
 #background {
   position: absolute;
   top: 0; right: 0; left: 0; bottom: 0;
-  opacity: 75%;
+  opacity: 70%;
   background-image: url('../Backgrounds/Rock_background.jpg');
   z-index: -5;
 }
