@@ -1,3 +1,3 @@
 # winter-project
 
-CHECK OUT "src->Important Pages." We can now easily distinguish between the three pages of the game (intro, game, ending).
+WIP Super Mario style game. Bounce a ball through a randomly generated course before the ball's energy runs out! Oh and have fun.
