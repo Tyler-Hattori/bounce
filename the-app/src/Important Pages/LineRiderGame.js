@@ -35,6 +35,7 @@ class LineRiderGame extends React.Component {
 
     componentDidMount() {
         this.tiles = []
+        this.usedTileSpawningPoints = []
         this.initiateTiles()
         window.addEventListener('keydown', this.handleKeyDown)
         this.gameLoop()
@@ -43,6 +44,7 @@ class LineRiderGame extends React.Component {
     initiateTiles() {
         this.tiles.push(<Tile image={tileImage} height= {100} xPos={800} yPos={document.getElementById("fill_screen").clientHeight - 50}/>)
         for (let j = 0; j < 2; j++) {
+            this.usedTileSpawningPoints.push(j)
             let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty))
             for (let i = 0; i < tileCount; i++) {
                 let x = (j*800) + Math.floor(Math.random() * 8) * 100
@@ -56,6 +58,7 @@ class LineRiderGame extends React.Component {
     resetGame() {
         let attempts = this.state.attempts
         this.tiles= []
+        this.usedTileSpawningPoints = []
         this.initiateTiles()
         this.setState({
             xPos: 0,
@@ -73,9 +76,11 @@ class LineRiderGame extends React.Component {
     createGround() {
         let ground = this.tiles
         this.tiles = []
+        this.usedTileSpawningPoints = []
+        this.usedTileSpawningPoints.push(Math.floor(this.state.xPos/800)+1)
         let tileCount = 8 - Math.floor(Math.random() * (this.state.difficulty))
         for (let i = 0; i < tileCount; i++) {
-            let x = (this.state.xPos/800)*800 + 800 + Math.floor(Math.random() * 8) * 100
+            let x = Math.floor(this.state.xPos/800)*800 + 800 + Math.floor(Math.random() * 8) * 100
             let y = document.getElementById("fill_screen").clientHeight - 50            
             
             this.tiles.push(<Tile image={tileImage} height= {100} xPos={x} yPos={y}/>)
@@ -87,7 +92,8 @@ class LineRiderGame extends React.Component {
 
         let timeoutId = setTimeout(() => {
             if (!this.state.isGameOver) {
-              if (this.state.xPos % 800 <= this.state.ballSpeedX*2/3 && this.state.xPos > 0)
+              if (this.state.xPos % 800 <= this.state.ballSpeedX && this.state.xPos % 800 > 0 && this.state.xPos > this.state.maxSpeed
+                && !this.spawnedTilesAt(Math.floor(this.state.xPos/800)+1))
                 this.createGround()
               this.changeDirection()
               if (this.state.yPos > document.getElementById("fill_screen").clientHeight)
@@ -111,11 +117,11 @@ class LineRiderGame extends React.Component {
         let grav = this.state.gravity
         let ball_speed = this.state.ballSpeedY
         let y = this.state.yPos + ball_speed
-        if (this.isThereCollision() && !this.state.bounced) {
+        if (this.isThereCollision(this.tiles) && !this.state.bounced) {
             ball_speed *= -1
             this.setState({bounced: true})
         }
-        if (!this.isThereCollision() && this.state.bounced) {
+        if (!this.isThereCollision(this.tiles) && this.state.bounced) {
             this.setState({bounced: false})
         }
         this.setState({
@@ -123,10 +129,10 @@ class LineRiderGame extends React.Component {
             yPos: y})
     }
 
-    isThereCollision() {
+    isThereCollision(arr) {
         let ball = {x: this.state.xPos + this.state.ballSize/2, y: this.state.yPos + this.state.ballSize + this.state.ballSpeedY*7/4, 
                     width: this.state.ballSize, height: this.state.ballSize}
-        let collided = this.tiles.find(a => {
+        let collided = arr.find(a => {
             if (a.props === undefined)
                 return false
             let tile = {x: a.props.xPos - 800, y: a.props.yPos, width: a.props.height, height: a.props.height}
@@ -137,6 +143,14 @@ class LineRiderGame extends React.Component {
         })
 
         return collided
+    }
+
+    spawnedTilesAt(xPos) {
+        for (let i = 0; i < this.usedTileSpawningPoints; i++) {
+            if (this.usedTileSpawningPoints[i] == xPos)
+                return true
+        }
+        return false
     }
 
     changeDirection() {
@@ -203,7 +217,6 @@ class LineRiderGame extends React.Component {
                         height={this.state.ballSize}/>
                         <p className= "colored_text" style= {{left: -1*this.state.xPos}}>Attempt: {this.state.attempts}</p>
                     </div>
-                    
                 </div>
             )
         }
