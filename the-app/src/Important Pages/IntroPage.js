@@ -121,12 +121,12 @@ class IntroPage extends React.Component {
                     <p className = "subtitle left text fade_in">(not to be confused with Line Rider)</p>
                     <p className = "instructions right text fade_in">Choose difficulty and bounce to the right with the arrow keys!</p>
                     <p className = "fade_in text_difficulty" style={{marginBottom: 0}}>Difficulty</p>
-                    <div className= "fade_in in_line">
-                        <button onClick= {() => this.select("plebian")} style= {{backgroundColor: this.state.selectionPlebianColor}}>Plebian</button>
-                        <button onClick= {() => this.select("easy")} style= {{backgroundColor: this.state.selectionEasyColor}}>Easy</button>
-                        <button onClick= {() => this.select("medium")} style= {{backgroundColor: this.state.selectionMediumColor}}>Medium</button>
-                        <button onClick= {() => this.select("hard")} style= {{backgroundColor: this.state.selectionHardColor}}>Hard</button>
-                        <button onClick= {() => this.select("expert")} style= {{backgroundColor: this.state.selectionExpertColor}}>Expert</button>
+                    <div className= "section fade_in">
+                        <button onClick= {() => this.select("plebian")} className = "button1 bouncy" style= {{ border: `solid lightgreen`}}>Plebian</button>
+                        <button onClick= {() => this.select("easy")} className = "button1 bouncy" style= {{animationDelay: `0.07s`,  border: `solid lightblue`}}>Easy</button>
+                        <button onClick= {() => this.select("medium")} className = "button1 bouncy" style= {{animationDelay: `0.14s`,  border: `solid yellow`}}>Medium</button>
+                        <button onClick= {() => this.select("hard")} className = "button1 bouncy" style= {{animationDelay: `0.21s`,  border: `solid red`}}>Hard</button>
+                        <button onClick= {() => this.select("expert")} className = "button1 bouncy" style= {{animationDelay: `0.28s`,  border: `solid black`}}>Expert</button>
                     </div>
                     <button className = "fade_in ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
                 </div>

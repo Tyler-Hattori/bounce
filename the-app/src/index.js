@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import IntroPage from './Important Pages/IntroPage.js'
 import reportWebVitals from './reportWebVitals';
+import CamIntro from './Important Pages/IntroByCam/CamIntro'
 
 ReactDOM.render(
   <React.StrictMode>
