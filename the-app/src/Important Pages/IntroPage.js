@@ -50,51 +50,26 @@ class IntroPage extends React.Component {
         switch(difficulty) {
             case "plebian":
                 this.setState({
-                    selectionPlebianColor: "yellow",
-                    selectionEasyColor: "gray",
-                    selectionMediumColor: "gray",
-                    selectionHardColor: "gray",
-                    selectionExpertColor: "gray",
                     selectedColor: true,
                     difficulty: 1})
                 break
             case "easy":
                 this.setState({
-                    selectionPlebianColor: "gray",
-                    selectionEasyColor: "green",
-                    selectionMediumColor: "gray",
-                    selectionHardColor: "gray",
-                    selectionExpertColor: "gray",
                     selectedColor: true,
                     difficulty: 2})
                 break
             case "medium":
                 this.setState({
-                    selectionPlebianColor: "gray",
-                    selectionEasyColor: "gray",
-                    selectionMediumColor: "blue",
-                    selectionHardColor: "gray",
-                    selectionExpertColor: "gray",
                     selectedColor: true,
                     difficulty: 3})
                 break
             case "hard":
                 this.setState({
-                    selectionPlebianColor: "gray",
-                    selectionEasyColor: "gray",
-                    selectionMediumColor: "gray",
-                    selectionHardColor: "red",
-                    selectionExpertColor: "gray",
                     selectedColor: true,
                     difficulty: 4})
                 break
             case "expert":
                 this.setState({
-                    selectionPlebianColor: "gray",
-                    selectionEasyColor: "gray",
-                    selectionMediumColor: "gray",
-                    selectionHardColor: "gray",
-                    selectionExpertColor: "purple",
                     selectedColor: true,
                     difficulty: 5})
                 break
