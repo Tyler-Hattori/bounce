@@ -179,6 +179,8 @@ class LineRiderGame extends React.Component {
         if ((ball_speed < this.state.maxSpeed && ball_speed > this.state.maxSpeed*-1)
             || (ball_speed >= this.state.maxSpeed && acceleration < 0) || (ball_speed <= this.state.maxSpeed*-1 && acceleration > 0))
             ball_speed += acceleration
+        if (this.state.xPos < -50 && dir === 'left')
+            ball_speed = 0
         let x = this.state.xPos + ball_speed
         this.setState({
             ballSpeedX: ball_speed,
