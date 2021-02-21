@@ -1,6 +1,18 @@
-.colored_text {
-  font-size: xx-large;
-  color: black;
+.attempt {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 4vmin;
+  animation-name: rise;
+  animation-duration: 1s;
+}
+@keyframes rise {
+	0% {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0%);
+	}
 }
 
 #fill_screen {
@@ -13,8 +25,9 @@
 #background {
   position: absolute;
   top: 0; right: 0; left: 0; bottom: 0;
-  opacity: 60%;
-  background-image: url('../Backgrounds/Rock_background.jpg');
+  opacity: 50%;
+  background-size: contain;
+
   z-index: -5;
 }
 

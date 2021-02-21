@@ -30,6 +30,7 @@ class LineRiderGame extends React.Component {
             setName: '',
             attempts: 1,
             difficulty: props.difficulty,
+            background: props.background,
         }
     }
 
@@ -96,7 +97,7 @@ class LineRiderGame extends React.Component {
                 && !this.spawnedTilesAt(Math.floor(this.state.xPos/800)+1))
                 this.createGround()
               this.changeDirection()
-              if (this.state.yPos > document.getElementById("fill_screen").clientHeight)
+              if (this.state.yPos > document.getElementById("fill_screen").clientHeight-30)
                 this.resetGame()
               this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
               this.fall()
@@ -209,13 +210,13 @@ class LineRiderGame extends React.Component {
         else {
             return(
                 <div>
-                    <div id = "background" style= {{left: -1*this.state.xPos/2}}/>
+                    <div id = "background" style= {{left: -1*this.state.xPos/2, backgroundImage: 'url('+this.state.background+')'}}/>
                     <div id= "fill_screen" style= {{left: -1*this.state.xPos}}>
                         {this.tiles}
                         <Ball xPos= {800 + this.state.xPos}
                         yPos={this.state.yPos}
                         height={this.state.ballSize}/>
-                        <p className= "colored_text" style= {{left: -1*this.state.xPos}}>Attempt: {this.state.attempts}</p>
+                        <p className= "attempt" style= {{left: -1*this.state.xPos}}>Attempt: {this.state.attempts}</p>
                     </div>
                 </div>
             )

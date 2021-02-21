@@ -3,23 +3,40 @@
     position: relative;
     text-align: center;
     background-color: blanchedalmond;
+    font-family: 'Permanent Marker', cursive;
 }
-.text_difficulty {
+
+h1 {
     position: relative;
-    text-align: center;
     background-color: blanchedalmond;
+    text-align: center;
+    padding-top: 20px;
+    font-family: 'Akaya Telivigala', cursive;
+    font-family: 'Permanent Marker', cursive;
+    font-family: 'Satisfy', cursive;
+    font-family: 'Carter One', cursive;
+    font-family: 'Sriracha', cursive;
+    font-family: 'Ranchers', cursive;
+    font-family: 'Aclonica', sans-serif;
+    font-size: 8vmin;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    transition: cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+
+.text_difficulty {
     margin-top: 150px;
+    font-size: 4vmin;
 }
 
 .subtitle {
     color: rgb(112, 112, 112);
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 2vmin;
 }
 
 .instructions {
     color: black;
-    font-family: 'Courier New', Courier, monospace;
-    margin-bottom: 150px;
+    font-size: 2vmin;
 }
 
 .in_line {
@@ -27,16 +44,16 @@
     position: relative;
     min-height: 1px;
     max-width: 100% !important;
-    margin-top: 0px;
 }
   
 .ok_button {
+    border-width: 0.6vmin;
+    border-radius: 100%;
     position: relative;
     margin-top: 150px;
     width: 150px;
     height: 100px;
     font-size: 30px;
-    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 #fill {
@@ -44,24 +61,24 @@
     top: 0; right: 0; left: 0; bottom: 0;
     overflow-y: hidden;
     overflow-x: scroll;
-    background-image: url('../Backgrounds/gray_gackground.jpg');
+    background-image: url('../Backgrounds/nature.jpg');
+    background-size: cover;
     z-index: -1;
 }
   
-a.button1{
-    display:inline-block;
-        padding:0.35em 1.2em;
-    border:0.2em solid #7ae73b;
-    margin:0 0.3em 0.3em 0;
-    border-radius:0.2em;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Bebas',sans-serif;
-    font-weight:300;
+.button1{
+    padding:0.35em 1.2em;
+    border-radius: 0.8vmin;
+    border-width: 1vmin;
+    position: absolute;
+    margin-top: 15%;
+    /* font-family:'Bebas',sans-serif; */
+    font-family: 'Sriracha', cursive;
+    font-size: 2vmin;
+    font-weight:800;
     color:#000000;
     text-align:center;
     transition: all 0.2s;
-    animation-delay: 0.0;
 }
 a.button1:hover{
     color:#000000;
@@ -87,44 +104,4 @@ a.button1:hover{
     48%{top:-0.4em}
     50%{top:0em}
     100%{top:0em;}
-}
-
-
-.background {
-    position: absolute;
-    background-color: #6f98e4;
-    margin-top:0;margin-left:0;right:0;bottom:0;
-}
-
-.header {
-    background-color: #f1f1f1;
-    padding: 30px;
-    text-align:center;
-    font-size: 35px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 25%;
-    margin-right: 25%;
-}
-
-.section {
-    background-color: #999898;
-    padding: 30px;
-    text-align:center;
-    font-size: 35px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 25%;
-    margin-right: 25%;
-}
-
-.footer {
-    background-color: #f1f1f1;
-    padding: 10px;
-    text-align: center;
-    height: 50%;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 25%;
-    margin-right: 25%;
 }

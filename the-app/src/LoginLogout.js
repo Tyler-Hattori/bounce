@@ -14,7 +14,7 @@ function LoginLogout() {
             <Login logginIn= {loggedIn} 
                     setLoggedIn = {(bool) => setLoggedIn(bool)} 
                     setName= {(name) => setName(name)}/>
-                {loggedIn ?  <p>Hello {name}</p>: <p>Not logged in</p>}
+                {loggedIn ?  <p style={{color:'white'}}>Hello {name}</p>: <p style={{color:'white'}}>Not logged in</p>}
             <Logout loggedIn= {loggedIn} 
                     setLoggedIn = {(bool) => setLoggedIn(bool)}/>
         </div>

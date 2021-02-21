@@ -1,9 +1,10 @@
 import React from 'react'
 import './Ball.css'
+import Basketball from './basketball.png'
 
 function Ball(props) {
     return (
-        <img src= "https://clipart.info/images/ccovers/1495749720Bowling-Ball-PNG-Clip-Art.png"
+        <img src= {Basketball}
         style= {{height: props.ballSize, 
             top: props.yPos,
             left: props.xPos}} 
