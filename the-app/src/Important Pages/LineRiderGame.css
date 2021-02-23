@@ -4,6 +4,14 @@
   animation-name: rise;
   animation-duration: 1s;
 }
+.time {
+  position: relative;
+  float: right;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 4vmin;
+  animation-name: rise;
+  animation-duration: 1s;
+}
 @keyframes rise {
 	0% {
 		opacity: 0;
@@ -12,6 +20,20 @@
 	100% {
 		opacity: 1;
 		transform: translateY(0%);
+	}
+}
+@keyframes slideAndLeave {
+	0% {
+    opacity: 0;
+		transform: translateX(-800px);
+	}
+  50% {
+    opacity: 1;
+    transform: translate(0%);
+  }
+	100% {
+    opacity: 0;
+		transform: translateX(600px);
 	}
 }
 
@@ -30,4 +52,19 @@
 
   z-index: -5;
 }
+
+.qboxanim {
+  opacity: 0;
+  overflow: hidden;
+  position:absolute;
+  height: 20vmin;
+  width: 20vmin;
+  margin-top: 20%;
+  margin-left: 45%;
+  background-size:contain;
+  animation-name: slideAndLeave;
+  animation-duration: 3s;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
 

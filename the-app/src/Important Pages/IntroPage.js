@@ -55,30 +55,35 @@ class IntroPage extends React.Component {
     select(difficulty) {
         switch(difficulty) {
             case "plebian":
+                this.switchButtonColor("plebian","green")
                 this.setState({
                     selectedColor: true,
                     difficulty: 1,
                     background: PlebianBackground})
                 break
             case "easy":
+                this.switchButtonColor("easy","blue")
                 this.setState({
                     selectedColor: true,
                     difficulty: 2,
                     background: EasyBackground})
                 break
             case "medium":
+                this.switchButtonColor("medium","gold")
                 this.setState({
                     selectedColor: true,
                     difficulty: 3,
                     background: MediumBackground})
                 break
             case "hard":
+                this.switchButtonColor("hard","red")
                 this.setState({
                     selectedColor: true,
                     difficulty: 4,
                     background: HardBackground})
                 break
             case "expert":
+                this.switchButtonColor("expert","black")
                 this.setState({
                     selectedColor: true,
                     difficulty: 5,
@@ -93,6 +98,31 @@ class IntroPage extends React.Component {
         }
     }
 
+    switchButtonColor(buttonID, color) {
+        document.getElementById(buttonID).style.backgroundColor = color
+        if (buttonID !== "plebian") {
+            document.getElementById("plebian").style.backgroundColor = "transparent"
+            document.getElementById("plebian").style.color = "black"
+        }
+        else    document.getElementById("plebian").style.color = "white"
+        if (buttonID !== "easy") {
+            document.getElementById("easy").style.backgroundColor = "transparent"
+            document.getElementById("easy").style.color = "black"
+        }
+        else    document.getElementById("easy").style.color = "white"
+        if (buttonID !== "medium")  document.getElementById("medium").style.backgroundColor = "transparent"
+        if (buttonID !== "hard") {
+            document.getElementById("hard").style.backgroundColor = "transparent"
+            document.getElementById("hard").style.color = "black"
+        }
+        else    document.getElementById("hard").style.color = "white"
+        if (buttonID !== "expert")    {
+            document.getElementById("expert").style.backgroundColor = "transparent"
+            document.getElementById("expert").style.color = "black"
+        }
+        else    document.getElementById("expert").style.color = "white"
+    }
+
     render() {
         if (this.state.selectionsSet) {
             return (
@@ -105,13 +135,13 @@ class IntroPage extends React.Component {
                 <div id= "fill" style= {{left: this.state.xPos*-1}}>
                     <h1 className= "fade_in">Line Roller</h1>
                     <p className = "subtitle left text fade_in">(not to be confused with Line Rider)</p>
-                    <p className = "instructions right text fade_in">Choose difficulty and bounce to the right with the arrow keys!</p>
+                    <p className = "instructions right text fade_in">Choose a difficulty and reach the goal before your ball loses its bounce!</p>
                     <div className= "fade_in">
-                        <button onClick= {() => this.select("plebian")} className = "button1 bouncy" style= {{border: 'solid lightgreen 1vmin', }}>Plebian</button>
-                        <button onClick= {() => this.select("easy")} className = "button1 bouncy" style= {{animationDelay: `0.07s`,  border: `solid lightblue 1vmin`}}>Easy</button>
-                        <button onClick= {() => this.select("medium")} className = "button1 bouncy" style= {{animationDelay: `0.14s`,  border: `solid yellow 1vmin`}}>Medium</button>
-                        <button onClick= {() => this.select("hard")} className = "button1 bouncy" style= {{animationDelay: `0.21s`,  border: `solid red 1vmin`}}>Hard</button>
-                        <button onClick= {() => this.select("expert")} className = "button1 bouncy" style= {{animationDelay: `0.28s`,  border: `solid black 1vmin`}}>Expert</button>
+                        <button id= "plebian" onClick= {() => this.select("plebian")} className = "button1 bouncy" style= {{border: 'solid green 1vmin', }}>Plebian</button>
+                        <button id= "easy" onClick= {() => this.select("easy")} className = "button1 bouncy" style= {{animationDelay: `0.07s`,  border: `solid blue 1vmin`}}>Easy</button>
+                        <button id= "medium" onClick= {() => this.select("medium")} className = "button1 bouncy" style= {{animationDelay: `0.14s`,  border: `solid gold 1vmin`}}>Medium</button>
+                        <button id= "hard" onClick= {() => this.select("hard")} className = "button1 bouncy" style= {{animationDelay: `0.21s`,  border: `solid red 1vmin`}}>Hard</button>
+                        <button id= "expert" onClick= {() => this.select("expert")} className = "button1 bouncy" style= {{animationDelay: `0.28s`,  border: `solid black 1vmin`}}>Expert</button>
                     </div>
                     <button className = "fade_in text ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
                 </div>
