@@ -5,7 +5,7 @@ import BasketballImage from './Images/basketball.png'
 function Ball(props) {
     return (
         <img src= {BasketballImage}
-        style= {{height: props.ballSize, 
+        style= {{height: props.height,
             top: props.yPos,
             left: props.xPos}} 
             id= "ball-image"

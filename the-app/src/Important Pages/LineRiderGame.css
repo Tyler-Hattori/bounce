@@ -36,6 +36,16 @@
 		transform: translateX(600px);
 	}
 }
+@keyframes boing {
+  10% {transform: translateY(-100px)}
+  21% {transform: translateY(0px)}
+  33% {transform: translateY(-80px)}
+  46% {transform: translateY(0px)}
+  60% {transform: translateY(-50px)}
+  75% {transform: translateY(0px)}
+  81% {transform: translateY(-20px)}
+  98% {transform: translateY(0px)}
+}
 
 #fill_screen {
   position: absolute;
@@ -64,7 +74,17 @@
   background-size:contain;
   animation-name: slideAndLeave;
   animation-duration: 3s;
-  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.springanim {
+  overflow: hidden;
+  position: fixed;
+  height: 314px;
+  width: 50px;
+  background-size:contain;
+  animation-name: boing;
+  animation-duration: 1s;
 }
 
 
