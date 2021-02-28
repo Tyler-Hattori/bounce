@@ -1,0 +1,7 @@
+#spike {
+    animation: back-and-forth infinite linear 0.5s;
+}
+
+@keyframes back-and-forth {
+    50% {transform: translateX(10px); transform: translateY(10px)}
+}

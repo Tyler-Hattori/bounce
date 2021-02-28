@@ -71,7 +71,7 @@
   width: 20vmin;
   margin-top: 20%;
   margin-left: 45%;
-  background-size:contain;
+  background-size: contain;
   animation-name: slideAndLeave;
   animation-duration: 3s;
   animation-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -87,4 +87,8 @@
   animation-duration: 1s;
 }
 
-
+.section {
+  background-color: blanchedalmond;
+  text-align: center;
+  font-family: 'Aclonica', sans-serif;
+}

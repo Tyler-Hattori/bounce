@@ -11,7 +11,11 @@ import SpringImage from '../Components/Images/spring.png'
 import Laser from '../Components/Laser'
 import Arrow from '../Components/Arrow'
 import Sword from '../Components/Sword'
-import MobingPlatform from '../Components/MovingTile'
+import MovingPlatform from '../Components/MovingTile'
+import Spike from '../Components/Spike'
+import Goal from '../Components/Goal'
+import Ouch from '../Components/Images/ouch.png'
+import ProgressBar from '../Components/Images/progress_bar.png'
 
 class LineRiderGame extends React.Component {
     constructor(props) {
@@ -41,21 +45,36 @@ class LineRiderGame extends React.Component {
             attempts: 1,
             difficulty: props.difficulty,
             background: props.background,
+            ballImage: props.ballImage,
+            ballBarImage: props.ballBarImage,
             collidedObj: <Tile/>,
             qboxanim: false,
             springanim: false,
+            deadanim: false,
             time1: 0,
             time2: 0,
+            time: new Date().getTime(),
             qBoxImage: QBoxHandling,
+            tileImage: props.tileImage,
+            numObstacles: 1,
+            springPos: 0,
         }
 
     }
     
     componentDidMount() {
+        this.plebianObstacles = [[]]
+        this.easyObstacles = [[]]
+        this.mediumObstacles = [[]]
+        this.hardObstacles = [[]]
+        this.expertObstacles = [[]]
         this.obstacles = []
         this.qBoxImages = [QBoxHandling,QBoxMiniBall]
-        this.obstacles.push(<Tile height= {100} width= {100} xPos={800} yPos={this.state.screenHeight - 50}/>)
         this.generateObstacles(this.state.difficulty)
+        let def = this.defaultStart()
+        for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
+        this.obstacles.push(this.tile(1600*this.state.numObstacles+800,this.state.screenHeight-50))
+        this.obstacles.push(<Goal height= {700} width= {100} xPos= {1600*this.state.numObstacles+800} yPos= {this.state.screenHeight-750}/>)
         window.addEventListener('keydown', this.handleKeyDown)
         this.gameLoop()
     }
@@ -63,50 +82,169 @@ class LineRiderGame extends React.Component {
     generateObstacles(difficulty) {
         switch (difficulty) {
             case 1:
-                this.randomPlebianCourse()
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*this.state.screenWidth + 800
+                    this.plebianObstacles = [this.ob1(x),this.ob2(x)]
+                    let index = Math.floor(Math.random()*this.plebianObstacles.length)
+                    for (let j=0;j<this.plebianObstacles[index].length;j++)   
+                        this.obstacles.push(this.plebianObstacles[index][j])
+                }
                 break
             case 2:
-                this.randomEasyCourse()
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*1600 + 800
+                    this.easyObstacles = [this.ob1(x),this.ob2(x)]
+                    let index = Math.floor(Math.random()*this.easyObstacles.length)
+                    for (let j=0;j<this.easyObstacles[index].length;j++)   
+                        this.obstacles.push(this.easyObstacles[index][j])
+                }
                 break
             case 3:
-                this.randomMediumCourse()
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*1600 + 800
+                    this.mediumObstacles = [this.ob1(x),this.ob2(x)]
+                    let index = Math.floor(Math.random()*this.mediumObstacles.length)
+                    for (let j=0;j<this.mediumObstacles[index].length;j++)   
+                        this.obstacles.push(this.mediumObstacles[index][j])
+                }
                 break
             case 4:
-                this.randomHardCourse()
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*1600 + 800
+                    this.hardObstacles = [this.ob2(x),this.ob3(x)]
+                    let index = Math.floor(Math.random()*this.hardObstacles.length)
+                    for (let j=0;j<this.hardObstacles[index].length;j++)   
+                        this.obstacles.push(this.hardObstacles[index][j])
+                }
                 break;
             case 5:
-                this.randomExpertCourse()
-                break;
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*1600 + 800
+                    this.expertObstacles = [this.ob1(x),this.ob2(x)]
+                    let index = Math.floor(Math.random()*this.expertObstacles.length)
+                    for (let j=0;j<this.expertObstacles[index].length;j++)   
+                        this.obstacles.push(this.expertObstacles[index][j])
+                }
+                break
         }
     }
 
-    randomPlebianCourse() {
-        return (<Spring index= {1} height= {314} xPos={1000} yPos={this.state.screenHeight - 100}/>)
+    defaultStart() {
+        return [
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {800} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {900} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1000} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1100} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1200} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1300} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1400} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1500} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1600} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1700} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1800} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1900} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {2000} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {2100} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {2200} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {2300} yPos= {this.state.screenHeight-50}/>,
+        ]
     }
-
-    randomEasyCourse() {
-        this.obstacles.push(<Spring height= {314} width= {50} xPos={1000} yPos={this.state.screenHeight - 100}/>)
-        this.obstacles.push(<QuestionBox height= {50} width= {50} xPos={1000} yPos={500}/>)
+    ob1(x) {
+        let h = this.state.screenHeight
+        return [
+            this.tile(x+100,h-50),
+            <Spring height= {314} width= {50} xPos= {x+200} yPos= {h-100}/>,
+            this.tile(x+1300,h-50)
+        ]
     }
-
-    randomMediumCourse() {
-        this.obstacles.push(<Spring height= {314} width= {50} xPos={1000} yPos={this.state.screenHeight - 100}/>)
+    ob2(x) {
+        let h = this.state.screenHeight
+        return [
+            this.tile(x+100,h-50),
+            <Spring height= {314} width= {60} xPos= {x+200} yPos= {h-100}/>,
+            this.tile(x+300,h-600),
+            this.tile(x+400,h-600),
+            this.tile(x+500,h-600),
+            this.tile(x+600,h-600),
+            this.tile(x+700,h-600),
+            this.tile(x+800,h-600),
+            this.tile(x+900,h-600),
+            this.tile(x+1000,h-600),
+            <Spike height= {100} width= {100} xPos= {x+300} yPos = {h-800}/>,
+            <Spike height= {100} width= {100} xPos= {x+300} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+400} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+500} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+600} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+700} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+800} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+900} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+1000} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+1400} yPos = {h-570}/>,
+            <Spike height= {100} width= {100} xPos= {x+1400} yPos = {h-500}/>,
+            <Spike height= {100} width= {100} xPos= {x+1400} yPos = {h-400}/>,
+            <Spike height= {100} width= {100} xPos= {x+1400} yPos = {h-300}/>,
+            <Spike height= {100} width= {100} xPos= {x+1400} yPos = {h-200}/>,
+            this.tile(x+1200,h-50),
+            this.tile(x+1300,h-50),
+            this.tile(x+1400,h-50),
+            this.tile(x+1500,h-50),
+            this.tile(x+1600,h-50),
+        ]
     }
-
-    randomHardCourse() {
-        return (<Spring index= {1} height= {314} xPos={1000} yPos={this.state.screenHeight - 100}/>)
+    ob3(x) {
+        let h = this.state.screenHeight
+        return [
+            this.tile(x+100, h-50),
+            <Spring height= {314} width= {60} xPos= {x+400} yPos= {h-100}/>,
+            <Spike height= {100} width= {100} xPos= {x+800} yPos= {h-800}/>,
+            <Spike height= {100} width= {100} xPos= {x+900} yPos= {h-800}/>,
+            <Spike height= {100} width= {100} xPos= {x+800} yPos= {h-600}/>,
+            <Spike height= {100} width= {100} xPos= {x+900} yPos= {h-600}/>,
+            this.tile(x+1300,h-50),
+            this.tile(x+1400,h-50),
+            this.tile(x+1500,h-50),
+            this.tile(x+1600,h-50),
+        ]
     }
+    ob4(x) {
 
-    randomExpertCourse() {
-        return (<Spring index= {1} height= {314} xPos={1000} yPos={this.state.screenHeight - 100}/>)
+    }
+    ob5(x) {
+
+    }
+    ob6(x) {
+        
+    }
+    ob7(x) {
+
+    }
+    ob8(x) {
+
+    }
+    ob9(x) {
+        
+    }
+    ob10(x) {
+
+    }
+    ob11(x) {
+
+    }
+    ob12(x) {
+        
+    }
+    tile(x,y) {
+        return <Tile image= {this.state.tileImage} height= {100} width= {110} xPos= {x} yPos= {y}/>
     }
 
     gameLoop() {
         let timeoutId = setTimeout(() => {
             if (!this.state.isGameOver) {
+
                 if (this.state.qboxanim) this.setState({time2: 20000 - new Date().getTime() + this.state.time1})
                 if (this.state.springanim && this.state.yPos < 300) this.setState({springanim:false})
-                if (this.state.time2 < 0) this.setState({qboxanim:false, xAcceleration: 4, ballsize: 40, gravity: this.state.difficulty/2})
+                if (this.state.deadanim && this.state.xPos > 700) this.setState({deadanim:false})
+                if (this.state.time2 <= 0) this.setState({qboxanim:false, xAcceleration: 4, ballsize: 40, gravity: this.state.difficulty/2})
                 this.changeDirection()
                 if (this.state.yPos > this.state.screenHeight-30) this.resetGame()
                 this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
@@ -119,9 +257,17 @@ class LineRiderGame extends React.Component {
     
     resetGame() {
         let attempts = this.state.attempts
+        this.plebianObstacles = [[]]
+        this.easyObstacles = [[]]
+        this.mediumObstacles = [[]]
+        this.hardObstacles = [[]]
+        this.expertObstacles = [[]]
         this.obstacles= []
-        this.obstacles.push(<Tile height= {100} width = {100} xPos={800} yPos={this.state.screenHeight - 50}/>)
         this.generateObstacles(this.state.difficulty)
+        let def = this.defaultStart()
+        for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
+        this.obstacles.push(this.tile(1600*this.state.numObstacles+800,this.state.screenHeight-50))
+        this.obstacles.push(<Goal height= {700} width= {50} xPos= {1600*this.state.numObstacles} yPos= {this.state.screenHeight-750}/>)
         this.setState({
             xPos: 0,
             yPos: 150,
@@ -136,9 +282,11 @@ class LineRiderGame extends React.Component {
             attempts: attempts + 1,
             qboxanim: false,
             springanim: false,
+            deadanim: true,
             xAcceleration: 4,
             time1: 0,
             time2: 0,
+            time: new Date().getTime(),
         })
     }
 
@@ -147,21 +295,26 @@ class LineRiderGame extends React.Component {
         let ball_speed = this.state.ballSpeedY
         let y = this.state.yPos
         if (this.isThereCollision(this.obstacles) && !this.state.bounced) {
-            if (this.state.collidedObj.type === Tile) {
+            let type = this.state.collidedObj.type
+            if (type === Tile) {
                 ball_speed *= -1
                 ball_speed += this.state.difficulty
-                this.setState({bounced: true})
+                this.setState({bounced: true, ballSpeedY: ball_speed, yPos: y + ball_speed})
             }
-            else if (this.state.collidedObj.type === QuestionBox && !this.state.qboxanim) {
-                let rand = Math.round(Math.random()*2)
+            else if (type === QuestionBox && !this.state.qboxanim) {
+                let rand = Math.floor(Math.random()*2)
                 this.setState({qboxanim: true})
                 if (this.qBoxImages[rand] === QBoxHandling) this.setState({qBoxImage: QBoxHandling, xAcceleration: 15, time1: new Date().getTime()})
                 else if (this.qBoxImages[rand] === QBoxMiniBall) this.setState({qBoxImage: QBoxMiniBall, ballSize: 20, gravity: this.state.gravity*2/3, time1: new Date().getTime()})
             }
-            else if (this.state.collidedObj.type === Spring) {
-                ball_speed = -40-grav
-                this.setState({springanim: true, bounced: true, ballSpeedY: ball_speed, yPos: y + ball_speed})
+            else if (type === Spring) {
+                ball_speed = -16-grav*16
+                this.setState({springanim: true, springPos: Math.round(this.state.xPos/100)*100+800, bounced: true, ballSpeedY: ball_speed, yPos: y + ball_speed})
             }
+            else if (type === Sword || type === Spike || type === Laser || type === Arrow) {
+                this.resetGame()
+            }
+            else if (type === Goal) this.setState({isGameOver: true})
         }
         else if (!this.isThereCollision(this.obstacles) && this.state.bounced) {
             this.setState({bounced: false})
@@ -174,7 +327,7 @@ class LineRiderGame extends React.Component {
                     width: this.state.ballSize, height: this.state.ballSize}
         let collidedObj = arr.find(a => {
             if (a === undefined || a.props === undefined) return false
-            let obstacle = {x: a.props.xPos - 800, y: a.props.yPos, width: a.props.width, height: a.props.height}
+            let obstacle = {x: a.props.xPos - 811, y: a.props.yPos, width: a.props.width, height: a.props.height}
             if (ball.x < obstacle.x + obstacle.width && ball.x > obstacle.x &&
                 ball.y >= obstacle.y && ball.y <= obstacle.y+obstacle.height) {
                     this.setState({collidedObj: a})
@@ -214,10 +367,11 @@ class LineRiderGame extends React.Component {
         if (this.state.xPos < -800 && dir === 'left')
             ball_speed = 0
         let x = this.state.xPos + ball_speed
-        this.setState({
-            ballSpeedX: ball_speed,
-            xPos: x
-        })
+        if (this.state.xPos > -200) 
+            this.setState({
+                ballSpeedX: ball_speed,
+                xPos: x
+            })
     }
 
     handleKeyDown(event) {
@@ -242,8 +396,9 @@ class LineRiderGame extends React.Component {
 
     render() {
         if (this.state.isGameOver) {
+            this.setState({time: Math.round((new Date().getTime()-this.state.time)*100)/100})
             return (
-                <GameOver/>
+                <GameOver time= {this.state.time}/>
             )
         }
         else {
@@ -252,14 +407,18 @@ class LineRiderGame extends React.Component {
                     <div id = "background" style= {{left: -1*this.state.xPos/2, backgroundImage: 'url('+this.state.background+')'}}/>
                     <div id= "fill_screen" style= {{left: -1*this.state.xPos}}>
                         {this.obstacles}
-                        {this.state.springanim ? <div className= "springanim" style= {{top: this.state.screenHeight-100, marginLeft: 1000, backgroundImage: 'url('+SpringImage+')'}}/>:<div/>}
-                        <Ball xPos= {800 + this.state.xPos}
+                        {this.state.springanim ? <div className= "springanim" style= {{top: this.state.screenHeight-100, marginLeft: this.state.springPos, backgroundImage: 'url('+SpringImage+')'}}/>:<div/>}
+                        <Ball image= {this.state.ballImage}
+                        xPos= {811 + this.state.xPos}
                         yPos={this.state.yPos}
                         height={this.state.ballSize}/>
-                        <p className= "attempt" style= {{left: -1*this.state.xPos}}>Attempt: {this.state.attempts}</p>
+                        <p className= "attempt" style= {{left: -1*this.state.xPos, marginTop: 100}}>Attempt: {this.state.attempts}</p>
                     </div>
+                    <img src= {ProgressBar} style= {{position: 'absolute', left: 611, width: '440px', top: 20}}/>
+                    <img src= {this.state.ballBarImage} style= {{position: 'absolute', left: 630+((this.state.xPos)/(this.state.numObstacles*1600))*400, width: '20px' ,top: 45}}/>
                     {this.state.qboxanim ? <p className= "time">{this.state.time2}</p>:<p/>}
                     {this.state.qboxanim ? <div className= "qboxanim" style= {{backgroundImage: 'url('+this.state.qBoxImage+')'}}/>:<div/>}
+                    {this.state.deadanim ? <div className= "qboxanim" style= {{backgroundImage: 'url('+Ouch+')'}}/>:<div/>}
                 </div>
             )
         }

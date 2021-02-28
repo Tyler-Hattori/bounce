@@ -1,10 +1,9 @@
 import React from 'react'
 import './Ball.css'
-import BasketballImage from './Images/basketball.png'
 
 function Ball(props) {
     return (
-        <img src= {BasketballImage}
+        <img src= {props.image}
         style= {{height: props.height,
             top: props.yPos,
             left: props.xPos}} 

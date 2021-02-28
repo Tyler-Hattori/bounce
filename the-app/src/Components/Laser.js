@@ -5,6 +5,7 @@ function Laser(props) {
     return (
         <img src= {LaserImage}
         style= {{height: props.height,
+            position: 'absolute',
             top: props.yPos,
             left: props.xPos}}/>
     )

@@ -1,9 +1,8 @@
 import React from 'react'
-import TileImage from './Images/tile.jpg'
 
 function Tile(props) {
     return (
-        <img src= {TileImage}
+        <img src= {props.image}
             style= {{height: props.height,
             position: "absolute",
             left: props.xPos,
