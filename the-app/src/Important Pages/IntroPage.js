@@ -87,7 +87,7 @@ class IntroPage extends React.Component {
                 this.setState({selectedBall: true, ballImage: Ball7, ballBarImage: BallBar7})
                 break
             case "plebian":
-                this.switchButtonColor("plebian","green")
+                this.switchButtonColor("plebian","darkgreen")
                 this.setState({
                     selectedDifficulty: true,
                     difficulty: 1,
@@ -95,7 +95,7 @@ class IntroPage extends React.Component {
                     tileImage: Tile1})
                 break
             case "easy":
-                this.switchButtonColor("easy","blue")
+                this.switchButtonColor("easy","darkblue")
                 this.setState({
                     selectedDifficulty: true,
                     difficulty: 2,
@@ -111,7 +111,7 @@ class IntroPage extends React.Component {
                     tileImage: Tile3})
                 break
             case "hard":
-                this.switchButtonColor("hard","red")
+                this.switchButtonColor("hard","darkred")
                 this.setState({
                     selectedDifficulty: true,
                     difficulty: 4,
@@ -119,7 +119,7 @@ class IntroPage extends React.Component {
                     tileImage: Tile4})
                 break
             case "expert":
-                this.switchButtonColor("expert","black")
+                this.switchButtonColor("expert","purple")
                 this.setState({
                     selectedDifficulty: true,
                     difficulty: 5,
