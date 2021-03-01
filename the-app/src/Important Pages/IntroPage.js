@@ -1,5 +1,5 @@
 import React from 'react'
-import LineRiderGame from './LineRiderGame.js'
+import BounceGame from './BounceGame.js'
 import LoginLogout from '../LoginLogout.js'
 import './IntroPage.css'
 import PlebianBackground from '../Backgrounds/orange.jpg'
@@ -40,38 +40,27 @@ class IntroPage extends React.Component {
             ballImage: Ball1,
             ballBarImage: BallBar1,
             difficulty: 0,
-            gameLoopTimeout: 50,
-            timeoutId: 0,
             tileImage: Tile1,
-            data: database.ref('/users/times'),
+            fastestPlebianTime: 0,
+            fastestEasyTime: 0,
+            fastestMediumTime: 0,
+            fastestHardTime: 0,
+            fastestExpertTime: 0,
         }
         
     }
 
     componentDidMount() {
-        this.gameLoop()
-    }
-
-    gameLoop() { 
-        let timeoutId = setTimeout(() => {
-            if (!this.state.selectionsSet) {
-              this.makeSelections()
-            }
-            this.gameLoop()
-          }, this.state.gameLoopTimeout)
-      
-        this.setState({ timeoutId })
-    }
-
-    componentWillUnmount() {
-        clearTimeout(this.state.timeoutId)
-    }
-
-    makeSelections() {
-        let status = this.state.selectionsSet
-        if (status) {
-            this.setState({ selectionsSet: true })
-        }
+        database.ref('times/1').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            snapshot.forEach((child)=>{this.setState({fastestPlebianTime: child.val()}) })  })
+        database.ref('times/2').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            snapshot.forEach((child)=>{this.setState({fastestEasyTime: child.val()}) })  })
+        database.ref('times/3').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            snapshot.forEach((child)=>{this.setState({fastestMediumTime: child.val()})  })  })
+        database.ref('times/4').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            snapshot.forEach((child)=>{this.setState({fastestHardTime: child.val()})})  })
+        database.ref('times/5').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            snapshot.forEach((child)=>{this.setState({fastestExpertTime: child.val()}) })  })
     }
 
     select(button) {
@@ -174,7 +163,7 @@ class IntroPage extends React.Component {
     render() {
         if (this.state.selectionsSet) {
             return (
-                <LineRiderGame tileImage= {this.state.tileImage}
+                <BounceGame tileImage= {this.state.tileImage}
                     difficulty={this.state.difficulty}
                     background= {this.state.background}
                     ballImage= {this.state.ballImage}
@@ -185,9 +174,9 @@ class IntroPage extends React.Component {
             return (
             <div>
                 <div id= "fill" style= {{left: this.state.xPos*-1}}>
-                    <h1 className= "fade_in">Line Roller</h1>
-                    <p className = "subtitle left text fade_in">(not to be confused with Line Rider)</p>
-                    <p className = "instructions right text fade_in">Choose a difficulty and reach the goal before your ball loses its bounce!</p>
+                    <h1 className= "fade_in">Bounce!</h1>
+                    <p className = "subtitle left text fade_in">(a game that involves bouncing)</p>
+                    <p className = "instructions right text fade_in">Reach the goal before your ball runs out of energy</p>
                     <div className= "fade_in">
                         <button id= "ball" onClick= {() => this.select("baseball")} className = "bouncy" style= {{backgroundImage: 'url('+Ball1+')', width: 50}}/>
                         <button id= "ball" onClick= {() => this.select("basketball")} className = "bouncy" style= {{animationDelay: `0.07s`, backgroundImage: 'url('+Ball2+')', width: 50}}/>
@@ -204,9 +193,12 @@ class IntroPage extends React.Component {
                         <button id= "hard" onClick= {() => this.select("hard")} className = "button1 bouncy" style= {{animationDelay: `0.21s`,  border: `solid red 1vmin`}}>Hard</button>
                         <button id= "expert" onClick= {() => this.select("expert")} className = "button1 bouncy" style= {{animationDelay: `0.28s`,  border: `solid black 1vmin`}}>Expert</button>
                     </div>
-                    <div>
-                        <p style= {{position: 'relative'}}>BestTimes: {this.state.data[0]}</p>
-                    </div>
+                        <p className= "fastest_times" style= {{left: 300}}>Fastest Times:</p>
+                        <p className= "fastest_times" style= {{left: 500}}>{this.state.fastestPlebianTime}</p>
+                        <p className= "fastest_times" style= {{left: 650}}>{this.state.fastestEasyTime}</p>
+                        <p className= "fastest_times" style= {{left: 800}}>{this.state.fastestMediumTime}</p>
+                        <p className= "fastest_times" style= {{left: 950}}>{this.state.fastestHardTime}</p>
+                        <p className= "fastest_times" style= {{left: 1100}}>{this.state.fastestExpertTime}</p>
                     <button className = "fade_in text ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
                 </div>
                 <div className= "login_logout">

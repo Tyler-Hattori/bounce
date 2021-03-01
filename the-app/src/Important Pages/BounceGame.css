@@ -59,7 +59,6 @@
   top: 0; right: 0; left: 0; bottom: 0;
   opacity: 50%;
   background-size: contain;
-
   z-index: -5;
 }
 
@@ -85,10 +84,4 @@
   background-size:contain;
   animation-name: boing;
   animation-duration: 1s;
-}
-
-.section {
-  background-color: blanchedalmond;
-  text-align: center;
-  font-family: 'Aclonica', sans-serif;
 }

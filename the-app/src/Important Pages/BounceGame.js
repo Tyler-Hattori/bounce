@@ -1,4 +1,4 @@
-import './LineRiderGame.css'
+import './BounceGame.css'
 import React from 'react'
 import GameOver from './GameOver.js'
 import Ball from '../Components/Ball'
@@ -11,13 +11,12 @@ import SpringImage from '../Components/Images/spring.png'
 import Laser from '../Components/Laser'
 import Arrow from '../Components/Arrow'
 import Sword from '../Components/Sword'
-import MovingPlatform from '../Components/MovingTile'
 import Spike from '../Components/Spike'
 import Goal from '../Components/Goal'
 import Ouch from '../Components/Images/ouch.png'
 import ProgressBar from '../Components/Images/progress_bar.png'
 
-class LineRiderGame extends React.Component {
+class BounceGame extends React.Component {
     constructor(props) {
         super(props)
         
@@ -239,20 +238,17 @@ class LineRiderGame extends React.Component {
 
     gameLoop() {
         let timeoutId = setTimeout(() => {
-            if (!this.state.isGameOver) {
-
-                if (this.state.qboxanim) this.setState({time2: 20000 - new Date().getTime() + this.state.time1})
-                if (this.state.springanim && this.state.yPos < 300) this.setState({springanim:false})
-                if (this.state.deadanim && this.state.xPos > 700) this.setState({deadanim:false})
-                if (this.state.time2 <= 0) this.setState({qboxanim:false, xAcceleration: 4, ballsize: 40, gravity: this.state.difficulty/2})
-                this.changeDirection()
-                if (this.state.yPos > this.state.screenHeight-30) this.resetGame()
-                this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
-                this.fall()
-            }
-            this.gameLoop()
+            if (this.state.qboxanim) this.setState({time2: 20000 - new Date().getTime() + this.state.time1})
+            if (this.state.springanim && this.state.yPos < 300) this.setState({springanim:false})
+            if (this.state.deadanim && this.state.xPos > 700) this.setState({deadanim:false})
+            if (this.state.time2 < 0) this.setState({qboxanim:false, xAcceleration: 4, ballsize: 40, gravity: this.state.difficulty/2})
+            this.changeDirection()
+            if (this.state.yPos > this.state.screenHeight-30) this.resetGame()
+            this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
+            this.fall()
+            if (!this.state.isGameOver) this.gameLoop()
           }, this.state.gameLoopTimeout)
-        this.setState({ timeoutId })
+        if (!this.state.isGameOver) this.setState({ timeoutId })
     }
     
     resetGame() {
@@ -267,7 +263,7 @@ class LineRiderGame extends React.Component {
         let def = this.defaultStart()
         for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
         this.obstacles.push(this.tile(1600*this.state.numObstacles+800,this.state.screenHeight-50))
-        this.obstacles.push(<Goal height= {700} width= {50} xPos= {1600*this.state.numObstacles} yPos= {this.state.screenHeight-750}/>)
+        this.obstacles.push(<Goal height= {700} width= {50} xPos= {1600*this.state.numObstacles+800} yPos= {this.state.screenHeight-750}/>)
         this.setState({
             xPos: 0,
             yPos: 150,
@@ -316,10 +312,10 @@ class LineRiderGame extends React.Component {
             }
             else if (type === Goal) this.setState({isGameOver: true})
         }
-        else if (!this.isThereCollision(this.obstacles) && this.state.bounced) {
+        else if (!this.isThereCollision(this.obstacles) && this.state.bounced && !this.state.isGameOver) {
             this.setState({bounced: false})
         }
-        this.setState({ballSpeedY: ball_speed + grav, yPos: y + ball_speed})
+        if(!this.state.isGameOver) this.setState({ballSpeedY: ball_speed + grav, yPos: y + ball_speed})
     }
 
     isThereCollision(arr) {
@@ -367,7 +363,7 @@ class LineRiderGame extends React.Component {
         if (this.state.xPos < -800 && dir === 'left')
             ball_speed = 0
         let x = this.state.xPos + ball_speed
-        if (this.state.xPos > -200) 
+        if (this.state.xPos > -200 && !this.state.isGameOver) 
             this.setState({
                 ballSpeedX: ball_speed,
                 xPos: x
@@ -396,9 +392,8 @@ class LineRiderGame extends React.Component {
 
     render() {
         if (this.state.isGameOver) {
-            this.setState({time: Math.round((new Date().getTime()-this.state.time)*100)/100})
             return (
-                <GameOver time= {this.state.time}/>
+                <GameOver difficulty = {this.state.difficulty} time= {Math.round(new Date().getTime() - this.state.time)/1000}/>
             )
         }
         else {
@@ -425,4 +420,4 @@ class LineRiderGame extends React.Component {
     }
 }
 
-export default LineRiderGame
+export default BounceGame
