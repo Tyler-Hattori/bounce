@@ -16,7 +16,7 @@ function GameOver(props) {
         <div id= "background_game_over">
             <div className= "section">
                 <p style= {{fontSize: '6vmin'}}>Nice Work!</p>
-                <p style= {{fontSize: '4vmin'}}>Time: {props.time}</p>
+                <p style= {{fontSize: '4vmin'}}>Time: {props.time}s</p>
                 {newRecord ? <p>New Record!!</p>:<p>Best Time: {bestTime}</p>}
             </div>
             <button className = "new_game" onClick= {() => {document.location.reload()}}>New Game</button>
