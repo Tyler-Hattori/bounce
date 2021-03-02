@@ -57,7 +57,7 @@ class BounceGame extends React.Component {
             time: new Date().getTime(),
             qBoxImage: QBoxHandling,
             tileImage: props.tileImage,
-            numObstacles: 10,
+            numObstacles: 2,
             springPos: 0,
             spikeImage: SpikeImage,
             died: false,
@@ -78,10 +78,10 @@ class BounceGame extends React.Component {
         for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
         let unit = this.state.screenWidth/16
         let offset = unit*8
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset,this.state.screenHeight-unit/2))
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit,this.state.screenHeight-unit/2))
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*2,this.state.screenHeight-unit/2))
-        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*3,this.state.screenHeight-unit/2))
-        this.obstacles.push(<Goal height= {700} width= {50} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unit*3} yPos= {this.state.screenHeight-750}/>)
+        this.obstacles.push(<Goal height= {700} width= {50} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unit*2} yPos= {this.state.screenHeight-750}/>)
         window.addEventListener('keydown', this.handleKeyDown)
         this.gameLoop()
     }
@@ -376,10 +376,10 @@ class BounceGame extends React.Component {
         for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
         let unit = this.state.screenWidth/16
         let offset = unit*8
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset,this.state.screenHeight-unit/2))
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit,this.state.screenHeight-unit/2))
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*2,this.state.screenHeight-unit/2))
-        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*3,this.state.screenHeight-unit/2))
-        this.obstacles.push(<Goal height= {700} width= {50} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unit*3} yPos= {this.state.screenHeight-750}/>)
+        this.obstacles.push(<Goal height= {700} width= {50} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unit*2} yPos= {this.state.screenHeight-750}/>)
         this.setState({
             xPos: 0,
             yPos: 150,
@@ -518,7 +518,7 @@ class BounceGame extends React.Component {
         else {
             return(
                 <div>
-                    <div id = "background" style= {{left: -1*this.state.xPos/2, backgroundImage: 'url('+this.state.background+')'}}/>
+                    <div id = "background" style= {{left: -1*this.state.xPos/2}}/>{/*// backgroundImage: 'url('+this.state.background+')'}}/> */}
                     <div id= "fill_screen" style= {{left: -1*this.state.xPos}}>
                         {this.obstacles}
                         {this.state.springanim ? <div className= "springanim" style= {{top: this.state.screenHeight-100, marginLeft: this.state.springPos, backgroundImage: 'url('+SpringImage+')'}}/>:<div/>}
@@ -528,8 +528,8 @@ class BounceGame extends React.Component {
                         height={this.state.ballSize}/>
                         <p className= "attempt" style= {{left: -1*this.state.xPos, marginTop: 60}}>Attempt: {this.state.attempts}</p>
                     </div>
-                    <img src= {ProgressBar} style= {{position: 'absolute', left: '37.5%', width: '25%', top: '2%'}}/>
-                    <img src= {this.state.ballBarImage} style= {{position: 'absolute', left: 37.5+((this.state.xPos)/(this.state.numObstacles*this.state.screenWidth))*25+'%', width: '20px' ,top: '1.6%'}}/>
+                    <img src= {ProgressBar} style= {{position: 'absolute', left: '37.5%', width: '25%', top: 15}}/>
+                    <img src= {this.state.ballBarImage} style= {{position: 'absolute', left: 37.5+((this.state.xPos)/(this.state.numObstacles*this.state.screenWidth+this.state.screenWidth/5))*24+'%', width: '20px' ,top: 13}}/>
                     {this.state.qboxanim ? <p className= "time">{this.state.time2}</p>:<p/>}
                     {this.state.qboxanim ? <div className= "qboxanim" style= {{backgroundImage: 'url('+this.state.qBoxImage+')'}}/>:<div/>}
                     {this.state.deadanim ? <div className= "qboxanim" style= {{backgroundImage: 'url('+Ouch+')'}}/>:<div/>}
