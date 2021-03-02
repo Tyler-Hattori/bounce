@@ -518,7 +518,7 @@ class BounceGame extends React.Component {
         else {
             return(
                 <div>
-                    <div id = "background" style= {{left: -1*this.state.xPos/2}}/>{/*// backgroundImage: 'url('+this.state.background+')'}}/> */}
+                    <div id = "background" style= {{left: -1*this.state.xPos/2, backgroundImage: 'url('+this.state.background+')'}}/>
                     <div id= "fill_screen" style= {{left: -1*this.state.xPos}}>
                         {this.obstacles}
                         {this.state.springanim ? <div className= "springanim" style= {{top: this.state.screenHeight-100, marginLeft: this.state.springPos, backgroundImage: 'url('+SpringImage+')'}}/>:<div/>}

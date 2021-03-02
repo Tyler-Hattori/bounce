@@ -4,7 +4,7 @@
     background-color: blanchedalmond;
     position: 'absolute';
     width: 30%;
-    margin-left: 200px;
+    margin-left: 15%;
     margin-top: 100px;
     text-align: center;
     font-family: 'Aclonica', sans-serif;
@@ -28,7 +28,7 @@
     border-radius: 100%;
     position: absolute;
     top: 150px;
-    right: 400px;
+    right: 15%;
     width: 200px;
     height: 150px;
     font-size: 30px;
