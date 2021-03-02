@@ -4,9 +4,10 @@ function Tile(props) {
     return (
         <img src= {props.image}
             style= {{height: props.height,
-            position: "absolute",
-            left: props.xPos,
-            top: props.yPos}}/>
+                width: props.width,
+                position: "absolute",
+                left: props.xPos,
+                top: props.yPos}}/>
     )
 }
 

@@ -6,7 +6,7 @@ function Spike(props) {
     return (
         <img src= {props.image} id= "spike" 
         style= {{position: 'absolute', 
-            height: props.height, 
+            height: props.width, 
             left: props.xPos, 
             top: props.yPos,
             animationDelay: {rand}+'s'}}/>

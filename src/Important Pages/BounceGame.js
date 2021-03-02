@@ -57,7 +57,7 @@ class BounceGame extends React.Component {
             time: new Date().getTime(),
             qBoxImage: QBoxHandling,
             tileImage: props.tileImage,
-            numObstacles: 2,
+            numObstacles: 3,
             springPos: 0,
             spikeImage: SpikeImage,
             died: false,
@@ -76,293 +76,17 @@ class BounceGame extends React.Component {
         this.generateObstacles(this.state.difficulty)
         let def = this.defaultStart()
         for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
-        let unit = this.state.screenWidth/16
-        let offset = unit*8
-        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset,this.state.screenHeight-unit/2))
-        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit,this.state.screenHeight-unit/2))
-        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*2,this.state.screenHeight-unit/2))
-        this.obstacles.push(<Goal height= {700} width= {50} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unit*2} yPos= {this.state.screenHeight-750}/>)
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let offset = unitX*8
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset,this.state.screenHeight-unitY))
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX,this.state.screenHeight-unitY))
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX*2,this.state.screenHeight-unitY))
+        this.obstacles.push(<Goal height= {unitY*15} width= {unitX/2} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unitX*2} yPos= {this.state.screenHeight-(unitY*16)}/>)
         window.addEventListener('keydown', this.handleKeyDown)
         this.gameLoop()
     }
-
-    generateObstacles(difficulty) {
-        switch (difficulty) {
-            case 1:
-                for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.plebianObstacles = [this.ob1(x),this.ob2(x), this.ob7(x)]
-                    let index = Math.floor(Math.random()*this.plebianObstacles.length)
-                    for (let j=0;j<this.plebianObstacles[index].length;j++)   
-                        this.obstacles.push(this.plebianObstacles[index][j])
-                }
-                break
-            case 2:
-                for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.easyObstacles = [this.ob1(x),this.ob2(x)]
-                    let index = Math.floor(Math.random()*this.easyObstacles.length)
-                    for (let j=0;j<this.easyObstacles[index].length;j++)   
-                        this.obstacles.push(this.easyObstacles[index][j])
-                }
-                break
-            case 3:
-                for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.mediumObstacles = [this.ob8(x)]
-                    let index = Math.floor(Math.random()*this.mediumObstacles.length)
-                    for (let j=0;j<this.mediumObstacles[index].length;j++)   
-                        this.obstacles.push(this.mediumObstacles[index][j])
-                }
-                break
-            case 4:
-                for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.hardObstacles = [this.ob4(x),this.ob5(x), this.ob6(x)]
-                    let index = Math.floor(Math.random()*this.hardObstacles.length)
-                    for (let j=0;j<this.hardObstacles[index].length;j++)   
-                        this.obstacles.push(this.hardObstacles[index][j])
-                }
-                break;
-            case 5:
-                for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.expertObstacles = [this.ob4(x), this.ob6(x)]
-                    let index = Math.floor(Math.random()*this.expertObstacles.length)
-                    for (let j=0;j<this.expertObstacles[index].length;j++)   
-                        this.obstacles.push(this.expertObstacles[index][j])
-                }
-                break
-        }
-    }
-
-    defaultStart() {
-        let unit = this.state.screenWidth/16
-        return [
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*8} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*9} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*10} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*11} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*12} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*13} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*14} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*15} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*16} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*17} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*18} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*19} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*20} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*21} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*22} yPos= {this.state.screenHeight-unit/2}/>,
-            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*23} yPos= {this.state.screenHeight-unit/2}/>,
-        ]
-    }
-    ob1(x) {
-        let unit = this.state.screenWidth/16
-        let h = this.state.screenHeight
-        return [
-            this.tile(x,h-unit/2),
-            this.tile(x+unit,h-unit/2),
-            <Spring height= {314} width= {50} xPos= {x+200} yPos= {h-100}/>,
-            this.tile(x+1300,h-unit/2)
-        ]
-    }
-    ob2(x) {
-        let unit = this.state.screenWidth/16
-        let h = this.state.screenHeight
-        return [
-            <Spring height= {314} width= {60} xPos= {x+200} yPos= {h-100}/>,
-            this.tile(x+300,h-600),
-            this.tile(x+400,h-600),
-            this.tile(x+500,h-600),
-            this.tile(x+600,h-600),
-            this.tile(x+700,h-600),
-            this.tile(x+(this.state.screenWidth/2),h-600),
-            this.tile(x+900,h-600),
-            this.tile(x+1000,h-600),
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+300} yPos = {h-(this.state.screenWidth/2)}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+300} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+400} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+500} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+600} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+700} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+(this.state.screenWidth/2)} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+900} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1000} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-570}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-400}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-300}/>,
-            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-200}/>,
-            this.tile(x+1200,h-unit/2),
-            this.tile(x+1300,h-unit/2),
-            this.tile(x+1400,h-unit/2),
-            this.tile(x+1500,h-unit/2),
-            this.tile(x+this.state.screenWidth,h-unit/2),
-        ]
-    }
-    ob3(x) {
-        let unit = this.state.screenWidth/16
-        let h = this.state.screenHeight
-        return [
-            this.tile(x+unit, h-unit/2),
-            <Spring height= {314} width= {60} xPos= {x+400} yPos= {h-100}/>,
-            this.spike(x+900,h-600),
-            this.spike(x+900,h-(this.state.screenWidth/2)),
-            this.spike(x+(this.state.screenWidth/2),h-600),
-            this.spike(x+(this.state.screenWidth/2),h-800),
-            this.tile(x+1300,h-unit/2),
-            this.tile(x+1400,h-unit/2),
-            this.tile(x+1500,h-unit/2),
-            this.tile(x+this.state.screenWidth,h-unit/2),
-        ]
-    }
-    ob4(x) {
-        let unit = this.state.screenWidth/16
-        let h = this.state.screenHeight
-        return [
-            this.tile(x+unit,h-unit/2),
-            this.tile(x+400,h-unit/2),
-            this.tile(x+(this.state.screenWidth/2),h-unit/2),
-            this.tile(x+1200,h-unit/2),
-            this.tile(x+this.state.screenWidth,h-unit/2),
-            this.spike(x+400, h-300),
-            this.spike(x+(this.state.screenWidth/2),h-300),
-            this.spike(x+1200,h-300),
-            this.spike(x+this.state.screenWidth,h-300),
-            this.spike(x+400, h-600),
-            this.spike(x+(this.state.screenWidth/2),h-600),
-            this.spike(x+1200,h-600),
-            this.spike(x+this.state.screenWidth,h-600)
-        ]
-    }
-    ob5(x) {
-        let unit = this.state.screenWidth/16
-        let h = this.state.screenHeight
-        return [
-            this.tile(x+unit,h-unit/2),
-            this.tile(x+400,h-unit/2),
-            this.tile(x+(this.state.screenWidth/2),h-unit/2),
-            this.tile(x+1200,h-unit/2),
-            this.tile(x+this.state.screenWidth,h-unit/2),
-            this.spike(x+300, h-300),
-            this.spike(x+300, h-200),
-            this.spike(x+500,h-300),
-            this.spike(x+500, h-200),
-            this.spike(x+700,h-300),
-            this.spike(x+700,h-200),
-            this.spike(x+900,h-300),
-            this.spike(x+900,h-200),
-            this.spike(x+1100, h-300),
-            this.spike(x+1100, h-200),
-            this.spike(x+1300,h-300),
-            this.spike(x+1300, h-200),
-            this.spike(x+1500,h-300),
-            this.spike(x+1500,h-200),
-        ]
-    }
-    ob6(x) {
-        let unit = this.state.screenWidth/16
-        let h = this.state.screenHeight
-        return [
-            this.spring(x+unit,h-100),
-            this.tile(x+400,h-unit/2),
-            this.tile(x+(this.state.screenWidth/2),h-unit/2),
-            this.tile(x+1200,h-unit/2),
-            this.tile(x+this.state.screenWidth,h-unit/2),
-            this.spike(x+300, h-300),
-            this.spike(x+300, h-200),
-            this.spike(x+500,h-300),
-            this.spike(x+500, h-200),
-            this.spike(x+700,h-300),
-            this.spike(x+700,h-200),
-            this.spike(x+900,h-300),
-            this.spike(x+900,h-200),
-            this.spike(x+1100, h-300),
-            this.spike(x+1100, h-200),
-            this.spike(x+1300,h-300),
-            this.spike(x+1300, h-200),
-            this.spike(x+1500,h-300),
-            this.spike(x+1500,h-200),
-            this.spike(x+300, h-400),
-            this.spike(x+500,h-400),
-            this.spike(x+700,h-400),
-            this.spike(x+900,h-400),
-            this.spike(x+1100, h-400),
-            this.spike(x+1300,h-400),
-            this.spike(x+1500,h-400)
-        ]
-    }
-    ob7(x) {
-        let unit = this.state.screenWidth/16
-        let h = this.state.screenHeight
-        return [
-            this.tile(x+300,h-700),
-            this.tile(x+600,h-unit/2),
-            this.tile(x+900,h-700),
-            this.tile(x+1200,h-unit/2),
-            this.tile(x+1500,h-700)
-        ]
-    }
-    ob8(x) {
-        let unit = this.state.screenWidth/16
-        let h = this.state.screenHeight
-        return [
-            //this.movingTile(x+300,h-unit/2,4,10,0)
-            
-        ]
-    }
-    ob9(x) {
-        
-    }
-    ob10(x) {
-
-    }
-    ob11(x) {
-
-    }
-    ob12(x) {
-        
-    }
-    tile(x,y) {
-        let unit = this.state.screenWidth/16
-        return <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {x} yPos= {y}/>
-    }
-    spike(x,y) {
-        let unit = this.state.screenWidth/16
-        return <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x} yPos= {y}/>
-    }
-    spring(x,y) {
-        let unit = this.state.screenWidth/16
-        return <Spring height= {314} width= {60} xPos= {x} yPos= {y}/>
-    }
-    // movingTile(x,y,acceleration,xSpeed,ySpeed) {
-    //     return <MovingTile image= {this.state.tileImage} height = {unit} width= {unit} xPosInit= {x} yPosInit= {y} xPos= {x} yPos= {y} acc= {acceleration} xSpeed= {xSpeed} ySpeed = {ySpeed}/>
-    // }
-
-    gameLoop() {
-        let timeoutId = setTimeout(() => {
-            if (this.state.qboxanim) this.setState({time2: 20000 - new Date().getTime() + this.state.time1})
-            if (this.state.springanim && this.state.yPos < this.state.screenHeight/2) this.setState({springanim:false})
-            if (this.state.deadanim && this.state.xPos > 700) this.setState({deadanim:false})
-            if (this.state.time2 < 0) this.setState({qboxanim:false, xAcceleration: 4, ballsize: 40, gravity: this.state.difficulty/2})
-            this.changeDirection()
-            if (this.state.yPos > this.state.screenHeight-30 || this.state.died) this.resetGame()
-            this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
-            if (!this.state.determinedScreenDims)   {
-                this.setState({
-                    screenWidth: document.getElementById("fill_screen").clientWidth, 
-                    screenHeight: document.getElementById("fill_screen").clientHeight,
-                    determinedScreenDims: true,
-                })
-                this.setState({ballSize: this.state.screenHeight/25})
-            }
-            this.fall()
-            if (!this.state.isGameOver) this.gameLoop()
-          }, this.state.gameLoopTimeout)
-        if (!this.state.isGameOver) this.setState({ timeoutId })
-    }
-    
+     
     resetGame() {
         let attempts = this.state.attempts
         this.plebianObstacles = [[]]
@@ -374,12 +98,13 @@ class BounceGame extends React.Component {
         this.generateObstacles(this.state.difficulty)
         let def = this.defaultStart()
         for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
-        let unit = this.state.screenWidth/16
-        let offset = unit*8
-        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset,this.state.screenHeight-unit/2))
-        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit,this.state.screenHeight-unit/2))
-        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*2,this.state.screenHeight-unit/2))
-        this.obstacles.push(<Goal height= {700} width= {50} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unit*2} yPos= {this.state.screenHeight-750}/>)
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let offset = unitX*8
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset,this.state.screenHeight-unitY))
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX,this.state.screenHeight-unitY))
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX*2,this.state.screenHeight-unitY))
+        this.obstacles.push(<Goal height= {unitY*15} width= {unitX/2} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unitX*2} yPos= {this.state.screenHeight-(unitY*16)}/>)
         this.setState({
             xPos: 0,
             yPos: 150,
@@ -404,6 +129,301 @@ class BounceGame extends React.Component {
         })
     }
 
+    generateObstacles(difficulty) {
+        switch (difficulty) {
+            case 1:
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
+                    this.plebianObstacles = [this.ob1(x), this.ob7(x)]
+                    let index = Math.floor(Math.random()*this.plebianObstacles.length)
+                    for (let j=0;j<this.plebianObstacles[index].length;j++)   
+                        this.obstacles.push(this.plebianObstacles[index][j])
+                }
+                break
+            case 2:
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
+                    this.easyObstacles = [this.ob1(x),this.ob2(x)]
+                    let index = Math.floor(Math.random()*this.easyObstacles.length)
+                    for (let j=0;j<this.easyObstacles[index].length;j++)   
+                        this.obstacles.push(this.easyObstacles[index][j])
+                }
+                break
+            case 3:
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
+                    this.mediumObstacles = [this.ob2(x),this.ob8(x)]
+                    let index = Math.floor(Math.random()*this.mediumObstacles.length)
+                    for (let j=0;j<this.mediumObstacles[index].length;j++)   
+                        this.obstacles.push(this.mediumObstacles[index][j])
+                }
+                break
+            case 4:
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
+                    this.hardObstacles = [this.ob3(x),this.ob4(x),this.ob5(x), this.ob6(x)]
+                    let index = Math.floor(Math.random()*this.hardObstacles.length)
+                    for (let j=0;j<this.hardObstacles[index].length;j++)   
+                        this.obstacles.push(this.hardObstacles[index][j])
+                }
+                break;
+            case 5:
+                for (let i = 1; i < this.state.numObstacles; i++) {
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
+                    this.expertObstacles = [this.ob3(x),this.ob4(x), this.ob6(x)]
+                    let index = Math.floor(Math.random()*this.expertObstacles.length)
+                    for (let j=0;j<this.expertObstacles[index].length;j++)   
+                        this.obstacles.push(this.expertObstacles[index][j])
+                }
+                break
+        }
+    }
+
+    defaultStart() {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(unitX*8),
+            this.tile(unitX*9),
+            this.tile(unitX*10),
+            this.tile(unitX*11),
+            this.tile(unitX*12),
+            this.tile(unitX*13),
+            this.tile(unitX*14),
+            this.tile(unitX*15),
+            this.tile(unitX*16),
+            this.tile(unitX*17),
+            this.tile(unitX*18),
+            this.tile(unitX*19),
+            this.tile(unitX*20),
+            this.tile(unitX*21),
+            this.tile(unitX*22),
+            this.tile(unitX*23),
+        ]
+    } //default: line of 16 tiles
+    ob1(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(x),
+            this.tile(x+unitX),
+            this.spring(x+unitX*2),
+            this.tile(x+unitX*9)
+        ]
+    } //ob1: Spring with far-off block
+    ob2(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.spring(x+unitX*2),
+            this.tile2(x+unitX*3,h-unitY*12),
+            this.tile2(x+unitX*4,h-unitY*12),
+            this.tile2(x+unitX*5,h-unitY*12),
+            this.tile2(x+unitX*6,h-unitY*12),
+            this.tile2(x+unitX*7,h-unitY*12),
+            this.tile2(x+unitX*8,h-unitY*12),
+            this.tile2(x+unitX*9,h-unitY*12),
+            this.tile2(x+unitX*10,h-unitY*12),
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*3} yPos = {h-unitY*16}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*3} yPos = {h-unitY*11}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*4} yPos = {h-unitY*11}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*5} yPos = {h-unitY*11}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*6} yPos = {h-unitY*11}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*7} yPos = {h-unitY*11}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*8} yPos = {h-unitY*11}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*9} yPos = {h-unitY*11}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*10} yPos = {h-unitY*11}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*14} yPos = {h-unitY*11.4}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*14} yPos = {h-unitY*10}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*14} yPos = {h-unitY*8}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*14} yPos = {h-unitY*6}/>,
+            <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*14} yPos = {h-unitY*4}/>,
+            this.tile(x+unitX*12),
+            this.tile(x+unitX*13),
+            this.tile(x+unitX*14),
+            this.tile(x+unitX*15),
+            this.tile(x+unitX*16),
+        ]
+    } //ob2: Catwalk with spikes under it
+    ob3(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.spring(x+unitX*4),
+            this.spike(x+unitX*9,h-unitY*12),
+            this.spike(x+unitX*9,h-unitY*18),
+            this.spike(x+unitX*8,h-unitY*12),
+            this.spike(x+unitX*8,h-unitY*18),
+            this.tile(x+unitX*13),
+            this.tile(x+unitX*14),
+            this.tile(x+unitX*15),
+            this.tile(x+unitX*16),
+        ]
+    } //ob3: Spring through spikes
+    ob4(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(x+unitX),
+            this.tile(x+unitX*4),
+            this.tile(x+unitX*8),
+            this.tile(x+unitX*12),
+            this.tile(x+unitX*16),
+            this.spike(x+unitX*4, h-unitY*6),
+            this.spike(x+unitX*8,h-unitY*6),
+            this.spike(x+unitX*12,h-unitY*6),
+            this.spike(x+unitX*16,h-unitY*6),
+            this.spike(x+unitX*4, h-unitY*12),
+            this.spike(x+unitX*8,h-unitY*12),
+            this.spike(x+unitX*12,h-unitY*12),
+            this.spike(x+unitX*16,h-unitY*12)
+        ]
+    } //ob4: tiles with two spikes over them. Tough
+    ob5(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(x+unitX),
+            this.tile(x+unitX*4),
+            this.tile(x+unitX*8),
+            this.tile(x+unitX*12),
+            this.tile(x+unitX*16),
+            this.spike(x+unitX*3, h-unitY*6),
+            this.spike(x+unitX*3, h-unitY*4),
+            this.spike(x+unitX*5,h-unitY*6),
+            this.spike(x+unitX*5, h-unitY*4),
+            this.spike(x+unitX*7,h-unitY*6),
+            this.spike(x+unitX*7,h-unitY*4),
+            this.spike(x+unitX*9,h-unitY*6),
+            this.spike(x+unitX*9,h-unitY*4),
+            this.spike(x+unitX*11, h-unitY*6),
+            this.spike(x+unitX*11, h-unitY*4),
+            this.spike(x+unitX*13,h-unitY*6),
+            this.spike(x+unitX*13, h-unitY*4),
+            this.spike(x+unitX*15,h-unitY*6),
+            this.spike(x+unitX*15,h-unitY*4),
+        ]
+    } //ob5: Spikes surrounding tiles vertically NO SPRING
+    ob6(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.spring(x+unitX),
+            this.tile(x+unitX*4),
+            this.tile(x+unitX*8),
+            this.tile(x+unitX*12),
+            this.tile(x+unitX*8),
+            this.spike(x+unitX*3, h-unitY*6),
+            this.spike(x+unitX*3, h-unitY*4),
+            this.spike(x+unitX*5,h-unitY*6),
+            this.spike(x+unitX*5, h-unitY*4),
+            this.spike(x+unitX*7,h-unitY*6),
+            this.spike(x+unitX*7,h-unitY*4),
+            this.spike(x+unitX*9,h-unitY*6),
+            this.spike(x+unitX*9,h-unitY*4),
+            this.spike(x+unitX*11, h-unitY*6),
+            this.spike(x+unitX*11, h-unitY*4),
+            this.spike(x+unitX*13,h-unitY*6),
+            this.spike(x+unitX*13, h-unitY*4),
+            this.spike(x+unitX*15,h-unitY*6),
+            this.spike(x+unitX*15,h-unitY*4),
+            this.spike(x+unitX*3, h-unitY*8),
+            this.spike(x+unitX*5,h-unitY*8),
+            this.spike(x+unitX*7,h-unitY*8),
+            this.spike(x+unitX*9,h-unitY*8),
+            this.spike(x+unitX*11, h-unitY*8),
+            this.spike(x+unitX*13,h-unitY*8),
+            this.spike(x+unitX*15,h-unitY*8)
+        ]
+    } //ob6: Spikes surrounding tiles vertically
+    ob7(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile2(x+unitX*3,h-unitY*14),
+            this.tile(x+unitX*12),
+            this.tile2(x+unitX*9,h-unitY*14),
+            this.tile2(x+unitX*15,h-unitY*14)
+        ]
+    } //ob7: Tiles spread around. Plebian
+    ob8(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.spring(x+unitX*2)
+
+            
+        ]
+    }
+    ob9(x) {
+        
+    }
+    ob10(x) {
+
+    }
+    ob11(x) {
+
+    }
+    ob12(x) {
+        
+    }
+    tile2(x,y) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        return <Tile image= {this.state.tileImage} height= {unitY} width= {unitX} xPos= {x} yPos= {y}/>
+    }
+    tile(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        return <Tile image= {this.state.tileImage} height= {unitY} width= {unitX} xPos= {x} yPos= {this.state.screenHeight-unitY}/>
+    }
+    spike(x,y) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        return <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x} yPos= {y}/>
+    }
+    spring(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight           
+        return <Spring height= {unitY*6} width= {unitX*0.6} xPos= {x} yPos= {h-unitY*2}/>
+    }
+    // movingTile(x,y,acceleration,xSpeed,ySpeed) {
+    //     return <MovingTile image= {this.state.tileImage} height = {unitX} width= {unitX} xPosInit= {x} yPosInit= {y} xPos= {x} yPos= {y} acc= {acceleration} xSpeed= {xSpeed} ySpeed = {ySpeed}/>
+    // }
+
+    gameLoop() {
+        let timeoutId = setTimeout(() => {
+            if (this.state.qboxanim) this.setState({time2: 20000 - new Date().getTime() + this.state.time1})
+            if (this.state.springanim && this.state.ballSpeedY > 0) this.setState({springanim:false})
+            if (this.state.deadanim && this.state.xPos > 700) this.setState({deadanim:false})
+            if (this.state.time2 < 0) this.setState({qboxanim:false, xAcceleration: 4, ballsize: 40, gravity: this.state.difficulty/2})
+            this.changeDirection()
+            if (this.state.yPos > this.state.screenHeight-30 || this.state.died) this.resetGame()
+            this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
+            if (!this.state.determinedScreenDims)   {
+                this.setState({
+                    screenWidth: document.getElementById("fill_screen").clientWidth, 
+                    screenHeight: document.getElementById("fill_screen").clientHeight,
+                    determinedScreenDims: true,
+                })
+                this.setState({ballSize: this.state.screenHeight/25})
+            }
+            this.fall()
+            if (!this.state.isGameOver) this.gameLoop()
+          }, this.state.gameLoopTimeout)
+        if (!this.state.isGameOver) this.setState({ timeoutId })
+    }
+   
     fall() {
         let grav = this.state.gravity
         let ball_speed = this.state.ballSpeedY
@@ -422,9 +442,9 @@ class BounceGame extends React.Component {
                 else if (this.qBoxImages[rand] === QBoxMiniBall) this.setState({qBoxImage: QBoxMiniBall, ballSize: 20, gravity: this.state.gravity*2/3, time1: new Date().getTime()})
             }
             else if (type === Spring) {
-                let unit = this.state.screenWidth/16
-                ball_speed = -16-grav*16
-                this.setState({springanim: true, springPos: Math.round(this.state.xPos/unit)*unit+(this.state.screenWidth/2), bounced: true, ballSpeedY: ball_speed, yPos: y + ball_speed})
+                let unitX = this.state.screenWidth/16
+                ball_speed = -17-grav*17
+                this.setState({springanim: true, springPos: Math.round(this.state.xPos/unitX)*unitX+(this.state.screenWidth/2), bounced: true, ballSpeedY: ball_speed, yPos: y + ball_speed})
             }
             else if (type === Sword || type === Spike || type === Laser || type === Arrow) {
                 this.setState({died:true})
@@ -521,7 +541,7 @@ class BounceGame extends React.Component {
                     <div id = "background" style= {{left: -1*this.state.xPos/2, backgroundImage: 'url('+this.state.background+')'}}/>
                     <div id= "fill_screen" style= {{left: -1*this.state.xPos}}>
                         {this.obstacles}
-                        {this.state.springanim ? <div className= "springanim" style= {{top: this.state.screenHeight-100, marginLeft: this.state.springPos, backgroundImage: 'url('+SpringImage+')'}}/>:<div/>}
+                        {this.state.springanim ? <div className= "springanim" style= {{top: this.state.screenHeight-this.state.screenHeight*2/20, marginLeft: this.state.springPos, backgroundImage: 'url('+SpringImage+')', height: this.state.screenHeight*6/20, backgrondSize: 'aut0 100%', backgroundRepeat: 'no-repeat'}}/>:<div/>}
                         <Ball image= {this.state.ballImage}
                         xPos= {(this.state.screenWidth/2) + this.state.xPos}
                         yPos={this.state.yPos}
