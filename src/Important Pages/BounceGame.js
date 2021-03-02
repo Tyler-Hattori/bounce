@@ -76,10 +76,12 @@ class BounceGame extends React.Component {
         this.generateObstacles(this.state.difficulty)
         let def = this.defaultStart()
         for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
-        this.obstacles.push(this.tile(1600*this.state.numObstacles+900,this.state.screenHeight-50))
-        this.obstacles.push(this.tile(1600*this.state.numObstacles+1000,this.state.screenHeight-50))
-        this.obstacles.push(this.tile(1600*this.state.numObstacles+1100,this.state.screenHeight-50))
-        this.obstacles.push(<Goal height= {700} width= {100} xPos= {1600*this.state.numObstacles+1100} yPos= {this.state.screenHeight-750}/>)
+        let unit = this.state.screenWidth/16
+        let offset = unit*8
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit,this.state.screenHeight-unit/2))
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*2,this.state.screenHeight-unit/2))
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*3,this.state.screenHeight-unit/2))
+        this.obstacles.push(<Goal height= {700} width= {50} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unit*3} yPos= {this.state.screenHeight-750}/>)
         window.addEventListener('keydown', this.handleKeyDown)
         this.gameLoop()
     }
@@ -88,7 +90,7 @@ class BounceGame extends React.Component {
         switch (difficulty) {
             case 1:
                 for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*this.state.screenWidth + 800
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
                     this.plebianObstacles = [this.ob1(x),this.ob2(x), this.ob7(x)]
                     let index = Math.floor(Math.random()*this.plebianObstacles.length)
                     for (let j=0;j<this.plebianObstacles[index].length;j++)   
@@ -97,7 +99,7 @@ class BounceGame extends React.Component {
                 break
             case 2:
                 for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*1600 + 800
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
                     this.easyObstacles = [this.ob1(x),this.ob2(x)]
                     let index = Math.floor(Math.random()*this.easyObstacles.length)
                     for (let j=0;j<this.easyObstacles[index].length;j++)   
@@ -106,7 +108,7 @@ class BounceGame extends React.Component {
                 break
             case 3:
                 for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*1600 + 800
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
                     this.mediumObstacles = [this.ob8(x)]
                     let index = Math.floor(Math.random()*this.mediumObstacles.length)
                     for (let j=0;j<this.mediumObstacles[index].length;j++)   
@@ -115,7 +117,7 @@ class BounceGame extends React.Component {
                 break
             case 4:
                 for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*1600 + 800
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
                     this.hardObstacles = [this.ob4(x),this.ob5(x), this.ob6(x)]
                     let index = Math.floor(Math.random()*this.hardObstacles.length)
                     for (let j=0;j<this.hardObstacles[index].length;j++)   
@@ -124,7 +126,7 @@ class BounceGame extends React.Component {
                 break;
             case 5:
                 for (let i = 1; i < this.state.numObstacles; i++) {
-                    let x = i*1600 + 800
+                    let x = i*this.state.screenWidth + (this.state.screenWidth/2)
                     this.expertObstacles = [this.ob4(x), this.ob6(x)]
                     let index = Math.floor(Math.random()*this.expertObstacles.length)
                     for (let j=0;j<this.expertObstacles[index].length;j++)   
@@ -135,35 +137,38 @@ class BounceGame extends React.Component {
     }
 
     defaultStart() {
+        let unit = this.state.screenWidth/16
         return [
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {800} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {900} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1000} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1100} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1200} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1300} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1400} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1500} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1600} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1700} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1800} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {1900} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {2000} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {2100} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {2200} yPos= {this.state.screenHeight-50}/>,
-            <Tile image= {this.state.tileImage} height= {100} width= {100} xPos= {2300} yPos= {this.state.screenHeight-50}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*8} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*9} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*10} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*11} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*12} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*13} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*14} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*15} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*16} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*17} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*18} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*19} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*20} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*21} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*22} yPos= {this.state.screenHeight-unit/2}/>,
+            <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {unit*23} yPos= {this.state.screenHeight-unit/2}/>,
         ]
     }
     ob1(x) {
+        let unit = this.state.screenWidth/16
         let h = this.state.screenHeight
         return [
-            this.tile(x,h-50),
-            this.tile(x+100,h-50),
+            this.tile(x,h-unit/2),
+            this.tile(x+unit,h-unit/2),
             <Spring height= {314} width= {50} xPos= {x+200} yPos= {h-100}/>,
-            this.tile(x+1300,h-50)
+            this.tile(x+1300,h-unit/2)
         ]
     }
     ob2(x) {
+        let unit = this.state.screenWidth/16
         let h = this.state.screenHeight
         return [
             <Spring height= {314} width= {60} xPos= {x+200} yPos= {h-100}/>,
@@ -172,71 +177,74 @@ class BounceGame extends React.Component {
             this.tile(x+500,h-600),
             this.tile(x+600,h-600),
             this.tile(x+700,h-600),
-            this.tile(x+800,h-600),
+            this.tile(x+(this.state.screenWidth/2),h-600),
             this.tile(x+900,h-600),
             this.tile(x+1000,h-600),
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+300} yPos = {h-800}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+300} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+400} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+500} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+600} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+700} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+800} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+900} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+1000} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+1400} yPos = {h-570}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+1400} yPos = {h-500}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+1400} yPos = {h-400}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+1400} yPos = {h-300}/>,
-            <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x+1400} yPos = {h-200}/>,
-            this.tile(x+1200,h-50),
-            this.tile(x+1300,h-50),
-            this.tile(x+1400,h-50),
-            this.tile(x+1500,h-50),
-            this.tile(x+1600,h-50),
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+300} yPos = {h-(this.state.screenWidth/2)}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+300} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+400} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+500} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+600} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+700} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+(this.state.screenWidth/2)} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+900} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1000} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-570}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-500}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-400}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-300}/>,
+            <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x+1400} yPos = {h-200}/>,
+            this.tile(x+1200,h-unit/2),
+            this.tile(x+1300,h-unit/2),
+            this.tile(x+1400,h-unit/2),
+            this.tile(x+1500,h-unit/2),
+            this.tile(x+this.state.screenWidth,h-unit/2),
         ]
     }
     ob3(x) {
+        let unit = this.state.screenWidth/16
         let h = this.state.screenHeight
         return [
-            this.tile(x+100, h-50),
+            this.tile(x+unit, h-unit/2),
             <Spring height= {314} width= {60} xPos= {x+400} yPos= {h-100}/>,
             this.spike(x+900,h-600),
-            this.spike(x+900,h-800),
-            this.spike(x+800,h-600),
-            this.spike(x+800,h-800),
-            this.tile(x+1300,h-50),
-            this.tile(x+1400,h-50),
-            this.tile(x+1500,h-50),
-            this.tile(x+1600,h-50),
+            this.spike(x+900,h-(this.state.screenWidth/2)),
+            this.spike(x+(this.state.screenWidth/2),h-600),
+            this.spike(x+(this.state.screenWidth/2),h-800),
+            this.tile(x+1300,h-unit/2),
+            this.tile(x+1400,h-unit/2),
+            this.tile(x+1500,h-unit/2),
+            this.tile(x+this.state.screenWidth,h-unit/2),
         ]
     }
     ob4(x) {
+        let unit = this.state.screenWidth/16
         let h = this.state.screenHeight
         return [
-            this.tile(x,h-50),
-            this.tile(x+400,h-50),
-            this.tile(x+800,h-50),
-            this.tile(x+1200,h-50),
-            this.tile(x+1600,h-50),
+            this.tile(x+unit,h-unit/2),
+            this.tile(x+400,h-unit/2),
+            this.tile(x+(this.state.screenWidth/2),h-unit/2),
+            this.tile(x+1200,h-unit/2),
+            this.tile(x+this.state.screenWidth,h-unit/2),
             this.spike(x+400, h-300),
-            this.spike(x+800,h-300),
+            this.spike(x+(this.state.screenWidth/2),h-300),
             this.spike(x+1200,h-300),
-            this.spike(x+1600,h-300),
+            this.spike(x+this.state.screenWidth,h-300),
             this.spike(x+400, h-600),
-            this.spike(x+800,h-600),
+            this.spike(x+(this.state.screenWidth/2),h-600),
             this.spike(x+1200,h-600),
-            this.spike(x+1600,h-600)
+            this.spike(x+this.state.screenWidth,h-600)
         ]
     }
     ob5(x) {
+        let unit = this.state.screenWidth/16
         let h = this.state.screenHeight
         return [
-            this.tile(x,h-50),
-            this.tile(x+400,h-50),
-            this.tile(x+800,h-50),
-            this.tile(x+1200,h-50),
-            this.tile(x+1600,h-50),
+            this.tile(x+unit,h-unit/2),
+            this.tile(x+400,h-unit/2),
+            this.tile(x+(this.state.screenWidth/2),h-unit/2),
+            this.tile(x+1200,h-unit/2),
+            this.tile(x+this.state.screenWidth,h-unit/2),
             this.spike(x+300, h-300),
             this.spike(x+300, h-200),
             this.spike(x+500,h-300),
@@ -254,13 +262,14 @@ class BounceGame extends React.Component {
         ]
     }
     ob6(x) {
+        let unit = this.state.screenWidth/16
         let h = this.state.screenHeight
         return [
-            this.spring(x,h-100),
-            this.tile(x+400,h-50),
-            this.tile(x+800,h-50),
-            this.tile(x+1200,h-50),
-            this.tile(x+1600,h-50),
+            this.spring(x+unit,h-100),
+            this.tile(x+400,h-unit/2),
+            this.tile(x+(this.state.screenWidth/2),h-unit/2),
+            this.tile(x+1200,h-unit/2),
+            this.tile(x+this.state.screenWidth,h-unit/2),
             this.spike(x+300, h-300),
             this.spike(x+300, h-200),
             this.spike(x+500,h-300),
@@ -285,19 +294,21 @@ class BounceGame extends React.Component {
         ]
     }
     ob7(x) {
+        let unit = this.state.screenWidth/16
         let h = this.state.screenHeight
         return [
             this.tile(x+300,h-700),
-            this.tile(x+600,h-50),
+            this.tile(x+600,h-unit/2),
             this.tile(x+900,h-700),
-            this.tile(x+1200,h-50),
+            this.tile(x+1200,h-unit/2),
             this.tile(x+1500,h-700)
         ]
     }
     ob8(x) {
+        let unit = this.state.screenWidth/16
         let h = this.state.screenHeight
         return [
-            //this.movingTile(x+300,h-50,4,10,0)
+            //this.movingTile(x+300,h-unit/2,4,10,0)
             
         ]
     }
@@ -314,41 +325,38 @@ class BounceGame extends React.Component {
         
     }
     tile(x,y) {
-        return <Tile image= {this.state.tileImage} height= {100} width= {110} xPos= {x} yPos= {y}/>
+        let unit = this.state.screenWidth/16
+        return <Tile image= {this.state.tileImage} height= {unit} width= {unit} xPos= {x} yPos= {y}/>
     }
     spike(x,y) {
-        return <Spike image= {this.state.spikeImage} height= {100} width= {100} xPos= {x} yPos= {y}/>
+        let unit = this.state.screenWidth/16
+        return <Spike image= {this.state.spikeImage} height= {unit} width= {unit} xPos= {x} yPos= {y}/>
     }
     spring(x,y) {
+        let unit = this.state.screenWidth/16
         return <Spring height= {314} width= {60} xPos= {x} yPos= {y}/>
     }
-    movingTile(x,y,acceleration,xSpeed,ySpeed) {
-        return <MovingTile image= {this.state.tileImage} height = {100} width= {100} xPosInit= {x} yPosInit= {y} xPos= {x} yPos= {y} acc= {acceleration} xSpeed= {xSpeed} ySpeed = {ySpeed}/>
-    }
+    // movingTile(x,y,acceleration,xSpeed,ySpeed) {
+    //     return <MovingTile image= {this.state.tileImage} height = {unit} width= {unit} xPosInit= {x} yPosInit= {y} xPos= {x} yPos= {y} acc= {acceleration} xSpeed= {xSpeed} ySpeed = {ySpeed}/>
+    // }
 
     gameLoop() {
         let timeoutId = setTimeout(() => {
-            // for (let i = 0; i < this.obstacles.length; i++) {
-            //     if (this.obstacles[i].type === MovingTile) {
-            //         let x = this.obstacles[i].xPos + this.obstacles[i].xSpeed
-            //         let y = this.obstacles[i].yPos + this.obstacles[i].ySpeed
-            //         let ySpeed = this.obstacles[i].ySpeed + this.obstacles[i].acceleration
-            //         let xSpeed= this.obstacles[i].xSpeed + this.obstacles[i].acceleration
-            //         let acceleration = this.obstacles[i].acceleration
-            //         if (x < this.obstacles[i].xPosInit) acceleration = Math.abs(this.obstacles[i].acceleration)
-            //         else if (x > this.obstacles[i].xPosInit) acceleration = Math.abs(this.obstacles[i].acceleration)*-1
-            //         this.obstacles.push(this.movingTile(x,y,acceleration,xSpeed,ySpeed))
-            //         alert(this.obstacles[i].xPos)
-            //         this.obstacles.splice(i,i+1)
-            //     }
-            // }
             if (this.state.qboxanim) this.setState({time2: 20000 - new Date().getTime() + this.state.time1})
-            if (this.state.springanim && this.state.yPos < 300) this.setState({springanim:false})
+            if (this.state.springanim && this.state.yPos < this.state.screenHeight/2) this.setState({springanim:false})
             if (this.state.deadanim && this.state.xPos > 700) this.setState({deadanim:false})
             if (this.state.time2 < 0) this.setState({qboxanim:false, xAcceleration: 4, ballsize: 40, gravity: this.state.difficulty/2})
             this.changeDirection()
             if (this.state.yPos > this.state.screenHeight-30 || this.state.died) this.resetGame()
             this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
+            if (!this.state.determinedScreenDims)   {
+                this.setState({
+                    screenWidth: document.getElementById("fill_screen").clientWidth, 
+                    screenHeight: document.getElementById("fill_screen").clientHeight,
+                    determinedScreenDims: true,
+                })
+                this.setState({ballSize: this.state.screenHeight/25})
+            }
             this.fall()
             if (!this.state.isGameOver) this.gameLoop()
           }, this.state.gameLoopTimeout)
@@ -366,8 +374,12 @@ class BounceGame extends React.Component {
         this.generateObstacles(this.state.difficulty)
         let def = this.defaultStart()
         for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
-        this.obstacles.push(this.tile(1600*this.state.numObstacles+800,this.state.screenHeight-50))
-        this.obstacles.push(<Goal height= {700} width= {50} xPos= {1600*this.state.numObstacles+800} yPos= {this.state.screenHeight-750}/>)
+        let unit = this.state.screenWidth/16
+        let offset = unit*8
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit,this.state.screenHeight-unit/2))
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*2,this.state.screenHeight-unit/2))
+        this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unit*3,this.state.screenHeight-unit/2))
+        this.obstacles.push(<Goal height= {700} width= {50} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unit*3} yPos= {this.state.screenHeight-750}/>)
         this.setState({
             xPos: 0,
             yPos: 150,
@@ -388,6 +400,7 @@ class BounceGame extends React.Component {
             time2: 0,
             time: new Date().getTime(),
             died: false,
+            determinedScreenDims:false,
         })
     }
 
@@ -409,8 +422,9 @@ class BounceGame extends React.Component {
                 else if (this.qBoxImages[rand] === QBoxMiniBall) this.setState({qBoxImage: QBoxMiniBall, ballSize: 20, gravity: this.state.gravity*2/3, time1: new Date().getTime()})
             }
             else if (type === Spring) {
+                let unit = this.state.screenWidth/16
                 ball_speed = -16-grav*16
-                this.setState({springanim: true, springPos: Math.round(this.state.xPos/100)*100+800, bounced: true, ballSpeedY: ball_speed, yPos: y + ball_speed})
+                this.setState({springanim: true, springPos: Math.round(this.state.xPos/unit)*unit+(this.state.screenWidth/2), bounced: true, ballSpeedY: ball_speed, yPos: y + ball_speed})
             }
             else if (type === Sword || type === Spike || type === Laser || type === Arrow) {
                 this.setState({died:true})
@@ -428,7 +442,7 @@ class BounceGame extends React.Component {
                     width: this.state.ballSize, height: this.state.ballSize}
         let collidedObj = arr.find(a => {
             if (a === undefined || a.props === undefined) return false
-            let obstacle = {x: a.props.xPos - 811, y: a.props.yPos, width: a.props.width, height: a.props.height}
+            let obstacle = {x: a.props.xPos - (this.state.screenWidth/2), y: a.props.yPos, width: a.props.width, height: a.props.height}
             if (ball.x < obstacle.x + obstacle.width && ball.x > obstacle.x &&
                 ball.y >= obstacle.y && ball.y <= obstacle.y+obstacle.height) {
                     this.setState({collidedObj: a})
@@ -465,10 +479,10 @@ class BounceGame extends React.Component {
         if ((ball_speed < this.state.maxSpeed && ball_speed > this.state.maxSpeed*-1)
             || (ball_speed >= this.state.maxSpeed && acceleration < 0) || (ball_speed <= this.state.maxSpeed*-1 && acceleration > 0))
             ball_speed += acceleration
-        if (this.state.xPos < -800 && dir === 'left')
+        if (this.state.xPos < -(this.state.screenWidth/2) && dir === 'left')
             ball_speed = 0
         let x = this.state.xPos + ball_speed
-        if (this.state.xPos > -200 && !this.state.isGameOver) 
+        if (this.state.xPos > -1*this.state.screenWidth/8 && !this.state.isGameOver) 
             this.setState({
                 ballSpeedX: ball_speed,
                 xPos: x
@@ -509,13 +523,13 @@ class BounceGame extends React.Component {
                         {this.obstacles}
                         {this.state.springanim ? <div className= "springanim" style= {{top: this.state.screenHeight-100, marginLeft: this.state.springPos, backgroundImage: 'url('+SpringImage+')'}}/>:<div/>}
                         <Ball image= {this.state.ballImage}
-                        xPos= {811 + this.state.xPos}
+                        xPos= {(this.state.screenWidth/2) + this.state.xPos}
                         yPos={this.state.yPos}
                         height={this.state.ballSize}/>
                         <p className= "attempt" style= {{left: -1*this.state.xPos, marginTop: 60}}>Attempt: {this.state.attempts}</p>
                     </div>
-                    <img src= {ProgressBar} style= {{position: 'absolute', left: 611, width: '440px', top: 20}}/>
-                    <img src= {this.state.ballBarImage} style= {{position: 'absolute', left: 630+((this.state.xPos)/(this.state.numObstacles*1600))*400, width: '20px' ,top: 20}}/>
+                    <img src= {ProgressBar} style= {{position: 'absolute', left: '37.5%', width: '25%', top: '2%'}}/>
+                    <img src= {this.state.ballBarImage} style= {{position: 'absolute', left: 37.5+((this.state.xPos)/(this.state.numObstacles*this.state.screenWidth))*25+'%', width: '20px' ,top: '1.6%'}}/>
                     {this.state.qboxanim ? <p className= "time">{this.state.time2}</p>:<p/>}
                     {this.state.qboxanim ? <div className= "qboxanim" style= {{backgroundImage: 'url('+this.state.qBoxImage+')'}}/>:<div/>}
                     {this.state.deadanim ? <div className= "qboxanim" style= {{backgroundImage: 'url('+Ouch+')'}}/>:<div/>}

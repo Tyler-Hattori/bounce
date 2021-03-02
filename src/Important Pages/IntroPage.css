@@ -59,8 +59,8 @@ h1 {
     border-radius: 100%;
     position: absolute;
     top: 80%;
-    left: 45%;
-    min-width: 10%;
+    left: 42.5%;
+    min-width: 15%;
     height: 10%;
     font-size: 5vmin;
 }
