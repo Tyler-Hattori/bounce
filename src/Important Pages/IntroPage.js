@@ -36,6 +36,7 @@ class IntroPage extends React.Component {
             selectionsSet: false,
             selectedDifficulty: false,
             selectedBall: false,
+            selectedLength: false,
             background: PlebianBackground,
             ballImage: Ball1,
             ballBarImage: BallBar1,
@@ -46,25 +47,43 @@ class IntroPage extends React.Component {
             fastestMediumTime: 0,
             fastestHardTime: 0,
             fastestExpertTime: 0,
+            numObstacles: 1,
         }
         
     }
 
-    componentDidMount() {
-        database.ref('times/1').orderByValue().limitToFirst(1).once("value",(snapshot) => {
-            snapshot.forEach((child)=>{this.setState({fastestPlebianTime: child.val()}) })  })
-        database.ref('times/2').orderByValue().limitToFirst(1).once("value",(snapshot) => {
-            snapshot.forEach((child)=>{this.setState({fastestEasyTime: child.val()}) })  })
-        database.ref('times/3').orderByValue().limitToFirst(1).once("value",(snapshot) => {
-            snapshot.forEach((child)=>{this.setState({fastestMediumTime: child.val()})  })  })
-        database.ref('times/4').orderByValue().limitToFirst(1).once("value",(snapshot) => {
-            snapshot.forEach((child)=>{this.setState({fastestHardTime: child.val()})})  })
-        database.ref('times/5').orderByValue().limitToFirst(1).once("value",(snapshot) => {
-            snapshot.forEach((child)=>{this.setState({fastestExpertTime: child.val()}) })  })
-    }
-
     select(button) {
         switch(button) {
+            case "super short":
+                this.setState({selectedLength: true, numObstacles: 3})
+                this.findFastestTimes(3)
+                this.switchButtonTransparency("ss")
+                break
+            case "short":
+                this.setState({selectedLength: true, numObstacles: 4})
+                this.findFastestTimes(4)
+                this.switchButtonTransparency("s")
+                break
+            case "standard":
+                this.setState({selectedLength: true, numObstacles: 5})
+                this.findFastestTimes(5)
+                this.switchButtonTransparency("st")
+                break
+            case "long":
+                this.setState({selectedLength: true, numObstacles: 7})
+                this.findFastestTimes(7)
+                this.switchButtonTransparency("l")
+                break
+            case "quite long":
+                this.setState({selectedLength: true, numObstacles: 9})
+                this.findFastestTimes(9)
+                this.switchButtonTransparency("ql")
+                break
+            case "very long":
+                this.setState({selectedLength: true, numObstacles: 12})
+                this.findFastestTimes(12)
+                this.switchButtonTransparency("vl")
+                break
             case "baseball":
                 this.setState({selectedBall: true, ballImage: Ball1, ballBarImage: BallBar1})
                 break
@@ -127,12 +146,30 @@ class IntroPage extends React.Component {
                     tileImage: Tile5})
                 break
             case "Ok":
-                if (this.state.selectedDifficulty && this.state.selectedBall)
+                if (this.state.selectedDifficulty && this.state.selectedBall && this.state.selectedLength)
                     this.setState({ selectionsSet: true })
                 break
             default:
             
         }
+    }
+    
+    findFastestTimes(length) {
+        database.ref(length+' obstacles/1').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            if (snapshot.val() === null) this.setState({fastestPlebianTime: 0})
+            snapshot.forEach((child)=>{this.setState({fastestPlebianTime: child.val()}) })  })
+        database.ref(length+' obstacles/2').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            if (snapshot.val() === null) this.setState({fastestEasyTime: 0})
+            snapshot.forEach((child)=>{this.setState({fastestEasyTime: child.val()}) })  })
+        database.ref(length+' obstacles/3').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            if (snapshot.val() === null) this.setState({fastestMediumTime: 0})
+            snapshot.forEach((child)=>{this.setState({fastestMediumTime: child.val()})  })  })
+        database.ref(length+' obstacles/4').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            if (snapshot.val() === null) this.setState({fastestHardTime: 0})
+            snapshot.forEach((child)=>{this.setState({fastestHardTime: child.val()})})  })
+        database.ref(length+' obstacles/5').orderByValue().limitToFirst(1).once("value",(snapshot) => {
+            if (snapshot.val() === null) this.setState({fastestExpertTime: 0})
+            snapshot.forEach((child)=>{this.setState({fastestExpertTime: child.val()}) })  })
     }
 
     switchButtonColor(buttonID, color) {
@@ -160,6 +197,35 @@ class IntroPage extends React.Component {
         else    document.getElementById("expert").style.color = "white"
     }
 
+    switchButtonTransparency(buttonID) {
+        document.getElementById(buttonID).style.backgroundColor = "black"
+        document.getElementById(buttonID).style.color = "white"
+        if (buttonID !== "ss")  {
+            document.getElementById("ss").style.backgroundColor = "transparent"
+            document.getElementById("ss").style.color = "black"
+        }
+        if (buttonID !== "s")  {
+            document.getElementById("s").style.backgroundColor = "transparent"
+            document.getElementById("s").style.color = "black"
+        }
+        if (buttonID !== "st")  {
+            document.getElementById("st").style.backgroundColor = "transparent"
+            document.getElementById("st").style.color = "black"
+        }
+        if (buttonID !== "l")  {
+            document.getElementById("l").style.backgroundColor = "transparent"
+            document.getElementById("l").style.color = "black"
+        }
+        if (buttonID !== "ql")  {
+            document.getElementById("ql").style.backgroundColor = "transparent"
+            document.getElementById("ql").style.color = "black"
+        }
+        if (buttonID !== "vl")  {
+            document.getElementById("vl").style.backgroundColor = "transparent"
+            document.getElementById("vl").style.color = "black"
+        }
+    }
+
     render() {
         if (this.state.selectionsSet) {
             return (
@@ -167,7 +233,8 @@ class IntroPage extends React.Component {
                     difficulty={this.state.difficulty}
                     background= {this.state.background}
                     ballImage= {this.state.ballImage}
-                    ballBarImage= {this.state.ballBarImage}/>
+                    ballBarImage= {this.state.ballBarImage}
+                    numObstacles= {this.state.numObstacles}/>
             )
         }
         else {
@@ -187,7 +254,15 @@ class IntroPage extends React.Component {
                         <button onClick= {() => this.select("volleyball")} className = "bouncy ball" style= {{animationDelay: `0.42s`, backgroundImage: 'url('+Ball7+')', width: 50}}/>
                     </div>
                     <div className= "fade_in">
-                        <button id= "plebian" onClick= {() => this.select("plebian")} className = "button1 bouncy" style= {{border: 'solid green 1vmin', }}>Plebian<br/>{this.state.fastestPlebianTime}s</button>
+                        <button id= "ss" onClick= {() => this.select("super short")} className = "bouncy length_button">Super Short</button>
+                        <button id= "s" onClick= {() => this.select("short")} className = "bouncy length_button" style= {{animationDelay: `0.07s`}}>Short</button>
+                        <button id= "st" onClick= {() => this.select("standard")} className = "bouncy length_button" style= {{animationDelay: `0.14s`}}>Standard</button>
+                        <button id= "l" onClick= {() => this.select("long")} className = "bouncy length_button" style= {{animationDelay: `0.21s`}}>Long</button>
+                        <button id= "ql" onClick= {() => this.select("quite long")} className = "bouncy length_button" style= {{animationDelay: `0.28s`}}>Quite Long</button>
+                        <button id= "vl" onClick= {() => this.select("very long")} className = "bouncy length_button" style= {{animationDelay: `0.35s`}}>Very Long</button>
+                    </div>
+                    <div className= "fade_in">
+                        <button id= "plebian" onClick= {() => this.select("plebian")} className = "button1 bouncy" style= {{border: 'solid green 1vmin'}}>Plebian<br/>{this.state.fastestPlebianTime}s</button>
                         <button id= "easy" onClick= {() => this.select("easy")} className = "button1 bouncy" style= {{animationDelay: `0.07s`,  border: `solid blue 1vmin`}}>Easy<br/>{this.state.fastestEasyTime}s</button>
                         <button id= "medium" onClick= {() => this.select("medium")} className = "button1 bouncy" style= {{animationDelay: `0.14s`,  border: `solid orange 1vmin`}}>Medium<br/>{this.state.fastestMediumTime}s</button>
                         <button id= "hard" onClick= {() => this.select("hard")} className = "button1 bouncy" style= {{animationDelay: `0.21s`,  border: `solid red 1vmin`}}>Hard<br/>{this.state.fastestHardTime}s</button>

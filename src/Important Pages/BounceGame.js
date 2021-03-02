@@ -57,7 +57,7 @@ class BounceGame extends React.Component {
             time: new Date().getTime(),
             qBoxImage: QBoxHandling,
             tileImage: props.tileImage,
-            numObstacles: 3,
+            numObstacles: props.numObstacles,
             springPos: 0,
             spikeImage: SpikeImage,
             died: false,
@@ -397,9 +397,6 @@ class BounceGame extends React.Component {
         let h = this.state.screenHeight           
         return <Spring height= {unitY*6} width= {unitX*0.6} xPos= {x} yPos= {h-unitY*2}/>
     }
-    // movingTile(x,y,acceleration,xSpeed,ySpeed) {
-    //     return <MovingTile image= {this.state.tileImage} height = {unitX} width= {unitX} xPosInit= {x} yPosInit= {y} xPos= {x} yPos= {y} acc= {acceleration} xSpeed= {xSpeed} ySpeed = {ySpeed}/>
-    // }
 
     gameLoop() {
         let timeoutId = setTimeout(() => {
@@ -532,7 +529,9 @@ class BounceGame extends React.Component {
     render() {
         if (this.state.isGameOver) {
             return (
-                <GameOver difficulty = {this.state.difficulty} time= {Math.round(new Date().getTime() - this.state.time)/1000}/>
+                <GameOver difficulty = {this.state.difficulty}
+                    time= {Math.round(new Date().getTime() - this.state.time)/1000}
+                    length= {this.state.numObstacles+' obstacles'}/>
             )
         }
         else {

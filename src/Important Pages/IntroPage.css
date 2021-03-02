@@ -90,8 +90,24 @@ h1 {
     transition: all 0.2s;
 }
 
+.length_button{
+    border-radius: 10%;
+    border-color: black;
+    position: absolute;
+    font-family: 'sriracha', cursive;
+    background-color: white;
+    margin-right: 5px;
+    font-size: 2.5vmin;
+    font-weight: 400;
+    color:#000000;
+    text-align:center;
+    transition: all 0.2s;
+}
+
 .button1:hover,
-.button1:focus {
+.button1:focus,
+.length_button:hover,
+.length_button:focus {
     background-color:#868686;
 }
 .ball:hover,
@@ -104,7 +120,7 @@ h1 {
     animation:bouncy 5s infinite linear;
     position:relative;
     margin-right: 10px;
-    margin-top: 5%;
+    margin-top: 4%;
 }
 @keyframes bouncy {
     0%{top:0em}

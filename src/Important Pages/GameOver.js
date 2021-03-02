@@ -4,10 +4,14 @@ import database from '../firebase'
 
 function GameOver(props) {
     let [bestTime, setBestTime] = useState(0)
-    database.ref('times/'+props.difficulty).push(props.time)
-    database.ref('times/'+props.difficulty).orderByValue().limitToFirst(1).once("value",(snapshot) => {
+    database.ref(props.length+'/'+props.difficulty).push(props.time)
+    database.ref(props.length+'/'+props.difficulty).orderByValue().limitToFirst(1).once("value",(snapshot) => {
         snapshot.forEach((child)=>{setBestTime(child.val())})  })
-
+    database.ref(props.length+'/'+props.difficulty).orderByValue().once("value",(snapshot) => {
+        snapshot.forEach((child)=>{
+            if (child.val() > bestTime) database.ref(props.length+'/'+props.difficulty+'/'+child.key).remove()
+        })  
+    })
     let newRecord = false
 
     if(bestTime == props.time) newRecord = true;
