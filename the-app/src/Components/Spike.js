@@ -1,11 +1,10 @@
 import React from 'react'
-import SpikeImage from './Images/spike.png'
 import './Spike.css'
 
 function Spike(props) {
     let rand = Math.random()
     return (
-        <img src= {SpikeImage} id= "spike" 
+        <img src= {props.image} id= "spike" 
         style= {{position: 'absolute', 
             height: props.height, 
             left: props.xPos, 

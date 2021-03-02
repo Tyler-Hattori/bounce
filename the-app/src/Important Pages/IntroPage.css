@@ -1,15 +1,13 @@
-/* rgb(221,207,142); */
-/* rgb(148,161,151); */
 .text {
     position: relative;
     text-align: center;
-    background-color: white;
+    background-image: -webkit-linear-gradient(bottom, white 50%, rgb(231, 231, 231) 50%);
     font-family: 'Acme', sans-serif;
 }
 
 h1 {
     position: relative;
-    background-color: white;
+    background-image: -webkit-linear-gradient(bottom, white 50%, rgb(231, 231, 231) 50%);
     text-align: center;
     padding-top: 20px;
     padding-bottom: 10px;
