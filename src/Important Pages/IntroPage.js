@@ -195,9 +195,9 @@ class IntroPage extends React.Component {
                     </div>
                     <button className = "fade_in text ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
                 </div>
-                <div className= "login_logout">
+                {/* <div className= "login_logout">
                     <LoginLogout/>
-                </div>
+                </div> */}
             </div>
             )
         }
