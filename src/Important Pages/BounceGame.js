@@ -585,7 +585,7 @@ class BounceGame extends React.Component {
                 if (this.qBoxImages[rand] === QBoxHandling) this.setState({qBoxImage: QBoxHandling, xAcceleration: 15, time1: new Date().getTime()})
                 else if (this.qBoxImages[rand] === QBoxMiniBall) this.setState({qBoxImage: QBoxMiniBall, ballSize: this.state.screenHeight/35, gravity: this.state.gravity*2/3, time1: new Date().getTime()})
                 else if (this.qBoxImages[rand] === QBoxSpeed) this.setState({qBoxImage: QBoxSpeed, maxSpeed: 45, time1: new Date().getTime()})
-                else if (this.qBoxImages[rand] === QBoxHeavy) this.setState({qBoxImage: QBoxHeavy, gravity: this.state.gravity*3, time1: new Date().getTime()})
+                else if (this.qBoxImages[rand] === QBoxHeavy) this.setState({qBoxImage: QBoxHeavy, gravity: this.state.gravity*2, time1: new Date().getTime()})
                 else if (this.qBoxImages[rand] === QBoxFat) this.setState({qBoxImage: QBoxFat, gravity: this.state.gravity*3/2, ballSize: this.state.screenHeight/15, time1: new Date().getTime()})
                 else if (this.qBoxImages[rand] === QBoxNonStop) this.setState({qBoxImage: QBoxNonStop, nonStop: true, time1: new Date().getTime()})
                 else if (this.qBoxImages[rand] === QBoxSlow) this.setState({qBoxImage: QBoxSlow, xAcceleration: 1, maxSpeed: 25, time1: new Date().getTime()})
