@@ -26,6 +26,11 @@ import BallBar4 from '../Components/Images/bowlingball_bar.png'
 import BallBar5 from '../Components/Images/poolball_bar.png'
 import BallBar6 from '../Components/Images/tennisball_bar.png'
 import BallBar7 from '../Components/Images/volleyball_bar.png'
+import Spike1 from '../Components/Images/thorns.png'
+import Spike2 from '../Components/Images/bee.png'
+import Spike3 from '../Components/Images/mine.png'
+import Spike4 from '../Components/Images/cactus.png'
+import Spike5 from '../Components/Images/spike.png'
 import database from '../firebase'
 
 
@@ -42,6 +47,7 @@ class IntroPage extends React.Component {
             ballBarImage: BallBar1,
             difficulty: 0,
             tileImage: Tile1,
+            spikeImage: Spike1,
             fastestPlebianTime: 0,
             fastestEasyTime: 0,
             fastestMediumTime: 0,
@@ -86,24 +92,31 @@ class IntroPage extends React.Component {
                 break
             case "baseball":
                 this.setState({selectedBall: true, ballImage: Ball1, ballBarImage: BallBar1})
+                this.switchBallTransparency("baseball")
                 break
             case "basketball":
                 this.setState({selectedBall: true, ballImage: Ball2, ballBarImage: BallBar2})
+                this.switchBallTransparency("basketball")
                 break
             case "beachball":
                 this.setState({selectedBall: true, ballImage: Ball3, ballBarImage: BallBar3})
+                this.switchBallTransparency("beachball")
                 break
             case "bowlingball":
                 this.setState({selectedBall: true, ballImage: Ball4, ballBarImage: BallBar4})
+                this.switchBallTransparency("bowlingball")
                 break
             case "poolball":
                 this.setState({selectedBall: true, ballImage: Ball5, ballBarImage: BallBar5})
+                this.switchBallTransparency("poolball")
                 break
             case "tennisball":
                 this.setState({selectedBall: true, ballImage: Ball6, ballBarImage: BallBar6})
+                this.switchBallTransparency("tennisball")
                 break
             case "volleyball":
                 this.setState({selectedBall: true, ballImage: Ball7, ballBarImage: BallBar7})
+                this.switchBallTransparency("volleyball")
                 break
             case "plebian":
                 this.switchButtonColor("plebian","darkgreen")
@@ -111,7 +124,8 @@ class IntroPage extends React.Component {
                     selectedDifficulty: true,
                     difficulty: 1,
                     background: PlebianBackground,
-                    tileImage: Tile1})
+                    tileImage: Tile1,
+                    spikeImage: Spike1})
                 break
             case "easy":
                 this.switchButtonColor("easy","darkblue")
@@ -119,7 +133,8 @@ class IntroPage extends React.Component {
                     selectedDifficulty: true,
                     difficulty: 2,
                     background: EasyBackground,
-                    tileImage: Tile2})
+                    tileImage: Tile2,
+                    spikeImage: Spike2})
                 break
             case "medium":
                 this.switchButtonColor("medium","gold")
@@ -127,7 +142,8 @@ class IntroPage extends React.Component {
                     selectedDifficulty: true,
                     difficulty: 3,
                     background: MediumBackground,
-                    tileImage: Tile3})
+                    tileImage: Tile3,
+                    spikeImage: Spike3})
                 break
             case "hard":
                 this.switchButtonColor("hard","darkred")
@@ -135,7 +151,8 @@ class IntroPage extends React.Component {
                     selectedDifficulty: true,
                     difficulty: 4,
                     background: HardBackground,
-                    tileImage: Tile4})
+                    tileImage: Tile4,
+                    spikeImage: Spike4})
                 break
             case "expert":
                 this.switchButtonColor("expert","purple")
@@ -143,7 +160,8 @@ class IntroPage extends React.Component {
                     selectedDifficulty: true,
                     difficulty: 5,
                     background: ExpertBackground,
-                    tileImage: Tile5})
+                    tileImage: Tile5,
+                    spikeImage: Spike5})
                 break
             case "Ok":
                 if (this.state.selectedDifficulty && this.state.selectedBall && this.state.selectedLength)
@@ -226,6 +244,17 @@ class IntroPage extends React.Component {
         }
     }
 
+    switchBallTransparency(buttonID) {
+        document.getElementById(buttonID).style.opacity = 1
+        if (buttonID !== "baseball")  document.getElementById("baseball").style.opacity = 0.3
+        if (buttonID !== "basketball")  document.getElementById("basketball").style.opacity = 0.3
+        if (buttonID !== "beachball")  document.getElementById("beachball").style.opacity = 0.3
+        if (buttonID !== "bowlingball")  document.getElementById("bowlingball").style.opacity = 0.3
+        if (buttonID !== "poolball")  document.getElementById("poolball").style.opacity = 0.3
+        if (buttonID !== "tennisball")  document.getElementById("tennisball").style.opacity = 0.3
+        if (buttonID !== "volleyball")  document.getElementById("volleyball").style.opacity = 0.3
+    }
+
     render() {
         if (this.state.selectionsSet) {
             return (
@@ -234,7 +263,8 @@ class IntroPage extends React.Component {
                     background= {this.state.background}
                     ballImage= {this.state.ballImage}
                     ballBarImage= {this.state.ballBarImage}
-                    numObstacles= {this.state.numObstacles}/>
+                    numObstacles= {this.state.numObstacles}
+                    spikeImage= {this.state.spikeImage}/>
             )
         }
         else {
@@ -244,15 +274,6 @@ class IntroPage extends React.Component {
                     <h1 className= "fade_in">Bounce!</h1>
                     <p className = "subtitle left text fade_in">(a game that involves bouncing)</p>
                     <p className = "instructions right text fade_in">Reach the goal before your ball runs out of energy</p>
-                    <div className= "fade_in">
-                        <button onClick= {() => this.select("baseball")} className = "bouncy ball" style= {{backgroundImage: 'url('+Ball1+')', width: 50}}/>
-                        <button onClick= {() => this.select("basketball")} className = "bouncy ball" style= {{animationDelay: `0.07s`, backgroundImage: 'url('+Ball2+')', width: 50}}/>
-                        <button onClick= {() => this.select("beachball")} className = "bouncy ball" style= {{animationDelay: `0.14s`, backgroundImage: 'url('+Ball3+')', width: 50}}/>
-                        <button onClick= {() => this.select("bowlingball")} className = "bouncy ball" style= {{animationDelay: `0.21s`, backgroundImage: 'url('+Ball4+')', width: 50}}/>
-                        <button onClick= {() => this.select("poolball")} className = "bouncy ball" style= {{animationDelay: `0.28s`, backgroundImage: 'url('+Ball5+')', width: 50}}/>
-                        <button onClick= {() => this.select("tennisball")} className = "bouncy ball" style= {{animationDelay: `0.35s`, backgroundImage: 'url('+Ball6+')', width: 50}}/>
-                        <button onClick= {() => this.select("volleyball")} className = "bouncy ball" style= {{animationDelay: `0.42s`, backgroundImage: 'url('+Ball7+')', width: 50}}/>
-                    </div>
                     <div className= "fade_in">
                         <button id= "ss" onClick= {() => this.select("super short")} className = "bouncy length_button">Super Short</button>
                         <button id= "s" onClick= {() => this.select("short")} className = "bouncy length_button" style= {{animationDelay: `0.07s`}}>Short</button>
@@ -267,6 +288,15 @@ class IntroPage extends React.Component {
                         <button id= "medium" onClick= {() => this.select("medium")} className = "button1 bouncy" style= {{animationDelay: `0.14s`,  border: `solid orange 1vmin`}}>Medium<br/>{this.state.fastestMediumTime}s</button>
                         <button id= "hard" onClick= {() => this.select("hard")} className = "button1 bouncy" style= {{animationDelay: `0.21s`,  border: `solid red 1vmin`}}>Hard<br/>{this.state.fastestHardTime}s</button>
                         <button id= "expert" onClick= {() => this.select("expert")} className = "button1 bouncy" style= {{animationDelay: `0.28s`,  border: `solid black 1vmin`}}>Expert<br/>{this.state.fastestExpertTime}s</button>
+                    </div>
+                    <div className= "fade_in">
+                        <button id= "baseball" onClick= {() => this.select("baseball")} className = "bouncy ball" style= {{backgroundImage: 'url('+Ball1+')', width: 50}}/>
+                        <button id= "basketball" onClick= {() => this.select("basketball")} className = "bouncy ball" style= {{animationDelay: `0.07s`, backgroundImage: 'url('+Ball2+')', width: 50}}/>
+                        <button id= "beachball" onClick= {() => this.select("beachball")} className = "bouncy ball" style= {{animationDelay: `0.14s`, backgroundImage: 'url('+Ball3+')', width: 50}}/>
+                        <button id= "bowlingball" onClick= {() => this.select("bowlingball")} className = "bouncy ball" style= {{animationDelay: `0.21s`, backgroundImage: 'url('+Ball4+')', width: 50}}/>
+                        <button id= "poolball" onClick= {() => this.select("poolball")} className = "bouncy ball" style= {{animationDelay: `0.28s`, backgroundImage: 'url('+Ball5+')', width: 50}}/>
+                        <button id= "tennisball" onClick= {() => this.select("tennisball")} className = "bouncy ball" style= {{animationDelay: `0.35s`, backgroundImage: 'url('+Ball6+')', width: 50}}/>
+                        <button id= "volleyball" onClick= {() => this.select("volleyball")} className = "bouncy ball" style= {{animationDelay: `0.42s`, backgroundImage: 'url('+Ball7+')', width: 50}}/>
                     </div>
                     <button className = "fade_in text ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
                 </div>

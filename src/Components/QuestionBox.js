@@ -5,7 +5,7 @@ function QuestionBox(props) {
     return(
         <img src= {QuestionBoxImage}
         style= {{position: "absolute",
-            height: 50, 
+            height: props.width, 
             top: props.yPos,
             left: props.xPos}}/>
     )

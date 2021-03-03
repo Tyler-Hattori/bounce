@@ -6,14 +6,18 @@ import Tile from '../Components/Tile'
 import QuestionBox from '../Components/QuestionBox'
 import QBoxHandling from '../Components/Images/question_box_handling.png'
 import QBoxMiniBall from '../Components/Images/question_box_mini_ball.png'
+import QBoxSpeed from '../Components/Images/question_box_speed.png'
+import QBoxHeavy from '../Components/Images/question_box_heavy.png'
+import QBoxFat from '../Components/Images/question_box_fat.png'
+import QBoxNonStop from '../Components/Images/question_box_nonstop.png'
+import QBoxSlow from '../Components/Images/question_box_slow.png'
+import QBoxMirror from '../Components/Images/question_box_mirrored.png'
 import Spring from '../Components/Spring'
 import SpringImage from '../Components/Images/spring.png'
 import Laser from '../Components/Laser'
 import Arrow from '../Components/Arrow'
 import Sword from '../Components/Sword'
 import Spike from '../Components/Spike'
-import SpikeImage from '../Components/Images/spike.png'
-import MovingTile from '../Components/MovingTile'
 import Goal from '../Components/Goal'
 import Ouch from '../Components/Images/ouch.png'
 import ProgressBar from '../Components/Images/progress_bar.png'
@@ -23,6 +27,7 @@ class BounceGame extends React.Component {
         super(props)
         
         this.handleKeyDown = this.handleKeyDown.bind(this)
+        this.handleTouch = this.handleTouch.bind(this)
 
         this.state = {
             screenWidth: 1620,
@@ -57,10 +62,13 @@ class BounceGame extends React.Component {
             time: new Date().getTime(),
             qBoxImage: QBoxHandling,
             tileImage: props.tileImage,
+            spikeImage: props.spikeImage,
             numObstacles: props.numObstacles,
             springPos: 0,
-            spikeImage: SpikeImage,
             died: false,
+            clientX: 0,
+            nonStop: false,
+            mirror: false
         }
 
     }
@@ -72,7 +80,7 @@ class BounceGame extends React.Component {
         this.hardObstacles = [[]]
         this.expertObstacles = [[]]
         this.obstacles = []
-        this.qBoxImages = [QBoxHandling,QBoxMiniBall]
+        this.qBoxImages = [QBoxHandling,QBoxMiniBall,QBoxFat,QBoxHeavy,QBoxMirror,QBoxNonStop,QBoxSpeed,QBoxSlow]
         this.generateObstacles(this.state.difficulty)
         let def = this.defaultStart()
         for (let i = 0; i < def.length; i++)  this.obstacles.push(def[i])
@@ -84,6 +92,7 @@ class BounceGame extends React.Component {
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX*2,this.state.screenHeight-unitY))
         this.obstacles.push(<Goal height= {unitY*15} width= {unitX/2} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unitX*2} yPos= {this.state.screenHeight-(unitY*16)}/>)
         window.addEventListener('keydown', this.handleKeyDown)
+        window.addEventListener('touchstart', this.handleTouch)
         this.gameLoop()
     }
      
@@ -121,11 +130,13 @@ class BounceGame extends React.Component {
             springanim: false,
             deadanim: true,
             xAcceleration: 4,
+            nonStop: false,
             time1: 0,
             time2: 0,
             time: new Date().getTime(),
             died: false,
             determinedScreenDims:false,
+            mirror: false
         })
     }
 
@@ -134,7 +145,7 @@ class BounceGame extends React.Component {
             case 1:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.plebianObstacles = [this.ob1(x), this.ob7(x)]
+                    this.plebianObstacles = [this.ob1(x), this.ob7(x),this.ob9(x)]
                     let index = Math.floor(Math.random()*this.plebianObstacles.length)
                     for (let j=0;j<this.plebianObstacles[index].length;j++)   
                         this.obstacles.push(this.plebianObstacles[index][j])
@@ -143,7 +154,7 @@ class BounceGame extends React.Component {
             case 2:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.easyObstacles = [this.ob1(x),this.ob2(x)]
+                    this.easyObstacles = [this.ob1(x),this.ob2(x),this.ob7(x),this.ob13(x)]
                     let index = Math.floor(Math.random()*this.easyObstacles.length)
                     for (let j=0;j<this.easyObstacles[index].length;j++)   
                         this.obstacles.push(this.easyObstacles[index][j])
@@ -152,7 +163,7 @@ class BounceGame extends React.Component {
             case 3:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.mediumObstacles = [this.ob2(x),this.ob8(x)]
+                    this.mediumObstacles = [this.ob2(x),this.ob8(x),this.ob11(x),this.ob12(x),this.ob13(x)]
                     let index = Math.floor(Math.random()*this.mediumObstacles.length)
                     for (let j=0;j<this.mediumObstacles[index].length;j++)   
                         this.obstacles.push(this.mediumObstacles[index][j])
@@ -161,7 +172,7 @@ class BounceGame extends React.Component {
             case 4:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.hardObstacles = [this.ob3(x),this.ob4(x),this.ob5(x), this.ob6(x)]
+                    this.hardObstacles = [this.ob3(x),this.ob4(x),this.ob5(x), this.ob6(x),this.ob8(x),this.ob11(x),this.ob12(x)]
                     let index = Math.floor(Math.random()*this.hardObstacles.length)
                     for (let j=0;j<this.hardObstacles[index].length;j++)   
                         this.obstacles.push(this.hardObstacles[index][j])
@@ -170,7 +181,7 @@ class BounceGame extends React.Component {
             case 5:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.expertObstacles = [this.ob3(x),this.ob4(x), this.ob6(x)]
+                    this.expertObstacles = [this.ob3(x),this.ob4(x), this.ob6(x),this.ob10(x)]
                     let index = Math.floor(Math.random()*this.expertObstacles.length)
                     for (let j=0;j<this.expertObstacles[index].length;j++)   
                         this.obstacles.push(this.expertObstacles[index][j])
@@ -210,7 +221,11 @@ class BounceGame extends React.Component {
             this.tile(x),
             this.tile(x+unitX),
             this.spring(x+unitX*2),
-            this.tile(x+unitX*9)
+            this.tile(x+unitX*9),
+            this.tile(x+unitX*8),
+            this.tile(x+unitX*7),
+            this.tile(x+unitX*6),
+            this.questionbox(x+unitX*6,h-unitY*14)
         ]
     } //ob1: Spring with far-off block
     ob2(x) {
@@ -227,6 +242,7 @@ class BounceGame extends React.Component {
             this.tile2(x+unitX*8,h-unitY*12),
             this.tile2(x+unitX*9,h-unitY*12),
             this.tile2(x+unitX*10,h-unitY*12),
+            this.questionbox(x+unitX*8,h-unitY*8),
             <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*3} yPos = {h-unitY*16}/>,
             <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*3} yPos = {h-unitY*11}/>,
             <Spike image= {this.state.spikeImage} height= {unitX} width= {unitX} xPos= {x+unitX*4} yPos = {h-unitY*11}/>,
@@ -254,6 +270,7 @@ class BounceGame extends React.Component {
         let h = this.state.screenHeight
         return [
             this.spring(x+unitX*4),
+            this.questionbox(x+unitX*4,h-unitY*16),
             this.spike(x+unitX*9,h-unitY*12),
             this.spike(x+unitX*9,h-unitY*18),
             this.spike(x+unitX*8,h-unitY*12),
@@ -283,7 +300,7 @@ class BounceGame extends React.Component {
             this.spike(x+unitX*12,h-unitY*12),
             this.spike(x+unitX*16,h-unitY*12)
         ]
-    } //ob4: tiles with two spikes over them. Tough
+    } //ob4: tiles with two spikes over them
     ob5(x) {
         let unitX = this.state.screenWidth/16
         let unitY = this.state.screenHeight/20
@@ -348,32 +365,151 @@ class BounceGame extends React.Component {
         let unitY = this.state.screenHeight/20
         let h = this.state.screenHeight
         return [
-            this.tile2(x+unitX*3,h-unitY*14),
+            this.spring(x+unitX),
+            this.tile2(x+unitX*6,h-unitY*13),
             this.tile(x+unitX*12),
-            this.tile2(x+unitX*9,h-unitY*14),
-            this.tile2(x+unitX*15,h-unitY*14)
+            this.tile(x+unitX*11),
+            this.tile(x+unitX*13),
+            <QuestionBox xPos= {x+unitX*12} yPos= {h-unitY*7} height= {unitY} width= {unitY}/>,
+            this.tile2(x+unitX*9,h-unitY*13),
+            this.tile2(x+unitX*15,h-unitY*13)
         ]
-    } //ob7: Tiles spread around. Plebian
+    } //ob7: Tiles spread around
     ob8(x) {
         let unitX = this.state.screenWidth/16
         let unitY = this.state.screenHeight/20
         let h = this.state.screenHeight
         return [
-            this.spring(x+unitX*2)
-
-            
+            this.spring(x+unitX*2),
+            this.questionbox(x+unitX*9,h-unitY*10),
+            this.tile(x+unitX*11),
+            this.tile(x+unitX*12),
+            this.tile(x+unitX*13),
         ]
-    }
+    } //ob8: Spring with questionbox
     ob9(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(x+100),
+            this.tile(x+300),
+            this.tile(x+600),
+            this.tile(x+1000),
+            this.tile(x+1500)
+        ]
+    } //Spread out ground tiles
+    ob10(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(x),
+            this.spike(x+unitX*3,h-unitY*14),
+            this.spike(x+unitX*3,h-unitY*10),
+            this.tile(x+unitX*6),
+            this.spike(x+unitX*9,h-unitY*12),
+            this.spike(x+unitX*9,h-unitY*8),
+            this.tile(x+unitX*12),
+            this.spike(x+unitX*15,h-unitY*10),
+            this.spike(x+unitX*15,h-unitY*6)
+        ]
+    } //ob10: jump through spikes
+    ob11(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.spike(x,h-8),
+            this.tile(x+unitX),
+            this.questionbox(x+unitX*2,h-unitY*10),
+            this.tile(x+unitX*2),
+            this.tile(x+unitX*3),
+            this.tile(x+unitX*6),
+            this.tile(x+unitX*7),
+            this.tile(x+unitX*8),
+            this.tile(x+unitX*9),
+            this.tile(x+unitX*10),
+            this.tile(x+unitX*11),
+            this.tile(x+unitX*12),
+            this.tile(x+unitX*13),
+            this.tile(x+unitX*14),
+            this.tile(x+unitX*15),
+            this.tile(x+unitX*16),
+            this.spike(x+unitX*7,h-unitY*9),
+            this.spike(x+unitX*9,h-unitY*9),
+            this.spike(x+unitX*11,h-unitY*9),
+            this.spike(x+unitX*13,h-unitY*9),
+            this.spike(x+unitX*15,h-unitY*9)
+        ]
+    } //ob11: avoid spikes on up bounce
+    ob12(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(x+unitX*3),
+            this.tile2(x+unitX*5,h-unitY*5),
+            this.spike(x+unitX*4,h-unitY*5),
+            this.tile2(x+unitX*7,h-unitY*10),
+            this.spike(x+unitX*6,h-unitY*10),
+            this.tile(x+unitX*10),
+            this.questionbox(x+unitX*10,h-unitY*10),
+            this.tile2(x+unitX*10,h-unitY*14),
+            this.spike(x+unitX*9,h-unitY*14),
+            this.spike(x+unitX*11,h-unitY*14),
+            this.tile2(x+unitX*13,h-unitY*10),
+            this.spike(x+unitX*14,h-unitY*10),
+            this.tile2(x+unitX*15,h-unitY*5),
+            this.spike(x+unitX*16,h-unitY*5)
+        ]
+    } //ob12: Stairstep
+    ob13(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(x+unitX*2),
+            this.spring(x+unitX*3),
+            this.tile(x+unitX*7/2),
+            this.questionbox(x+unitX*3,h-unitY*12),
+            this.spike(x+unitX*7,h-unitY*9),
+            this.spike(x+unitX*8,h-unitY*9),
+            this.spike(x+unitX*9,h-unitY*9),
+            this.spike(x+unitX*10,h-unitY*9),
+            this.spring(x+unitX*11),
+            this.tile(x+unitX*23/2),
+            this.spike(x+unitX*12,h-unitY*9),
+            this.spike(x+unitX*13,h-unitY*9),
+            this.spike(x+unitX*14,h-unitY*9),
+            this.spike(x+unitX*15,h-unitY*9)
+        ]
+    } //ob13: Leap
+    ob14(x) {
         
     }
-    ob10(x) {
-
+    ob15(x) {
+        
     }
-    ob11(x) {
-
+    ob16(x) {
+        
     }
-    ob12(x) {
+    ob17(x) {
+        
+    }
+    ob18(x) {
+        
+    }
+    ob19(x) {
+        
+    }
+    ob20(x) {
+        
+    }
+    ob21(x) {
+        
+    }
+    ob22(x) {
         
     }
     tile2(x,y) {
@@ -397,16 +533,27 @@ class BounceGame extends React.Component {
         let h = this.state.screenHeight           
         return <Spring height= {unitY*6} width= {unitX*0.6} xPos= {x} yPos= {h-unitY*2}/>
     }
+    questionbox(x,y) {
+        let unitY = this.state.screenHeight/20
+        return <QuestionBox xPos= {x} yPos= {y} width= {unitY} height= {unitY}/>
+    }
 
     gameLoop() {
         let timeoutId = setTimeout(() => {
             if (this.state.qboxanim) this.setState({time2: 20000 - new Date().getTime() + this.state.time1})
             if (this.state.springanim && this.state.ballSpeedY > 0) this.setState({springanim:false})
             if (this.state.deadanim && this.state.xPos > 700) this.setState({deadanim:false})
-            if (this.state.time2 < 0) this.setState({qboxanim:false, xAcceleration: 4, ballsize: 40, gravity: this.state.difficulty/2})
+            if (this.state.time2 <= 0) this.setState({
+                qboxanim:false, 
+                xAcceleration: 4, 
+                ballsize: this.state.screenHeight/25, 
+                gravity: this.state.difficulty/2,
+                maxSpeed: 30,
+                nonStop: false,
+                mirror: false})
             this.changeDirection()
-            if (this.state.yPos > this.state.screenHeight-30 || this.state.died) this.resetGame()
-            this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
+            if (!this.state.nonStop) this.setState({ keyPressed: false, ballDirection: 'zero acceleration' })
+            if (this.state.yPos > this.state.screenHeight || this.state.died) this.resetGame()
             if (!this.state.determinedScreenDims)   {
                 this.setState({
                     screenWidth: document.getElementById("fill_screen").clientWidth, 
@@ -433,10 +580,16 @@ class BounceGame extends React.Component {
                 this.setState({bounced: true, ballSpeedY: ball_speed, yPos: y + ball_speed})
             }
             else if (type === QuestionBox && !this.state.qboxanim) {
-                let rand = Math.floor(Math.random()*2)
+                let rand = Math.floor(Math.random()*8)
                 this.setState({qboxanim: true})
                 if (this.qBoxImages[rand] === QBoxHandling) this.setState({qBoxImage: QBoxHandling, xAcceleration: 15, time1: new Date().getTime()})
-                else if (this.qBoxImages[rand] === QBoxMiniBall) this.setState({qBoxImage: QBoxMiniBall, ballSize: 20, gravity: this.state.gravity*2/3, time1: new Date().getTime()})
+                else if (this.qBoxImages[rand] === QBoxMiniBall) this.setState({qBoxImage: QBoxMiniBall, ballSize: this.state.screenHeight/35, gravity: this.state.gravity*2/3, time1: new Date().getTime()})
+                else if (this.qBoxImages[rand] === QBoxSpeed) this.setState({qBoxImage: QBoxSpeed, maxSpeed: 45, time1: new Date().getTime()})
+                else if (this.qBoxImages[rand] === QBoxHeavy) this.setState({qBoxImage: QBoxHeavy, gravity: this.state.gravity*3, time1: new Date().getTime()})
+                else if (this.qBoxImages[rand] === QBoxFat) this.setState({qBoxImage: QBoxFat, gravity: this.state.gravity*3/2, ballSize: this.state.screenHeight/15, time1: new Date().getTime()})
+                else if (this.qBoxImages[rand] === QBoxNonStop) this.setState({qBoxImage: QBoxNonStop, nonStop: true, time1: new Date().getTime()})
+                else if (this.qBoxImages[rand] === QBoxSlow) this.setState({qBoxImage: QBoxSlow, xAcceleration: 1, maxSpeed: 25, time1: new Date().getTime()})
+                else if (this.qBoxImages[rand] === QBoxMirror) this.setState({qBoxImage: QBoxMirror, mirror: true, time1: new Date().getTime()})
             }
             else if (type === Spring) {
                 let unitX = this.state.screenWidth/16
@@ -474,13 +627,13 @@ class BounceGame extends React.Component {
     changeDirection() {
         switch (this.state.ballDirection) {
           case 'left':
-              this.moveSideways('left')
+            this.moveSideways('left')
             break
           case 'right':
-              this.moveSideways('right')
-              break
+            this.moveSideways('right')
+            break
           case 'zero acceleration':
-              this.moveSideways('zero acceleration')
+            this.moveSideways('zero acceleration')
             break
           default:
         }
@@ -509,12 +662,24 @@ class BounceGame extends React.Component {
     handleKeyDown(event) {
         switch (event.keyCode) {
             case 37:
-                this.setState({ ballDirection: 'left' })
+                if (this.state.mirror) this.setState({ballDirection: 'right'})
+                else this.setState({ ballDirection: 'left' })
                 break
             case 39:
-                this.setState({ ballDirection: 'right' })
+                if (this.state.mirror) this.setState({ballDirection: 'left'})
+                else this.setState({ ballDirection: 'right' })
                 break
-            default:
+        }
+        this.setState({
+            keyPressed: true
+        })
+    }
+    handleTouch(event) {
+        if (event.changedTouches[0].clientX > this.state.screenWidth/2)
+            this.setState({ballDirection:'right'})
+        else if (event.changedTouches[0].clientX < this.state.screenWidth/2){
+            this.setState({ballDireciton: 'left'})
+            alert(this.state.ballDirection)
         }
         this.setState({
             keyPressed: true
@@ -531,7 +696,8 @@ class BounceGame extends React.Component {
             return (
                 <GameOver difficulty = {this.state.difficulty}
                     time= {Math.round(new Date().getTime() - this.state.time)/1000}
-                    length= {this.state.numObstacles+' obstacles'}/>
+                    length= {this.state.numObstacles+' obstacles'}
+                    attempts= {this.state.attempts}/>
             )
         }
         else {
@@ -549,7 +715,7 @@ class BounceGame extends React.Component {
                     </div>
                     <img src= {ProgressBar} style= {{position: 'absolute', left: '37.5%', width: '25%', top: 15}}/>
                     <img src= {this.state.ballBarImage} style= {{position: 'absolute', left: 37.5+((this.state.xPos)/(this.state.numObstacles*this.state.screenWidth+this.state.screenWidth/5))*24+'%', width: '20px' ,top: 13}}/>
-                    {this.state.qboxanim ? <p className= "time">{this.state.time2}</p>:<p/>}
+                    {this.state.qboxanim ? <p className= "time">{this.state.time2/1000}</p>:<p/>}
                     {this.state.qboxanim ? <div className= "qboxanim" style= {{backgroundImage: 'url('+this.state.qBoxImage+')'}}/>:<div/>}
                     {this.state.deadanim ? <div className= "qboxanim" style= {{backgroundImage: 'url('+Ouch+')'}}/>:<div/>}
                 </div>

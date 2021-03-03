@@ -110,11 +110,6 @@ h1 {
 .length_button:focus {
     background-color:#868686;
 }
-.ball:hover,
-.ball:focus {
-    background-color:#868686;
-}
-
 
 .bouncy{
     animation:bouncy 5s infinite linear;

@@ -15,10 +15,10 @@ function GameOver(props) {
     else if (props.length === "12 obstacles") lengthString = "very long"
 
     if (props.difficulty == 1) difficultyString = "plebian"
-    else if (props.length == 2) difficultyString = "easy"
-    else if (props.length == 3) difficultyString = "medium"
-    else if (props.length == 4) difficultyString = "hard"
-    else if (props.length == 5) difficultyString = "expert"
+    else if (props.difficulty == 2) difficultyString = "easy"
+    else if (props.difficulty == 3) difficultyString = "medium"
+    else if (props.difficulty == 4) difficultyString = "hard"
+    else if (props.difficulty == 5) difficultyString = "expert"
 
     database.ref(props.length+'/'+props.difficulty).push(props.time)
     database.ref(props.length+'/'+props.difficulty).orderByValue().limitToFirst(1).once("value",(snapshot) => {
@@ -36,6 +36,7 @@ function GameOver(props) {
         <div id= "background_game_over">
             <div className= "section">
                 <p style= {{fontSize: '6vmin'}}>Nice Work!</p>
+                <p style= {{fontSize: '2vmin'}}>Attempts: {props.attempts}</p>
                 <p style= {{fontSize: '4vmin'}}>Time: {props.time}s</p>
                 <p style= {{fontSize: '2vmin'}}>On a {lengthString} {difficultyString} course</p>
                 {newRecord ? <p>New Record!!</p>:<p>Best Time: {bestTime}</p>}
