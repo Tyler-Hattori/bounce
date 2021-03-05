@@ -31,7 +31,7 @@ class BounceGame extends React.Component {
 
         this.state = {
             screenWidth: 1620,
-            screenHeight: 1000,
+            screenHeight: 1009,
             yPos: 150,
             xPos: 0,
             ballDirection: '',
@@ -172,7 +172,7 @@ class BounceGame extends React.Component {
             case 4:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.hardObstacles = [this.ob3(x),this.ob4(x),this.ob5(x), this.ob6(x),this.ob8(x),this.ob11(x),this.ob12(x),this.ob19(x)]
+                    this.hardObstacles = [this.ob3(x),this.ob4(x),this.ob5(x), this.ob6(x),this.ob8(x),this.ob11(x),this.ob12(x),this.ob19(x),this.ob22(x)]
                     let index = Math.floor(Math.random()*this.hardObstacles.length)
                     for (let j=0;j<this.hardObstacles[index].length;j++)   
                         this.obstacles.push(this.hardObstacles[index][j])
@@ -181,7 +181,7 @@ class BounceGame extends React.Component {
             case 5:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.expertObstacles = [this.ob3(x),this.ob4(x), this.ob6(x),this.ob10(x),this.ob21(x)]
+                    this.expertObstacles = [/*this.ob3(x),this.ob4(x), this.ob6(x),this.ob10(x),*/this.ob21(x),this.ob22(x)]
                     let index = Math.floor(Math.random()*this.expertObstacles.length)
                     for (let j=0;j<this.expertObstacles[index].length;j++)   
                         this.obstacles.push(this.expertObstacles[index][j])
@@ -670,7 +670,39 @@ class BounceGame extends React.Component {
         ]
     } //spring aim between spikes avoid laser (l13)
     ob22(x) {
-        
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.tile(x),
+            this.tile(x+unitX),
+            this.tile(x+unitX*2),
+            this.questionbox(x+unitX,h-unitY*10),
+            this.laser(x+unitX*9,h-unitY*12,"l14"),
+            this.laser(x+unitX*9,h-unitY*9,"l15"),
+            this.laser(x+unitX*9,h-unitY*6,"l16"),
+            this.laser(x+unitX*9,h-unitY*3,"l17"),
+            this.laser(x+unitX*9,h-unitY*15,"l18"),
+            this.tile2(x+unitX*14,h-unitY*2),
+        ]
+    } //ob22: qbox with column of lasers
+    ob23(x) {
+        let unitX = this.state.screenWidth/16
+        let unitY = this.state.screenHeight/20
+        let h = this.state.screenHeight
+        return [
+            this.spring(x),
+            this.tile2(x+unitX,h-unitY*10),
+            this.tile2(x+unitX*2,h-unitY*10),
+            this.tile2(x+unitX*3,h-unitY*10),
+            this.tile2(x+unitX*4,h-unitY*10),
+            this.tile2(x+unitX*5,h-unitY*10),
+            this.tile2(x+unitX*6,h-unitY*10),
+            this.tile2(x+unitX*7,h-unitY*10),
+            this.tile2(x+unitX*8,h-unitY*10),
+            this.tile2(x+unitX*9,h-unitY*10),
+            this.tile2(x+unitX*10,h-unitY*10),
+        ]
     }
     tile2(x,y) {
         let unitX = this.state.screenWidth/16
