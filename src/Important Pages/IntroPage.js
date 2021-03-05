@@ -283,20 +283,20 @@ class IntroPage extends React.Component {
                         <button id= "vl" onClick= {() => this.select("very long")} className = "bouncy length_button" style= {{animationDelay: `0.35s`}}>Very Long</button>
                     </div>
                     <div className= "fade_in">
-                        <button id= "plebian" onClick= {() => this.select("plebian")} className = "button1 bouncy" style= {{border: 'solid green 1vmin'}}>Plebian<br/>{this.state.fastestPlebianTime}s</button>
-                        <button id= "easy" onClick= {() => this.select("easy")} className = "button1 bouncy" style= {{animationDelay: `0.07s`,  border: `solid blue 1vmin`}}>Easy<br/>{this.state.fastestEasyTime}s</button>
-                        <button id= "medium" onClick= {() => this.select("medium")} className = "button1 bouncy" style= {{animationDelay: `0.14s`,  border: `solid orange 1vmin`}}>Medium<br/>{this.state.fastestMediumTime}s</button>
-                        <button id= "hard" onClick= {() => this.select("hard")} className = "button1 bouncy" style= {{animationDelay: `0.21s`,  border: `solid red 1vmin`}}>Hard<br/>{this.state.fastestHardTime}s</button>
-                        <button id= "expert" onClick= {() => this.select("expert")} className = "button1 bouncy" style= {{animationDelay: `0.28s`,  border: `solid black 1vmin`}}>Expert<br/>{this.state.fastestExpertTime}s</button>
+                        <button id= "plebian" onClick= {() => this.select("plebian")} className = "button1 bouncy" style= {{animationDelay: `0.70s`, border: 'solid green 1vmin'}}>Plebian<br/>{this.state.fastestPlebianTime}s</button>
+                        <button id= "easy" onClick= {() => this.select("easy")} className = "button1 bouncy" style= {{animationDelay: `0.63s`,  border: `solid blue 1vmin`}}>Easy<br/>{this.state.fastestEasyTime}s</button>
+                        <button id= "medium" onClick= {() => this.select("medium")} className = "button1 bouncy" style= {{animationDelay: `0.56s`,  border: `solid orange 1vmin`}}>Medium<br/>{this.state.fastestMediumTime}s</button>
+                        <button id= "hard" onClick= {() => this.select("hard")} className = "button1 bouncy" style= {{animationDelay: `0.49s`,  border: `solid red 1vmin`}}>Hard<br/>{this.state.fastestHardTime}s</button>
+                        <button id= "expert" onClick= {() => this.select("expert")} className = "button1 bouncy" style= {{animationDelay: `0.42s`,  border: `solid black 1vmin`}}>Expert<br/>{this.state.fastestExpertTime}s</button>
                     </div>
                     <div className= "fade_in">
-                        <button id= "baseball" onClick= {() => this.select("baseball")} className = "bouncy ball" style= {{backgroundImage: 'url('+Ball1+')', width: 50}}/>
-                        <button id= "basketball" onClick= {() => this.select("basketball")} className = "bouncy ball" style= {{animationDelay: `0.07s`, backgroundImage: 'url('+Ball2+')', width: 50}}/>
-                        <button id= "beachball" onClick= {() => this.select("beachball")} className = "bouncy ball" style= {{animationDelay: `0.14s`, backgroundImage: 'url('+Ball3+')', width: 50}}/>
-                        <button id= "bowlingball" onClick= {() => this.select("bowlingball")} className = "bouncy ball" style= {{animationDelay: `0.21s`, backgroundImage: 'url('+Ball4+')', width: 50}}/>
-                        <button id= "poolball" onClick= {() => this.select("poolball")} className = "bouncy ball" style= {{animationDelay: `0.28s`, backgroundImage: 'url('+Ball5+')', width: 50}}/>
-                        <button id= "tennisball" onClick= {() => this.select("tennisball")} className = "bouncy ball" style= {{animationDelay: `0.35s`, backgroundImage: 'url('+Ball6+')', width: 50}}/>
-                        <button id= "volleyball" onClick= {() => this.select("volleyball")} className = "bouncy ball" style= {{animationDelay: `0.42s`, backgroundImage: 'url('+Ball7+')', width: 50}}/>
+                        <button id= "baseball" onClick= {() => this.select("baseball")} className = "bouncy ball" style= {{animationDelay: `0.77s`, backgroundImage: 'url('+Ball1+')', width: 50}}/>
+                        <button id= "basketball" onClick= {() => this.select("basketball")} className = "bouncy ball" style= {{animationDelay: `0.84s`, backgroundImage: 'url('+Ball2+')', width: 50}}/>
+                        <button id= "beachball" onClick= {() => this.select("beachball")} className = "bouncy ball" style= {{animationDelay: `0.91s`, backgroundImage: 'url('+Ball3+')', width: 50}}/>
+                        <button id= "bowlingball" onClick= {() => this.select("bowlingball")} className = "bouncy ball" style= {{animationDelay: `0.98s`, backgroundImage: 'url('+Ball4+')', width: 50}}/>
+                        <button id= "poolball" onClick= {() => this.select("poolball")} className = "bouncy ball" style= {{animationDelay: `1.05s`, backgroundImage: 'url('+Ball5+')', width: 50}}/>
+                        <button id= "tennisball" onClick= {() => this.select("tennisball")} className = "bouncy ball" style= {{animationDelay: `1.12s`, backgroundImage: 'url('+Ball6+')', width: 50}}/>
+                        <button id= "volleyball" onClick= {() => this.select("volleyball")} className = "bouncy ball" style= {{animationDelay: `1.19s`, backgroundImage: 'url('+Ball7+')', width: 50}}/>
                     </div>
                     <button className = "fade_in text ok_button" onClick= {() => this.select("Ok")}>Ok?</button>
                 </div>

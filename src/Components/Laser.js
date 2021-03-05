@@ -1,10 +1,10 @@
 import React from 'react'
-import LaserImage from './Images/laser.jpg'
+import './Laser.css'
 
 function Laser(props) {
     return (
-        <img src= {LaserImage}
-        style= {{height: props.height,
+        <img src= {props.laserImage} className= "laser" id= {props.id}
+        style= {{height: props.width,
             position: 'absolute',
             top: props.yPos,
             left: props.xPos}}/>
