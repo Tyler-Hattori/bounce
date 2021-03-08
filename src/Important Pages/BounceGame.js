@@ -181,7 +181,7 @@ class BounceGame extends React.Component {
             case 5:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.expertObstacles = [/*this.ob3(x),this.ob4(x), this.ob6(x),this.ob10(x),*/this.ob21(x),this.ob22(x)]
+                    this.expertObstacles = [this.ob3(x),this.ob4(x), this.ob6(x),this.ob10(x),this.ob21(x),this.ob22(x)]
                     let index = Math.floor(Math.random()*this.expertObstacles.length)
                     for (let j=0;j<this.expertObstacles[index].length;j++)   
                         this.obstacles.push(this.expertObstacles[index][j])
@@ -677,6 +677,7 @@ class BounceGame extends React.Component {
             this.tile(x),
             this.tile(x+unitX),
             this.tile(x+unitX*2),
+            this.spring(x+unitX*3),
             this.questionbox(x+unitX,h-unitY*10),
             this.laser(x+unitX*9,h-unitY*12,"l19"),
             this.laser(x+unitX*9,h-unitY*9,"l15"),
@@ -685,7 +686,7 @@ class BounceGame extends React.Component {
             this.laser(x+unitX*9,h-unitY*15,"l18"),
             this.tile2(x+unitX*14,h-unitY*2),
         ]
-    } //ob22: qbox with column of lasers (l18)
+    } //ob22: spring qbox with column of lasers (l18)
     ob23(x) {
         let unitX = this.state.screenWidth/16
         let unitY = this.state.screenHeight/20
@@ -898,6 +899,7 @@ class BounceGame extends React.Component {
                     time= {Math.round(new Date().getTime() - this.state.time)/1000}
                     length= {this.state.numObstacles+' obstacles'}
                     attempts= {this.state.attempts}/>
+                
             )
         }
         else {
