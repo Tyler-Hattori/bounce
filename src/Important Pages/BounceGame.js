@@ -90,7 +90,7 @@ class BounceGame extends React.Component {
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset,this.state.screenHeight-unitY))
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX,this.state.screenHeight-unitY))
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX*2,this.state.screenHeight-unitY))
-        this.obstacles.push(<Goal height= {unitY*15} width= {unitX/2} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unitX*2} yPos= {this.state.screenHeight-(unitY*16)}/>)
+        this.obstacles.push(<Goal height= {unitY*15} width= {unitX/2} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unitX*2} yPos= {this.state.screenHeight-(unitY*15.8)}/>)
         window.addEventListener('keydown', this.handleKeyDown)
         window.addEventListener('touchstart', this.handleTouch)
         this.gameLoop()
@@ -113,7 +113,7 @@ class BounceGame extends React.Component {
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset,this.state.screenHeight-unitY))
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX,this.state.screenHeight-unitY))
         this.obstacles.push(this.tile(this.state.screenWidth*this.state.numObstacles+offset+unitX*2,this.state.screenHeight-unitY))
-        this.obstacles.push(<Goal height= {unitY*15} width= {unitX/2} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unitX*2} yPos= {this.state.screenHeight-(unitY*16)}/>)
+        this.obstacles.push(<Goal height= {unitY*15} width= {unitX/2} xPos= {this.state.screenWidth*this.state.numObstacles+offset+unitX*2} yPos= {this.state.screenHeight-(unitY*15.8)}/>)
         this.setState({
             xPos: 0,
             yPos: 150,
@@ -163,7 +163,7 @@ class BounceGame extends React.Component {
             case 3:
                 for (let i = 1; i < this.state.numObstacles; i++) {
                     let x = i*this.state.screenWidth + (this.state.screenWidth/2)
-                    this.mediumObstacles = [this.ob20(x),this.ob19(x),this.ob2(x),this.ob8(x),this.ob11(x),this.ob12(x),this.ob13(x),this.ob15(x),this.ob16(),this.ob18(x)]
+                    this.mediumObstacles = [this.ob20(x),this.ob19(x),this.ob2(x),this.ob8(x),this.ob11(x),this.ob12(x),this.ob13(x),this.ob15(x),this.ob16(x),this.ob18(x)]
                     let index = Math.floor(Math.random()*this.mediumObstacles.length)
                     for (let j=0;j<this.mediumObstacles[index].length;j++)   
                         this.obstacles.push(this.mediumObstacles[index][j])
@@ -399,7 +399,7 @@ class BounceGame extends React.Component {
             this.tile(x+1000),
             this.tile(x+1500)
         ]
-    } //Spread out ground tiles
+    } //ob9: Spread out ground tiles
     ob10(x) {
         let unitX = this.state.screenWidth/16
         let unitY = this.state.screenHeight/20
@@ -618,18 +618,18 @@ class BounceGame extends React.Component {
             this.laser(x+unitX*8,h-unitY*9,"l3"),
             this.spike(x+unitX*8,h-unitY*12),
             this.spike(x+unitX*8,h-unitY*15),
-            this.laser(x+unitX*11,h-unitY*3,"l4"),
-            this.spike(x+unitX*11,h-unitY*6),
+            this.spike(x+unitX*11,h-unitY*3),
+            this.laser(x+unitX*11,h-unitY*6,"l4"),
             this.spike(x+unitX*11,h-unitY*9),
             this.spike(x+unitX*11,h-unitY*12),
             this.spike(x+unitX*11,h-unitY*15),
             this.spike(x+unitX*14,h-unitY*3),
-            this.spike(x+unitX*14,h-unitY*6),
+            this.laser(x+unitX*14,h-unitY*6,"l5"),
             this.spike(x+unitX*14,h-unitY*9),
             this.spike(x+unitX*14,h-unitY*12),
             this.spike(x+unitX*14,h-unitY*15)
         ]
-    } //spike walls with laser
+    } //spike walls with laser (l5)
     ob20(x) {
         let unitX = this.state.screenWidth/16
         let unitY = this.state.screenHeight/20
@@ -644,19 +644,19 @@ class BounceGame extends React.Component {
             this.tile2(x+unitX*10,h-unitY*4),
             this.tile2(x+unitX*13,h-unitY*2),
             this.tile2(x+unitX*14,h-unitY*2),
-            this.laser(x+unitX*3,h-unitY*14,"l5"),
+            this.laser(x+unitX*3,h-unitY*14,"l9"),
             this.laser(x+unitX*7,h-unitY*13,"l6"),
             this.laser(x+unitX*11,h-unitY*12,"l7"),
             this.laser(x+unitX*15,h-unitY*11,"l8")
         ]
-    } //spring with lasers (l8)
+    } //spring with lasers (l9)
     ob21(x) {
         let unitX = this.state.screenWidth/16
         let unitY = this.state.screenHeight/20
         let h = this.state.screenHeight
         return [
             this.spring(x),
-            this.laser(x,h-unitY*4,"l9"),
+            this.laser(x,h-unitY*4,"l14"),
             this.laser(x+unitX*2,h-unitY*8,"l10"),
             this.spike(x+unitX*7,h-unitY*6),
             this.spike(x+unitX*8,h-unitY*6),
@@ -668,7 +668,7 @@ class BounceGame extends React.Component {
             this.laser(x+unitX*15,h-unitY*5,"l13"),
             this.tile(x+unitX*14)
         ]
-    } //spring aim between spikes avoid laser (l13)
+    } //spring aim between spikes avoid laser (l14)
     ob22(x) {
         let unitX = this.state.screenWidth/16
         let unitY = this.state.screenHeight/20
@@ -678,14 +678,14 @@ class BounceGame extends React.Component {
             this.tile(x+unitX),
             this.tile(x+unitX*2),
             this.questionbox(x+unitX,h-unitY*10),
-            this.laser(x+unitX*9,h-unitY*12,"l14"),
+            this.laser(x+unitX*9,h-unitY*12,"l19"),
             this.laser(x+unitX*9,h-unitY*9,"l15"),
             this.laser(x+unitX*9,h-unitY*6,"l16"),
             this.laser(x+unitX*9,h-unitY*3,"l17"),
             this.laser(x+unitX*9,h-unitY*15,"l18"),
             this.tile2(x+unitX*14,h-unitY*2),
         ]
-    } //ob22: qbox with column of lasers
+    } //ob22: qbox with column of lasers (l18)
     ob23(x) {
         let unitX = this.state.screenWidth/16
         let unitY = this.state.screenHeight/20
